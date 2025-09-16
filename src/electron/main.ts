@@ -1,6 +1,7 @@
 import {app, BrowserWindow} from 'electron';
 import path from 'path';
 import { isDev } from './until.js';
+import { pollResources } from './ResourceManager.js';
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -23,6 +24,8 @@ app.on('ready', () => {
       createWindow()
     }
   })
+
+  pollResources();
 });
 
 app.on('window-all-closed', () => {
