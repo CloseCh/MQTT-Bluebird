@@ -3,6 +3,7 @@ import path from 'path';
 import { isDev } from './until.js';
 import { getStaticData, pollResources } from './ResourceManager.js';
 import { getPreloadPath } from './pathResolver.js';
+import { MQTTmessage } from './MQTTsubscriptor.js';
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -20,7 +21,7 @@ const createWindow = () => {
   }
 
   // Envio de datos
-  pollResources(mainWindow);
+  MQTTmessage(mainWindow);
   ipcMain.handle("getStaticData", () => {
     return getStaticData();
   });
