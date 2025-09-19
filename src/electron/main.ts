@@ -2,7 +2,7 @@ import {ipcMain, app, BrowserWindow} from 'electron';
 import path from 'path';
 import { isDev } from './until.js';
 import { getStaticData, pollResources } from './ResourceManager.js';
-import { getPreloadPath } from './pathResolver.js';
+import { getPreloadPath, getUIPath } from './pathResolver.js';
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -16,7 +16,7 @@ const createWindow = () => {
   if (isDev()){
     mainWindow.loadURL('http://localhost:5123/');
   } else {
-    mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'));
+    mainWindow.loadFile(getUIPath());
   }
 
   // Envio de datos
