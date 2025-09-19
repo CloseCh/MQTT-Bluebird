@@ -21,10 +21,10 @@ const createWindow = () => {
 
   // Envio de datos
   pollResources(mainWindow);
-  ipcMain.handle("getStaticData", () => {
+  ipcMain.handle('getStaticData', () => {
     return getStaticData();
   });
-}
+};
 
 app.on('ready', () => {
   createWindow()
