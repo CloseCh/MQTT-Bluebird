@@ -2,7 +2,7 @@
   "appId": "com.weiyu.MQTTclient",
   "files": ["dist-electron", "dist-react"],
   "icon": "./test.png",
-  "extraResources": ["/dist-electron/preload.cjs"],
+  "extraResources": ["./dist-electron/preload.cjs"],
   "mac": {
     "target": "dmg"
   },
@@ -11,6 +11,6 @@
     "category": "Utility"
   },
   "win": {
-    "target": ["portable", "msi"]
+    "target": "nsis"
   }
 }
