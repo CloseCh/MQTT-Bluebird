@@ -6,8 +6,10 @@ function App() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    // @ts-ignore
-    window.electron.subscribeTemperature(stats => console.log(stats));
+    const unsub = window.electron.subscribeStatistics((stats) => 
+      console.log(stats)
+  );
+  return unsub;
   }, []);
 
   return (
