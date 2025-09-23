@@ -11,10 +11,17 @@ type StaticData = {
   totalMemoryGB: number;
 };
 
+type MQTTmessage = {
+  topic: string;
+  numberMessage: number;
+};
+
 type EventPayloadMapping = {
   statistics: Statistics;
   getStaticData: StaticData;
+  message: MQTTmessage;
 };
+
 
 type UnsubscribeFunction = () => void;
 
@@ -22,5 +29,6 @@ interface Window {
   electron: {
     subscribeStatistics: (callback: (stadistics: Statistics)=> void) => void;
     getStadisticData: () => Promise<StaticData>;
+    subscribeMQTT: (callback: (temperatura: MQTTmessage) => void) => void;
   };
 }

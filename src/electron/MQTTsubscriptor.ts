@@ -1,19 +1,19 @@
 import mqtt from 'mqtt';
 import { BrowserWindow } from 'electron';
+import { ipcWebContentsSend } from './until.js';
 
 const client = mqtt.connect('mqtt://localhost:1883');
 
 export function MQTTmessage(mainWindow: BrowserWindow){
   client.on('message', (topic,message) => {
     const strigMenssage = message.toString();
-    mainWindow.webContents.send("temperature", {
+    const numberMessage = Number(strigMenssage);
+    ipcWebContentsSend('message', mainWindow.webContents, {
       topic,
-      strigMenssage,
+      numberMessage,
     });
   });
 }
-
-
 
 client.on('connect', () => {
   console.log('Conexion establecida');

@@ -1,21 +1,26 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-import { useStatistics } from './useStatistics';
+import { useMQTT } from './useStatistics';
 import { Chart } from './Chart';
 
 function App() {
   const [count, setCount] = useState(0)
-  const statistics = useStatistics(10);
-  const cpuUsages = useMemo(
-    () => statistics.map(stat => stat.cpuUsage), 
-    [statistics]
+  // const statistics = useStatistics(10);
+  // const cpuUsages = useMemo(
+  //   () => statistics.map(stat => stat.cpuUsage), 
+  //   [statistics]
+  // );
+  const temperatura = useMQTT(10);
+  const temp = useMemo(
+    () => temperatura.map(stat => stat.numberMessage),
+    [temperatura]
   );
 
   return (
     <div className='App'>
       <div style={{ height : 120}}>
-        <Chart data={cpuUsages} maxDataPoints={10}/>
+        <Chart data={temp} maxDataPoints={10}/>
       </div>
       <div>
         <a href="https://react.dev" target="_blank">

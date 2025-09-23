@@ -1,11 +1,16 @@
 const electron = require('electron');
 
 electron.contextBridge.exposeInMainWorld('electron', {
+  //
   subscribeStatistics: (callback) =>
     ipcOn('statistics', (stats) => {
       callback(stats);
     }),
   getStadisticData: () => ipcInvoke('getStaticData'),
+  subscribeMQTT: (callback) =>
+    ipcOn('message', (temp) => {
+      callback(temp);
+    }),
 } satisfies Window['electron']);
 
 function ipcInvoke<Key extends keyof EventPayloadMapping>(
