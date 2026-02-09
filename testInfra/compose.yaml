@@ -1,0 +1,41 @@
+services:
+  mosquitto:
+    container_name: mosquitto
+    build:
+      context: ./mosquitto
+      dockerfile: Dockerfile
+    ports:
+      - 1883:1883
+    networks:
+      - internal_net
+  
+  python-publisher:
+    build:
+      context: ./python-publisher
+      dockerfile: Dockerfile
+    container_name: pyp
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    networks:
+      - internal_net
+    environment:
+      - PYTHONUNBUFFERED=1
+  
+  mqtt-explorer:
+    image: smeagolworms4/mqtt-explorer
+    container_name: mqtt-explorer
+    restart: unless-stopped
+    ports:
+      - "4000:4000"  # Puerto web para acceder a MQTT Explorer
+    networks:
+      - internal_net
+    environment:
+      - HTTP_PORT=4000
+      - HTTP_USER=admin        # Usuario para acceso web (opcional)
+      - HTTP_PASSWORD=admin    # Contraseña para acceso web (opcional)
+
+networks:
+  internal_net:
+    name: intnet
+    driver: bridge
