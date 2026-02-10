@@ -9,19 +9,6 @@ services:
     networks:
       - internal_net
   
-  python-publisher:
-    build:
-      context: ./python-publisher
-      dockerfile: Dockerfile
-    container_name: pyp
-    restart: unless-stopped
-    depends_on:
-      - mosquitto
-    networks:
-      - internal_net
-    environment:
-      - PYTHONUNBUFFERED=1
-  
   mqtt-explorer:
     image: smeagolworms4/mqtt-explorer
     container_name: mqtt-explorer
@@ -35,6 +22,15 @@ services:
       - HTTP_USER=admin        # Usuario para acceso web (opcional)
       - HTTP_PASSWORD=admin    # Contraseña para acceso web (opcional)
 
+  node:
+    container_name: nodePublisher
+    build: 
+      context: ./nodeContainer
+      dockerfile: Dockerfile
+    depends_on:
+      - mosquitto
+    networks:
+      - internal_net
 networks:
   internal_net:
     name: intnet
