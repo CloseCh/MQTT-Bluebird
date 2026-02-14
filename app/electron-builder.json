@@ -1,8 +1,17 @@
 {
   "appId": "com.weiyu.MQTTclient",
-  "files": ["dist-electron", "dist-react"],
   "icon": "./test.png",
-  "extraResources": ["./dist-electron/preload.cjs"],
+  "files": [
+    "dist-electron", 
+    "dist-react"
+  ],
+  "extraResources": [
+    {
+      "from": "./src/preload",
+      "to": "preload",
+      "filter": ["**/*"]
+    }
+  ],
   "mac": {
     "target": "dmg"
   },

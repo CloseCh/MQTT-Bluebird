@@ -27,8 +27,6 @@ type UnsubscribeFunction = () => void;
 
 interface Window {
   electron: {
-    subscribeStatistics: (callback: (stadistics: Statistics)=> void) => void;
-    getStadisticData: () => Promise<StaticData>;
     subscribeMQTT: (callback: (temperatura: MQTTmessage) => void) => void;
   };
 }

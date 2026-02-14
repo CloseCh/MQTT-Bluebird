@@ -1,6 +1,6 @@
 import mqtt from 'mqtt';
 import { BrowserWindow } from 'electron';
-import { ipcWebContentsSend } from './until.js';
+import { ipcWebContentsSend } from './util/until.js';
 
 const client = mqtt.connect('mqtt://localhost:1883');
 

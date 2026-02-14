@@ -1,8 +1,6 @@
-import {ipcMain, app, BrowserWindow} from 'electron';
-import path from 'path';
-import { isDev } from './until.js';
-import { getStaticData, pollResources } from './ResourceManager.js';
-import { getPreloadPath, getUIPath } from './pathResolver.js';
+import { app, BrowserWindow} from 'electron';
+import { isDev } from './util/until.js';
+import { getPreloadPath, getUIPath } from './util/pathResolver.js';
 import { MQTTmessage } from './MQTTsubscriptor.js';
 
 const createWindow = () => {
@@ -22,10 +20,6 @@ const createWindow = () => {
 
   // Envio de datos
   MQTTmessage(mainWindow);
-  // pollResources(mainWindow);
-  // ipcMain.handle('getStaticData', () => {
-  //   return getStaticData();
-  // });
 };
 
 app.on('ready', () => {
