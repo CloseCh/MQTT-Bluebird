@@ -8,7 +8,7 @@ import {
 } from 'recharts';
 
 type BaseChartProps = {
-  data: { value: number | undefined }[];
+  data: { value: number | undefined; index: number }[];
   fill: string;
   stroke: string;
 };
@@ -27,7 +27,7 @@ export function BaseChart(props: BaseChartProps) {
           dataKey="value"
           isAnimationActive={false}
         />
-        <XAxis stroke="transparent" height={0} />
+        <XAxis dataKey="index" stroke="transparent" height={0} />
         <YAxis domain={[0, 100]} stroke="transparent" width={0} />
       </AreaChart>
     </ResponsiveContainer>

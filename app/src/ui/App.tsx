@@ -1,21 +1,18 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-import { useMQTT } from './useStatistics';
-import { Chart } from './Chart';
+import { useMQTT } from './function/useStatistics';
+import { Chart } from './components/chart/Chart';
 
 function App() {
   const [count, setCount] = useState(0)
-  // const statistics = useStatistics(10);
-  // const cpuUsages = useMemo(
-  //   () => statistics.map(stat => stat.cpuUsage), 
-  //   [statistics]
-  // );
-  const temperatura = useMQTT(10);
-  const temp = useMemo(
-    () => temperatura.map(stat => stat.numberMessage),
-    [temperatura]
-  );
+  
+  const data = useMQTT(10);
+  const obtenerPropiedad = (propiedad: string) => {
+    return data.map(item => (item.data as Record<string, any>)[propiedad]);
+  };
+
+  const temp = obtenerPropiedad('temperatura');
 
   return (
     <div className='App'>
