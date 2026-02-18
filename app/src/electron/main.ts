@@ -1,7 +1,7 @@
 import { app, BrowserWindow} from 'electron';
 import { isDev } from './util/until.js';
 import { getPreloadPath, getUIPath } from './util/pathResolver.js';
-import { MQTTmessage } from './MQTTsubscriptor.js';
+import { setupClient, destroyClient } from './services/MQTTsubscriptor.js';
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -19,7 +19,7 @@ const createWindow = () => {
   }
 
   // Envio de datos
-  MQTTmessage(mainWindow);
+  setupClient(mainWindow);
 };
 
 app.on('ready', () => {
@@ -37,4 +37,6 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+
+  destroyClient();
 });
