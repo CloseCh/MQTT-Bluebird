@@ -1,6 +1,6 @@
 {
   "appId": "com.weiyu.MQTTclient",
-  "icon": "./test.png",
+  "icon": "./public/test.png",
   "files": [
     "dist-electron", 
     "dist-react"
