@@ -4,7 +4,7 @@ import { ipcWebContentsSend } from '../util/until.js';
 
 let client : MqttClient | null = null;
 
-const subscriptions : string[] = ['#'];
+const subscriptions : string[] = ['$SYS/#','#'];
 
 export function setupClient(mainWindow: BrowserWindow) : void {
   if (client) {
@@ -26,7 +26,7 @@ export function setupClient(mainWindow: BrowserWindow) : void {
   client.on('message', (topic, data) => {
     const text = data.toString();
     console.log(topic)
-    let parsed: unknown;
+    let parsed: object | string;
 
     try {
       parsed = JSON.parse(text);
