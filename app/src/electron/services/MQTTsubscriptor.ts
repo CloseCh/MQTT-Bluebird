@@ -1,17 +1,19 @@
-import mqtt, { MqttClient } from 'mqtt';
+import mqtt, { IPublishPacket, MqttClient } from 'mqtt';
 import { BrowserWindow } from 'electron';
 import { ipcWebContentsSend } from '../util/until.js';
 
 let client : MqttClient | null = null;
 
-const subscriptions : string[] = ['$SYS/#','#'];
+let subscriptions : string[] = ['#'];
+
+let brocker : string = 'mqtt://localhost:1883';
 
 export function setupClient(mainWindow: BrowserWindow) : void {
   if (client) {
     return;
   }
 
-  client = mqtt.connect('mqtt://localhost:1883', {
+  client = mqtt.connect(brocker, {
     clientId: 'mqtt_client_' + Math.random().toString(16).substring(2, 8),
     clean: true,
     connectTimeout: 4000,
@@ -23,17 +25,17 @@ export function setupClient(mainWindow: BrowserWindow) : void {
     client!.subscribe(subscriptions);
   });
 
-  client.on('message', (topic, data) => {
+  client.on('message', (topic : string, data : object, packet : IPublishPacket) => {
     const text = data.toString();
-    console.log(topic)
+    
     let parsed: object | string;
 
     try {
       parsed = JSON.parse(text);
     } catch {
-      parsed = text; // no es JSON → lo dejamos como string
+      parsed = text;
     }
-    console.log(parsed)
+    
     ipcWebContentsSend('message', mainWindow.webContents, {
       topic,
       data: parsed
