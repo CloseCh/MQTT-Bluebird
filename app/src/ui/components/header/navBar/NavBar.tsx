@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -53,11 +53,11 @@ export default function NavBar() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>
+      <IconButton onClick={toggleDrawer(true)}>
         <MenuIcon 
           sx={navBarStyles.icons}
         />
-      </Button>
+      </IconButton>
       
       <Drawer 
         sx={navBarStyles.drawer}

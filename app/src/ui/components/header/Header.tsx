@@ -1,7 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import NavBar from './navBar/NavBar.js';
 
 export default function Header() {
@@ -9,11 +8,9 @@ export default function Header() {
     <>
       <AppBar position="sticky">
         <Toolbar variant="dense">
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <NavBar />
-          </IconButton>
+          <NavBar />
           <Typography variant="h6" color="inherit" component="div">
-            Photos
+            MQTTC
           </Typography>
         </Toolbar>
       </AppBar>
