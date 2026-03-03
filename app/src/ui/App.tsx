@@ -12,11 +12,20 @@ export default function App() {
   return (
     <>
       <CssBaseline />
-      <Grid container spacing={2} direction="column">
+      <Grid container direction="column">
         <Grid size={12}>
           <Header />
         </Grid>
-        <Grid size={12}>
+        <Grid
+          container
+          size={12}
+          sx={{
+            flexGrow: 1,
+            maxWidth: '100%',
+            height: '100%',
+            mt: 1
+          }}
+        >
           <Outlet />
         </Grid>
       </Grid>
