@@ -16,7 +16,8 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="storage" element={<Subscription />} />
+          <Route index element={<Subscription />} />
+          <Route path="subscription" element={<Subscription />} />
         </Route>
       </Routes>
     </BrowserRouter>
