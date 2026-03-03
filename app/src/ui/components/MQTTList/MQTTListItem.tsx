@@ -1,4 +1,5 @@
 import React from 'react';
+import ListItem from '@mui/material/ListItem';
 
 type MQTTListItemProps = {
   topic: string;
@@ -7,10 +8,10 @@ type MQTTListItemProps = {
 
 const MQTTListItem = React.memo(({ topic, messages }: MQTTListItemProps) => {
   return (
-    <li>
+    <ListItem>
       <span>{topic}</span>
       <span>{JSON.stringify(messages?.at(-1)?.data)}</span>
-    </li>
+    </ListItem>
   );
 });
 

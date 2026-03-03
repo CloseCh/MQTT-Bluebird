@@ -1,11 +1,12 @@
 import MQTTListItem from "./MQTTListItem.jsx";
-import { useMQTT } from "../../../function/messageManagement";
+import { useMQTT } from "../../function/messageManagement";
+import List from '@mui/material/List';
 
 export default function MQTTList() {
   const { topics, messagesByTopic } = useMQTT(100);
 
   return (
-    <ul>
+    <List>
       {topics.map((topic : string) => (
         <MQTTListItem
           key={topic}
@@ -13,6 +14,6 @@ export default function MQTTList() {
           messages={messagesByTopic[topic]}
         />
       ))}
-    </ul>
+    </List>
   );
 }
