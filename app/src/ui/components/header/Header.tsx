@@ -6,7 +6,7 @@ import NavBar from './navBar/NavBar.js';
 export default function Header() {
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar position="fixed">
         <Toolbar variant="dense">
           <NavBar />
           <Typography variant="h6" color="inherit" component="div">
