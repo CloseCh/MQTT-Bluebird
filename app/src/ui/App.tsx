@@ -3,15 +3,25 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-// import MQTTList from './components/mqttView/MQTTList/MQTTList.jsx'
-import Main from './view/main/Main.jsx'
+import { Outlet } from 'react-router';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Header from './components/header/Header';
 
-function App() {
+export default function App() {
   return (
     <>
-      <Main />
+      <CssBaseline />
+      <Grid container spacing={2} direction="column">
+        <Grid size={12}>
+          <Header />
+        </Grid>
+        <Grid size={12}>
+          <Outlet />
+        </Grid>
+      </Grid>
     </>
   )
 }
 
-export default App
+
