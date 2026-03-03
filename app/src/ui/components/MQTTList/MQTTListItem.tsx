@@ -1,17 +1,18 @@
 import React from 'react';
-import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+
+import MailIcon from '@mui/icons-material/Mail'
 
 type MQTTListItemProps = {
   topic: string;
-  messages: MQTTmessage[];
 }
 
-const MQTTListItem = React.memo(({ topic, messages }: MQTTListItemProps) => {
+const MQTTListItem = React.memo(({ topic }: MQTTListItemProps) => {
   return (
-    <ListItem>
+    <ListItemButton>
+      <MailIcon sx={{marginRight: '10px'}}/>
       <span>{topic}</span>
-      <span>{JSON.stringify(messages?.at(-1)?.data)}</span>
-    </ListItem>
+    </ListItemButton>
   );
 });
 
