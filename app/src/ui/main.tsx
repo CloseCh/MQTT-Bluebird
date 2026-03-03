@@ -6,6 +6,7 @@ import {
   Route 
 } from "react-router";
 
+import Main from './pages/main/Main.tsx';
 import Subscription from './pages/subscription/Subscription.tsx';
 
 import './index.css';
@@ -16,7 +17,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<Subscription />} />
+          <Route index element={<Main />} />
           <Route path="subscription" element={<Subscription />} />
         </Route>
       </Routes>
