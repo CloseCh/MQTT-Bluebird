@@ -1,14 +1,17 @@
 import Stack from "@mui/material/Stack";
-import MQTTList from "../../components/mqttList/MQTTList";
-import { useState } from "react";
-import MQTTDetailed from "../../components/mqttDetailed/MQTTDetailed";
+import { useState, useCallback} from "react";
+import MQTTDetailed from "../../components/mqttDetailed/MQTTDetailed.jsx";
+import MQTTList from "../../components/mqttList/MQTTList.jsx";
+
+import { useMQTT } from "../../function/messageManagement.js";
 
 export default function Main() {
 	const [ selectedItem, setSelectedItem ] = useState("");
+	const { topics } = useMQTT(100);
 
-	function handleClick (topics: string) {
-		setSelectedItem(topics);
-	}
+	const handleClick = useCallback((topic: string) => {
+    setSelectedItem(topic);
+  }, []);
 
 	return (
 		<>
@@ -16,7 +19,7 @@ export default function Main() {
 				direction="row" 
 				sx={{ width: '100%' }}
 			>
-				<MQTTList handleClick={handleClick} />
+				<MQTTList handleClick={handleClick} topics={topics} />
 				{ selectedItem !== "" ? <MQTTDetailed /> : <></>}
 			</Stack>
 		</>

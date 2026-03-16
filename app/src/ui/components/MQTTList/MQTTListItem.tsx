@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCallback } from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 
 import MailIcon from '@mui/icons-material/Mail'
@@ -8,13 +9,17 @@ interface MQTTListItemProps {
   handleClick: (topic: string) => void;
 }
 
-const MQTTListItem = React.memo(({ topic, handleClick }: MQTTListItemProps) => {
-  return (
-    <ListItemButton onClick={() => handleClick(topic)}>
-      <MailIcon sx={{marginRight: '10px'}}/>
-      <span>{topic}</span>
-    </ListItemButton>
-  );
-});
+function MQTTListItem ({ topic, handleClick }: MQTTListItemProps) {
+    const handleClickMemo = useCallback(() => {
+        handleClick(topic);
+    }, [topic, handleClick]);
 
-export default MQTTListItem;
+    return (
+        <ListItemButton onClick={handleClickMemo}>
+            <MailIcon sx={{ marginRight: '10px' }} />
+            <span>{topic}</span>
+        </ListItemButton>
+    );
+}
+
+export default React.memo(MQTTListItem);

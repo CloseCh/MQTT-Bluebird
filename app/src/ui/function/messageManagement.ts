@@ -1,19 +1,29 @@
 import { useEffect, useState, useCallback } from 'react';
 
+type Packet = import('mqtt').IPublishPacket;
+type PacketList = Record<string, Packet[]>;
+type TopicList = string[];
+
+/**
+ * Es un metodo que devuelve lo que se debe mostrar en el page, lista de topics y los mensajes.
+ * 
+ * @param dataPointCount Cantidad de mensajes en la lista
+ * @returns lista de topics, y obteción de packet por topics
+ */
 export function useMQTT(dataPointCount: number) {
-  const [topics, setTopics] = useState<string[]>([]);
-  const [messagesByTopic, setMessagesByTopic] = useState<Record<string, MQTTmessage[]>>({});
+  const [topics, setTopics] = useState<TopicList>([]);
+  const [packetByTopic, setPacketByTopic] = useState<PacketList>({});
 
   const onMessage = useCallback((message: MQTTmessage) => {
     setTopics(prev =>
       prev.includes(message.topic) ? prev : [...prev, message.topic]
     );
 
-    setMessagesByTopic(prev => {
-      const topicMessages = prev[message.topic] ?? [];
-      const newMessages = [...topicMessages, message];
-      if (newMessages.length > dataPointCount) newMessages.shift();
-      return { ...prev, [message.topic]: newMessages };
+    setPacketByTopic(prev => {
+      const topicPacket = prev[message.topic] ?? [];
+      const newPacket = [...topicPacket, message.packet];
+      if (newPacket.length > dataPointCount) newPacket.shift();
+      return { ...prev, [message.topic]: newPacket };
     });
   }, [dataPointCount]);
 
@@ -22,5 +32,8 @@ export function useMQTT(dataPointCount: number) {
     return unsub;
   }, [onMessage]);
 
-  return { topics, messagesByTopic };
+  return { 
+    topics, 
+    getTopicMessages: (topic: string) => packetByTopic[topic] ?? [] 
+  };
 }

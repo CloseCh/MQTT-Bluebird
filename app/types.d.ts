@@ -10,11 +10,6 @@ interface MQTTmessageList {
   data: Array<string>;
 }
 
-interface MQTTPacketList {
-  topic: string;
-  packet: import('mqtt').IPublishPacket;
-}
-
 type EventPayloadMapping = {
   message: MQTTmessage;
 };
