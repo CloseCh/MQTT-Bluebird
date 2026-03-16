@@ -38,7 +38,8 @@ export function setupClient(mainWindow: BrowserWindow) : void {
     
     ipcWebContentsSend('message', mainWindow.webContents, {
       topic,
-      data: parsed
+      data: parsed,
+      packet
     });
   });
 

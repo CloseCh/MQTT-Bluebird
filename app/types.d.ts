@@ -1,12 +1,18 @@
 //Global types
-type MQTTmessage = {
-  topic: string,
+interface MQTTmessage {
+  topic: string;
   data: object | string;
+  packet: import('mqtt').IPublishPacket;
 };
 
-type MQTTmessageList = {
-  topic: string,
-  data: Array<string>
+interface MQTTmessageList {
+  topic: string;
+  data: Array<string>;
+}
+
+interface MQTTPacketList {
+  topic: string;
+  packet: import('mqtt').IPublishPacket;
 }
 
 type EventPayloadMapping = {

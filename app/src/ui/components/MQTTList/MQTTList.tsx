@@ -2,13 +2,16 @@ import MQTTListItem from "./MQTTListItem.js";
 import { useMQTT } from "../../function/messageManagement.js";
 import List from '@mui/material/List';
 
-export default function MQTTList() {
-  const { topics } = useMQTT(100);
+interface MQTTListProps {
+  handleClick: (topic: string) => void;
+}
 
+export default function MQTTList({ handleClick }: MQTTListProps) {
+  const { topics } = useMQTT(100);
+  
   return (
       <List 
         sx={{
-          border: '1px solid red',
           width: '100%'
         }}
       >
@@ -16,6 +19,7 @@ export default function MQTTList() {
           <MQTTListItem
             key={topic}
             topic={topic}
+            handleClick={handleClick}
           />
         ))}
       </List>
