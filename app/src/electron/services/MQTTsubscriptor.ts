@@ -25,7 +25,7 @@ export function setupClient(mainWindow: BrowserWindow) : void {
     client!.subscribe(subscriptions);
   });
 
-  client.on('message', (topic : string, data : object, packet : IPublishPacket) => {
+  client.on('message', (topic : string, data : Buffer, packet : IPublishPacket) => {
     const text = data.toString();
     
     let parsed: object | string;

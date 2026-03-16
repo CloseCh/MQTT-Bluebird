@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 
-type Packet = import('mqtt').IPublishPacket;
-type PacketList = Record<string, Packet[]>;
+type PacketList = Record<string, MQTTMessage[]>;
 type TopicList = string[];
 
 /**
@@ -14,14 +13,14 @@ export function useMQTT(dataPointCount: number) {
   const [topics, setTopics] = useState<TopicList>([]);
   const [packetByTopic, setPacketByTopic] = useState<PacketList>({});
 
-  const onMessage = useCallback((message: MQTTmessage) => {
+  const onMessage = useCallback((message: MQTTMessage) => {
     setTopics(prev =>
       prev.includes(message.topic) ? prev : [...prev, message.topic]
     );
 
     setPacketByTopic(prev => {
       const topicPacket = prev[message.topic] ?? [];
-      const newPacket = [...topicPacket, message.packet];
+      const newPacket = [...topicPacket, message];
       if (newPacket.length > dataPointCount) newPacket.shift();
       return { ...prev, [message.topic]: newPacket };
     });
@@ -34,6 +33,6 @@ export function useMQTT(dataPointCount: number) {
 
   return { 
     topics, 
-    getTopicMessages: (topic: string) => packetByTopic[topic] ?? [] 
+    getMessage: (topic: string) => packetByTopic[topic] ?? [] 
   };
 }
