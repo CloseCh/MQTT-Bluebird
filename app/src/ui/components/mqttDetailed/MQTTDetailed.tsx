@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { HEADER_HEIGHT } from "../../constants/layout.js";
 import Drawer from "@mui/material/Drawer";
 import Grid from "@mui/material/Grid";
@@ -10,17 +9,18 @@ import Box from "@mui/material/Box";
 import MQTTDetailedSelector from "./MQTTDetailedSelector.jsx";
 import type { SelectChangeEvent } from "@mui/material/Select";
 
-interface prop {
-  handleClick: () => void
-  selectedMessage: string
-  message: MQTTMessage
+interface Prop {
+  handleClick: () => void;
+  selectedMessage: string;
+  message: MQTTMessage;
+  messageFormat: string;
+  setMessageFormat: (topic: string, format: string) => void;
 }
 
-export default function MQTTDetailed ({ handleClick, selectedMessage, message }: prop) {
-  const [messageType, setMessageType] = useState('');
-
+export default function MQTTDetailed ({ handleClick, selectedMessage, message, messageFormat, setMessageFormat}: Prop) {
   const handleChange = (event: SelectChangeEvent) => {
-    setMessageType(event.target.value as string);
+    const newFormat = event.target.value as string;
+    setMessageFormat(message.topic, newFormat);
   };
   
   return (
@@ -39,12 +39,14 @@ export default function MQTTDetailed ({ handleClick, selectedMessage, message }:
       <Grid 
         container
       >
-
         <Grid size={12}>
           <Stack direction="row" spacing={2} alignItems="center" sx={{ padding: '20px 20px 0px 20px'}}>
             <IconButton onClick={handleClick}> <KeyboardDoubleArrowRightIcon/> </IconButton>
             <Box sx={{ flex: 1 }}>
-              <MQTTDetailedSelector messageType={messageType} handleChange={handleChange}/>
+              <MQTTDetailedSelector 
+                handleChange={handleChange} 
+                messageFormat={messageFormat} 
+              />
             </Box>
           </Stack>
         </Grid>

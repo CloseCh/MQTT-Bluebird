@@ -5,24 +5,24 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 interface Prop {
-  messageType: string
-  handleChange: (event: SelectChangeEvent) => void
+  handleChange: (event: SelectChangeEvent) => void;
+  messageFormat: string;
 }
 
-export default function MQTTDetailedSelector ({ messageType, handleChange}: Prop) {
+export default function MQTTDetailedSelector ({ handleChange, messageFormat}: Prop) {
   return (
     <FormControl fullWidth>
       <InputLabel id="label">Message Type</InputLabel>
       <Select
         labelId="label"
         id="detailed-select"
-        value={messageType}
+        value={messageFormat}
         label="MessageType"
         onChange={handleChange}
       >
-        <MenuItem value={10}>String</MenuItem>
-        <MenuItem value={20}>Number</MenuItem>
-        <MenuItem value={30}>Json</MenuItem>
+        <MenuItem value={"string"}>String</MenuItem>
+        <MenuItem value={"number"}>Number</MenuItem>
+        <MenuItem value={"json"}>Json</MenuItem>
       </Select>
     </FormControl>
   );

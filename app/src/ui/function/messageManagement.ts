@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 
-type PacketList = Record<string, MQTTMessage[]>;
+type PacketFormatList = Record<string, { messages: MQTTMessage[], format: string }>;
 type TopicList = string[];
 
 /**
@@ -10,29 +10,36 @@ type TopicList = string[];
  * @returns lista de topics, y obteción de packet por topics
  */
 export function useMQTT(dataPointCount: number) {
-  const [topics, setTopics] = useState<TopicList>([]);
-  const [packetByTopic, setPacketByTopic] = useState<PacketList>({});
+    const [topics, setTopics] = useState<TopicList>([]);
+    const [packetByTopic, setPacketByTopic] = useState<PacketFormatList>({});
 
-  const onMessage = useCallback((message: MQTTMessage) => {
-    setTopics(prev =>
-      prev.includes(message.topic) ? prev : [...prev, message.topic]
-    );
+    const onMessage = useCallback((message: MQTTMessage) => {
+        setTopics(prev =>
+            prev.includes(message.topic) ? prev : [...prev, message.topic]
+        );
 
-    setPacketByTopic(prev => {
-      const topicPacket = prev[message.topic] ?? [];
-      const newPacket = [...topicPacket, message];
-      if (newPacket.length > dataPointCount) newPacket.shift();
-      return { ...prev, [message.topic]: newPacket };
-    });
-  }, [dataPointCount]);
+        setPacketByTopic(prev => {
+            const current = prev[message.topic] ?? { messages: [], format: 'string' };
+            const newMessages = [...current.messages, message];
+            if (newMessages.length > dataPointCount) newMessages.shift();
+            return { ...prev, [message.topic]: { ...current, messages: newMessages } };
+        });
+    }, [dataPointCount]);
 
-  useEffect(() => {
-    const unsub = window.electron.subscribeMQTT(onMessage);
-    return unsub;
-  }, [onMessage]);
+    useEffect(() => {
+        const unsub = window.electron.subscribeMQTT(onMessage);
+        return unsub;
+    }, [onMessage]);
 
-  return { 
-    topics, 
-    getMessage: (topic: string) => packetByTopic[topic] ?? [] 
-  };
+    return {
+        topics,
+        getMessage: (topic: string) => packetByTopic[topic]?.messages ?? [],
+        getFormat: (topic: string) => packetByTopic[topic]?.format ?? 'string',
+        setFormat: (topic: string, format: string) => {
+            setPacketByTopic(prev => ({
+                ...prev,
+                [topic]: { ...prev[topic], format }
+            }));
+        }
+    };
 }

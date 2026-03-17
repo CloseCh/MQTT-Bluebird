@@ -8,29 +8,39 @@ import MQTTList from "../../components/mqttList/MQTTList.jsx";
 import { useMQTT } from "../../function/messageManagement.js";
 
 export default function Main() {
-	const [ selectedItem, setSelectedItem ] = useState("");
-	const { topics, getMessage } = useMQTT(100);
+	const [ selectedTopic, setSelectedTopic ] = useState("");
+	const { topics, getMessage, getFormat, setFormat } = useMQTT(100);
 
 	const handleClick = useCallback((topic: string) => {
-    setSelectedItem(topic);
+    setSelectedTopic(topic);
   }, []);
 
 	function handleDetailedClick () {
-		setSelectedItem("");
+		setSelectedTopic("");
 	}
 
-	const packetList: MQTTMessage[] = getMessage(selectedItem);
-
+	const packetList: MQTTMessage[] = getMessage(selectedTopic);
 	const selectedTopicMessage: MQTTMessage = packetList[packetList.length - 1];
-
+	const messageFormat: string = getFormat(selectedTopic);
 	return (
 		<>
 			<Stack 
 				direction="row" 
 				sx={{ width: '100%' }}
 			>
-				<MQTTList handleClick={handleClick} topics={topics} />
-				{selectedItem !== "" ? <MQTTDetailed handleClick={handleDetailedClick} selectedMessage={selectedItem} message={selectedTopicMessage} /> : <></>}
+				<MQTTList handleClick={handleClick} topics={topics} selectedTopic={selectedTopic}/>
+				{
+					selectedTopic !== "" ? 
+						<MQTTDetailed 
+							handleClick={handleDetailedClick} 
+							selectedMessage={selectedTopic} 
+							message={selectedTopicMessage} 
+							messageFormat={messageFormat} 
+							setMessageFormat={setFormat}
+						/> 
+					: 
+						<></>
+				}
 			</Stack>
 		</>
 	);
