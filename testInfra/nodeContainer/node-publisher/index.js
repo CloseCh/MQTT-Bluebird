@@ -2,8 +2,7 @@ import {
   publishASCII,
   publishJSON, 
   publishNumeric, 
-  publishHex, 
-  publishCustom
+  publishHex
 } from './src/publisher.js'
 
 function startPublishing() {
@@ -13,13 +12,11 @@ function startPublishing() {
   setInterval(publishJSON,    5000);
   setInterval(publishNumeric, 15000);
   setInterval(publishHex,     4000);
-  setInterval(publishCustom,  6000);
 
   publishASCII();
   publishJSON();
   publishNumeric();
   publishHex();
-  publishCustom();
 }
 
 startPublishing();

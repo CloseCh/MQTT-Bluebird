@@ -1,6 +1,5 @@
 import {
   encodeASCII, 
-  encodeCustom,
   encodeHex,
   encodeJSON,
   encodeNumeric
@@ -71,23 +70,4 @@ function publishHex() {
   }
 }
 
-function publishCustom() {
-  const temp = Math.random() * 10 + 20;
-  const rpm  = Math.floor(Math.random() * 3000 + 500);
-  const flag = Math.random() > 0.5 ? 1 : 0;
-
-  // Trama binaria: [header uint8][temp float32][rpm uint16][flag int8][label string]
-  const payload = encodeCustom([
-    { type: 'uint8',   value: 0xA5 },         // magic byte / header
-    { type: 'float32', value: temp },          // temperatura
-    { type: 'uint16',  value: rpm },           // RPM motor
-    { type: 'int8',    value: flag ? 1 : -1 }, // estado (activo/inactivo)
-    { type: 'float64', value: Date.now() / 1000 }, // timestamp unix
-    { type: 'string',  value: 'END' },         // terminador
-  ]);
-
-  client.publish('test/custom', payload, { qos: 1 });
-  console.log(`[CUSTOM]  → temp=${temp.toFixed(2)} rpm=${rpm} flag=${flag}  (${payload.length} bytes: ${payload.toString('hex')})`);
-}
-
-export {publishASCII, publishCustom, publishHex, publishJSON, publishNumeric}
+export {publishASCII, publishHex, publishJSON, publishNumeric}
