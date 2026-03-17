@@ -7,19 +7,32 @@ import MailIcon from '@mui/icons-material/Mail'
 interface MQTTListItemProps {
   topic: string;
   handleClick: (topic: string) => void;
+  selected: boolean;
 }
 
-function MQTTListItem ({ topic, handleClick }: MQTTListItemProps) {
-    const handleClickMemo = useCallback(() => {
-        handleClick(topic);
-    }, [topic, handleClick]);
+function MQTTListItem({ topic, handleClick, selected }: MQTTListItemProps) {
+  const handleClickMemo = useCallback(() => {
+    handleClick(topic);
+  }, [topic, handleClick]);
 
-    return (
-        <ListItemButton onClick={handleClickMemo}>
-            <MailIcon sx={{ marginRight: '10px' }} />
-            <span>{topic}</span>
-        </ListItemButton>
-    );
+  return (
+    <ListItemButton
+      onClick={handleClickMemo}
+      selected={selected}
+      sx={{
+        '&.Mui-selected': {
+          backgroundColor: 'primary.main',
+          color: 'primary.contrastText',
+          '&:hover': {
+            backgroundColor: 'primary.dark',
+          }
+        }
+      }}
+    >
+      <MailIcon sx={{ marginRight: '10px' }} />
+      <span>{topic}</span>
+    </ListItemButton>
+  );
 }
 
 export default React.memo(MQTTListItem);
