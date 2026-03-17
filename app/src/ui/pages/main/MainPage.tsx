@@ -2,13 +2,13 @@ import { useState, useCallback} from "react";
 
 import Stack from "@mui/material/Stack";
 
-import MQTTDetailed from "../../components/mqttDetailed/MQTTDetailed.jsx";
-import MQTTList from "../../components/mqttList/MQTTList.jsx";
+import MQTTDetailed from "../../components/mqttDetailed/MQTTDetailed.js";
+import MQTTList from "../../components/mqttList/MQTTList.js";
 
 import { useMQTT } from "../../function/messageManagement.js";
 import { type MessageTypes } from '../../constants/types.js';
 
-export default function Main() {
+export default function MainPage() {
 	const [ selectedTopic, setSelectedTopic ] = useState("");
 	const { topics, getMessage, getFormat, setFormat } = useMQTT(100);
 
