@@ -1,7 +1,9 @@
 import { app, BrowserWindow} from 'electron';
 import { isDev } from './util/until.js';
 import { getPreloadPath, getUIPath } from './util/pathResolver.js';
-import { setupClient, destroyClient } from './services/MQTTsubscriptor.js';
+import { setupSubscriptor } from './services/MQTTsubscriptor.js';
+import { destroyClient } from './services/MQTTConnection.js';
+import { setupPublisher } from './services/MQTTpublisher.js';
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -19,7 +21,8 @@ const createWindow = () => {
   }
 
   // Envio de datos
-  setupClient(mainWindow);
+  setupSubscriptor(mainWindow);
+  setupPublisher();
 };
 
 app.on('ready', () => {

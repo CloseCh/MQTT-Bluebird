@@ -5,8 +5,8 @@ const electron = require('electron');
  * @param {Key} key
  * @returns {Promise<EventPayloadMapping[Key]>}
  */
-function ipcInvoke(key) {
-  return electron.ipcRenderer.invoke(key);
+function ipcInvoke(key, payload) {
+  return electron.ipcRenderer.invoke(key, payload);
 }
 
 /**
@@ -25,4 +25,6 @@ electron.contextBridge.exposeInMainWorld('electron', {
     ipcOn('message', (temp) => {
       callback(temp);
     }),
+  publishMQTT: (message) =>
+    ipcInvoke('mqttPublish', message),
 });
