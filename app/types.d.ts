@@ -1,7 +1,7 @@
 //Global types
 interface MQTTMessage {
   topic: string;
-  data: Buffer;
+  data: string;
   packet: import('mqtt').IPublishPacket;
 };
 

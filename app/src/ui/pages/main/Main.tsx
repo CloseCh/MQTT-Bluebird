@@ -6,6 +6,7 @@ import MQTTDetailed from "../../components/mqttDetailed/MQTTDetailed.jsx";
 import MQTTList from "../../components/mqttList/MQTTList.jsx";
 
 import { useMQTT } from "../../function/messageManagement.js";
+import { type MessageTypes } from '../../constants/types.js';
 
 export default function Main() {
 	const [ selectedTopic, setSelectedTopic ] = useState("");
@@ -21,7 +22,7 @@ export default function Main() {
 
 	const packetList: MQTTMessage[] = getMessage(selectedTopic);
 	const selectedTopicMessage: MQTTMessage = packetList[packetList.length - 1];
-	const messageFormat: string = getFormat(selectedTopic);
+	const messageFormat: MessageTypes = getFormat(selectedTopic);
 	return (
 		<>
 			<Stack 

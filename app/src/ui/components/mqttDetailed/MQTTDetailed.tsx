@@ -8,18 +8,19 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import MQTTDetailedSelector from "./MQTTDetailedSelector.jsx";
 import type { SelectChangeEvent } from "@mui/material/Select";
+import { type MessageTypes } from '../../constants/types.js';
 
 interface Prop {
   handleClick: () => void;
   selectedMessage: string;
   message: MQTTMessage;
-  messageFormat: string;
-  setMessageFormat: (topic: string, format: string) => void;
+  messageFormat: MessageTypes;
+  setMessageFormat: (topic: string, format: MessageTypes) => void;
 }
 
 export default function MQTTDetailed ({ handleClick, selectedMessage, message, messageFormat, setMessageFormat}: Prop) {
   const handleChange = (event: SelectChangeEvent) => {
-    const newFormat = event.target.value as string;
+    const newFormat = event.target.value as MessageTypes;
     setMessageFormat(message.topic, newFormat);
   };
   
@@ -51,7 +52,7 @@ export default function MQTTDetailed ({ handleClick, selectedMessage, message, m
           </Stack>
         </Grid>
         <Grid size={12}>
-          <MQTTDetailedMessageData message={message}/>
+          <MQTTDetailedMessageData message={message} messageFormat={messageFormat}/>
         </Grid>
         <Grid size={12}>
         </Grid>

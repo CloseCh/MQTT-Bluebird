@@ -3,10 +3,11 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import type { MessageTypes } from "../../constants/types.js";
 
 interface Prop {
   handleChange: (event: SelectChangeEvent) => void;
-  messageFormat: string;
+  messageFormat: MessageTypes;
 }
 
 export default function MQTTDetailedSelector ({ handleChange, messageFormat}: Prop) {
@@ -21,8 +22,18 @@ export default function MQTTDetailedSelector ({ handleChange, messageFormat}: Pr
         onChange={handleChange}
       >
         <MenuItem value={"string"}>String</MenuItem>
-        <MenuItem value={"number"}>Number</MenuItem>
-        <MenuItem value={"json"}>Json</MenuItem>
+        <MenuItem value={"ascii"}>Ascii</MenuItem>
+        <MenuItem value={"hex"}>hex</MenuItem>
+        <MenuItem value={"json"}>json</MenuItem>
+        <MenuItem value={"utf8"}>utf8</MenuItem>
+        <MenuItem value={"int8"}>int8</MenuItem>
+        <MenuItem value={"uint8"}>uint8</MenuItem>
+        <MenuItem value={"int16"}>int16</MenuItem>
+        <MenuItem value={"uint16"}>uint16</MenuItem>
+        <MenuItem value={"int32"}>int32</MenuItem>
+        <MenuItem value={"uint32"}>uint32</MenuItem>
+        <MenuItem value={"int64"}>int64</MenuItem>
+        <MenuItem value={"uint64"}>uint64</MenuItem>
       </Select>
     </FormControl>
   );

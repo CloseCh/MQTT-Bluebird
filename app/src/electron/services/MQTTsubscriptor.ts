@@ -24,23 +24,15 @@ export function setupClient(mainWindow: BrowserWindow) : void {
     console.log('Conexion establecida');
     client!.subscribe(subscriptions);
   });
-
+  
   client.on('message', (topic : string, data : Buffer, packet : IPublishPacket) => {
-    const text = data.toString();
-    
-    let parsed: object | string;
-
-    try {
-      parsed = JSON.parse(text);
-    } catch {
-      parsed = text;
-    }
-    
-    ipcWebContentsSend('message', mainWindow.webContents, {
+    const messageRecibed: MQTTMessage = {
       topic,
-      data: parsed,
+      data: data.toString('hex'),
       packet
-    });
+    };
+
+    ipcWebContentsSend('message', mainWindow.webContents, messageRecibed);
   });
 
   client.on('error', (err) => {
