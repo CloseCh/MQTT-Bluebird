@@ -14,6 +14,12 @@ function startPublishing() {
   setInterval(publishNumeric, 15000);
   setInterval(publishHex,     4000);
   setInterval(publishCustom,  6000);
+
+  publishASCII();
+  publishJSON();
+  publishNumeric();
+  publishHex();
+  publishCustom();
 }
 
 startPublishing();

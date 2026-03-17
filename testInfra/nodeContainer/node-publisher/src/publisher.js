@@ -61,10 +61,14 @@ function publishHex() {
     'AABBCCDDEEFF',
   ];
   const hex = samples[Math.floor(Math.random() * samples.length)];
-  const payload = encodeHex(hex);
 
-  client.publish('test/hex', payload, { qos: 1 });
-  console.log(`[HEX]     → "${hex}"  raw: 0x${payload.toString('hex').toUpperCase()}`);
+  try {
+    const payload = encodeHex(hex);
+    client.publish('test/hex', payload, { qos: 1 });
+    console.log(`[HEX]     → "${hex}"  raw: 0x${payload.toString('hex').toUpperCase()}`);
+  } catch (err) {
+    console.error(`[HEX] Error al codificar "${hex}":`, err.message);
+  }
 }
 
 function publishCustom() {

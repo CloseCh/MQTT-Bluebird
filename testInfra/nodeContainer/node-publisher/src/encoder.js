@@ -37,8 +37,12 @@ function encodeNumeric(value, type) {
 
 /** HEX: string hexadecimal → buffer binario */
 function encodeHex(hexString) {
-  // Acepta tanto "DEADBEEF" como "DE AD BE EF" o "0xDE,0xAD"
   const clean = hexString.replace(/0x|[\s,]/gi, '');
+  
+  if (clean.length % 2 !== 0) {
+    throw new Error(`Hex string inválido: longitud impar (${clean.length} chars)`);
+  }
+
   return Buffer.from(clean, 'hex');
 }
 
