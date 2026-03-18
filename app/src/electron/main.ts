@@ -1,17 +1,17 @@
 import { app, BrowserWindow} from 'electron';
 import { isDev } from './util/until.js';
 import { getPreloadPath, getUIPath } from './util/pathResolver.js';
-import { setupSubscriptor } from './services/MQTTsubscriptor.js';
+import { setupSubscriptor } from './services/MQTTSubscriptor.js';
 import { destroyClient } from './services/MQTTConnection.js';
-import { setupPublisher } from './services/MQTTpublisher.js';
+import { setupPublisher } from './services/MQTTPublisher.js';
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: getPreloadPath(),
     },
-    width: 1200,
-    height: 800
+    width: 1400,
+    height: 1000
   });
 
   if (isDev()){
