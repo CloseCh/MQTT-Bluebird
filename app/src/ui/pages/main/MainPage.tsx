@@ -7,6 +7,7 @@ import MQTTList from "../../components/mqttList/MQTTList.js";
 
 import { useMQTT } from "../../function/messageManagement.js";
 import { type MessageTypes } from '../../constants/types.js';
+import { HEADER_HEIGHT } from "../../constants/layout.js";
 
 export default function MainPage() {
 	const [ selectedTopic, setSelectedTopic ] = useState("");
@@ -27,7 +28,7 @@ export default function MainPage() {
 		<>
 			<Stack 
 				direction="row" 
-				sx={{ width: '100%' }}
+				sx={{ width: '100%', paddingTop: `${HEADER_HEIGHT}px` }}
 			>
 				<MQTTList handleClick={handleClick} topics={topics} selectedTopic={selectedTopic}/>
 				{
