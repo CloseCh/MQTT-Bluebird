@@ -1,12 +1,11 @@
 import {
-  encodeASCII, 
+  encodeASCII,
   encodeHex,
   encodeJSON,
   encodeNumeric
 } from "./encoder.js"
-import client from "./mqttConnector.js";
 
-function publishASCII() {
+function publishASCII(client) {
   const messages = [
     'Hola desde MQTT',
     'Status: OK',
@@ -19,40 +18,62 @@ function publishASCII() {
   console.log(`[ASCII]   → "${text}"`);
 }
 
-function publishJSON() {
+function publishJSON(client) {
   const payload = encodeJSON({
     temperatura: parseFloat((Math.random() * 10 + 20).toFixed(2)),
-    humedad:     parseFloat((Math.random() * 30 + 50).toFixed(1)),
-    timestamp:   new Date().toISOString(),
+    humedad: parseFloat((Math.random() * 30 + 50).toFixed(1)),
+    timestamp: new Date().toISOString(),
   });
 
   client.publish('test/json', payload, { qos: 1 });
   console.log(`[JSON]    → ${payload.toString()}`);
 }
 
-function publishNumeric() {
-  const types = ['int8','uint8','int16','uint16','int32','uint32','int64','uint64'];
+function publishNumeric(client) {
+  let value, type;
+  let num = Math.floor(Math.random() * 8);
 
-  for (const type of types) {
-    let value;
-    switch (type) {
-      case 'int8':   value = Math.floor(Math.random() * 256) - 128; break;
-      case 'uint8':  value = Math.floor(Math.random() * 256);       break;
-      case 'int16':  value = Math.floor(Math.random() * 65536) - 32768; break;
-      case 'uint16': value = Math.floor(Math.random() * 65536);     break;
-      case 'int32':  value = Math.floor(Math.random() * 2**31) * (Math.random() < 0.5 ? -1 : 1); break;
-      case 'uint32': value = Math.floor(Math.random() * 2**32);     break;
-      case 'int64':  value = BigInt(Math.floor(Math.random() * 1e15)) * (Math.random() < 0.5 ? -1n : 1n); break;
-      case 'uint64': value = BigInt(Math.floor(Math.random() * 1e15)); break;
-    }
-
-    const payload = encodeNumeric(value, type);
-    client.publish(`test/numeric/${type}`, payload, { qos: 1 });
-    console.log(`[NUMERIC] ${type.padEnd(6)} → ${value}  (${payload.toString('hex')})`);
+  switch (num) {
+    case 0 : 
+      value = Math.floor(Math.random() * 256) - 128; 
+      type = 'int8';
+      break;
+    case 1 : 
+      value = Math.floor(Math.random() * 256); 
+      type = 'uint8';
+      break;
+    case 2 : 
+      value = Math.floor(Math.random() * 65536) - 32768; 
+      type = 'int16';
+      break;
+    case 3 : 
+      value = Math.floor(Math.random() * 65536); 
+      type = 'uint16';
+      break;
+    case 4 : 
+      value = Math.floor(Math.random() * 2 ** 31) * (Math.random() < 0.5 ? -1 : 1); 
+      type = 'int32';
+      break;
+    case 5 : 
+      value = Math.floor(Math.random() * 2 ** 32); 
+      type = 'uint32';
+      break;
+    case 6 : 
+      value = BigInt(Math.floor(Math.random() * 1e15)) * (Math.random() < 0.5 ? -1n : 1n); 
+      type = 'int64';
+      break;
+    case 7 : 
+      value = BigInt(Math.floor(Math.random() * 1e15)); 
+      type = 'uint64';
+      break;
   }
+
+  const payload = encodeNumeric(value, type);
+  client.publish(`test/numeric/${type}`, payload, { qos: 1 });
+  console.log(`[NUMERIC] ${type.padEnd(6)} → ${value}  (${payload.toString('hex')})`);
 }
 
-function publishHex() {
+function publishHex(client) {
   const samples = [
     'DEADBEEF',
     'CA FE BA BE',
@@ -70,4 +91,19 @@ function publishHex() {
   }
 }
 
-export {publishASCII, publishHex, publishJSON, publishNumeric}
+export default function startPublishing(client) {
+  console.log('Iniciando publicación de mensajes...\n');
+
+  setInterval(() => publishASCII(client), 3000);
+  setInterval(() => publishJSON(client), 5000);
+  setInterval(() => publishNumeric(client), 15000);
+  setInterval(() => publishHex(client), 4000);
+
+  publishASCII(client);
+  publishJSON(client);
+  publishNumeric(client);
+  publishHex(client);
+}
+
+
+export { publishASCII, publishHex, publishJSON, publishNumeric }
