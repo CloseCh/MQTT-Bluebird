@@ -17,6 +17,7 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
     const messageReceived: MQTTMessage = {
       topic,
       data: data.toString('hex'),
+      timeStamp: new Date(),
       packet
     };
 

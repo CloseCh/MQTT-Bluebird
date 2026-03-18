@@ -12,7 +12,7 @@ export default function App() {
   return (
     <>
       <CssBaseline />
-      <Grid container direction="column">
+      <Grid container direction="column" sx={{ height: '100vh', width: '100vw' }}>
         <Grid size={12}>
           <Header />
         </Grid>
@@ -21,9 +21,9 @@ export default function App() {
           size={12}
           sx={{
             flexGrow: 1,
-            maxWidth: '100%',
-            height: '100%',
-            mt: 1
+            height: '100vh', 
+            width: '100vw',
+            overflow: 'hidden'
           }}
         >
           <Outlet />

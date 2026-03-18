@@ -2,6 +2,7 @@
 interface MQTTMessage {
   topic: string;
   data: string;
+  timeStamp: Date;
   packet: import('mqtt').IPublishPacket;
 };
 

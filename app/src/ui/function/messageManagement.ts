@@ -6,7 +6,7 @@ type TopicList = string[];
 
 interface Return {
   topics: TopicList;
-  getMessage: (topic: string) => MQTTMessage[];
+  getMessageList: (topic: string) => MQTTMessage[];
   getFormat: (topic: string) => MessageTypes;
   setFormat: (topic: string, format: MessageTypes) => void
 }
@@ -49,7 +49,7 @@ export function useMQTT(dataPointCount: number): Return {
 
   return {
     topics,
-    getMessage: topic => packetByTopic[topic]?.messages ?? [],
+    getMessageList: topic => packetByTopic[topic]?.messages ?? [],
     getFormat: topic => packetByTopic[topic]?.format ?? 'string',
     setFormat
   };
