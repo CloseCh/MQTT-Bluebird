@@ -1,13 +1,11 @@
 import { useEffect, useState, useCallback } from 'react';
-import { type MessageTypes } from '../constants/types.js';
 
-type PacketFormatList = Record<string, { messages: MQTTMessage[], format: MessageTypes }>;
+type PacketFormatList = Record<string, MQTTMessageList>;
 type TopicList = string[];
 
 interface Return {
   topics: TopicList;
-  getMessageList: (topic: string) => MQTTMessage[];
-  getFormat: (topic: string) => MessageTypes;
+  getTypedMessageList: (topic: string) => MQTTMessageList;
   setFormat: (topic: string, format: MessageTypes) => void
 }
 
@@ -19,18 +17,32 @@ interface Return {
  */
 export function useMQTT(dataPointCount: number): Return {
   const [topics, setTopics] = useState<TopicList>([]);
-  const [packetByTopic, setPacketByTopic] = useState<PacketFormatList>({});
+  const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
+  
+  const emptyMessage = { messageList: [], format: 'ascii' };
 
   const onMessage = useCallback((message: MQTTMessage) => {
+    const topic: string = message.topic;
+    
     setTopics(prev =>
-      prev.includes(message.topic) ? prev : [...prev, message.topic]
+      prev.includes(topic) ? prev : [...prev, topic]
     );
 
-    setPacketByTopic(prev => {
-      const current = prev[message.topic] ?? { messages: [], format: 'string' };
-      const newMessages = [...current.messages, message];
-      if (newMessages.length > dataPointCount) newMessages.shift();
-      return { ...prev, [message.topic]: { ...current, messages: newMessages } };
+    setMessageListByTopic(prev => {
+      const current = prev[topic] ?? emptyMessage;
+      const MessageList = current.messageList;
+
+      const newMessageList = MessageList.length >= dataPointCount
+        ? [message, ...MessageList.slice(0, -1)]
+        : [message, ...MessageList];
+
+      return {
+        ...prev,
+        [topic] : {
+          ...current,
+          messageList: newMessageList
+        }
+      }
     });
   }, [dataPointCount]);
 
@@ -41,7 +53,7 @@ export function useMQTT(dataPointCount: number): Return {
 
   const setFormat = useCallback((topic: string, format: MessageTypes) => {
     console.log('setFormat called', topic, format);
-    setPacketByTopic(prev => ({
+    setMessageListByTopic(prev => ({
       ...prev,
       [topic]: { ...prev[topic], format }
     }));
@@ -49,8 +61,7 @@ export function useMQTT(dataPointCount: number): Return {
 
   return {
     topics,
-    getMessageList: topic => packetByTopic[topic]?.messages ?? [],
-    getFormat: topic => packetByTopic[topic]?.format ?? 'string',
+    getTypedMessageList: topic => messageListByTopic[topic] ?? emptyMessage,
     setFormat
   };
 }

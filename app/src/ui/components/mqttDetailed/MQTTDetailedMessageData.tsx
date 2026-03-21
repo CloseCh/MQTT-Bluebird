@@ -3,7 +3,6 @@ import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import messageDecoder from '../../function/messageDecorder.js';
-import { type MessageTypes } from '../../constants/types.js';
 type Packet = import('mqtt').IPublishPacket;
 
 interface Prop {

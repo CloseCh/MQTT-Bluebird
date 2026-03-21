@@ -8,17 +8,15 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import MQTTDetailedSelector from "./MQTTDetailedSelector.jsx";
 import type { SelectChangeEvent } from "@mui/material/Select";
-import { type MessageTypes } from '../../constants/types.js';
 
 interface Prop {
   handleClick: () => void;
-  selectedMessage: string;
   message: MQTTMessage;
   messageFormat: MessageTypes;
   setMessageFormat: (topic: string, format: MessageTypes) => void;
 }
 
-export default function MQTTDetailed ({ handleClick, selectedMessage, message, messageFormat, setMessageFormat}: Prop) {
+export default function MQTTDetailed ({ handleClick, message, messageFormat, setMessageFormat}: Prop) {
   const handleChange = (event: SelectChangeEvent) => {
     const newFormat = event.target.value as MessageTypes;
     setMessageFormat(message.topic, newFormat);
@@ -26,9 +24,8 @@ export default function MQTTDetailed ({ handleClick, selectedMessage, message, m
   
   return (
     <Drawer
-      variant={"persistent"}
       anchor="right"
-      open={selectedMessage != ""}
+      open={true}
       sx={{
         '& .MuiDrawer-paper': {
           top: `${HEADER_HEIGHT}px`,

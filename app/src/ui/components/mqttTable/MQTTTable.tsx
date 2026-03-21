@@ -1,3 +1,4 @@
+import React, { useCallback } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -22,10 +23,12 @@ const columns: readonly Column[] = [
 ];
 
 interface Prop {
-  messageList: MQTTMessage[]
+  messageList: MQTTMessage[];
+  handleClick: (message: MQTTMessage) => void;
 }
 
-export default function MQTTTable({messageList}: Prop) {
+function MQTTTable({ handleClick, messageList}: Prop) {
+  
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ height: '100%' }}>
@@ -44,9 +47,16 @@ export default function MQTTTable({messageList}: Prop) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {messageList.slice().reverse().map((message, index) => (
-              <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 75}}>{message.timeStamp.toLocaleString()}</TableCell>
+            {messageList.map((message) => (
+              <TableRow 
+                hover 
+                role="checkbox" 
+                tabIndex={-1} 
+                key={message.timeStamp}
+                onClick={() => handleClick(message)}
+                sx={{ cursor: 'pointer' }}
+              >
+                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 75}}>{message.timeStamp}</TableCell>
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 200}}>{message.data}</TableCell>
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 50}}>{message.packet.qos}</TableCell>
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 100}}>{message.packet.retain ? 'Yes' : 'No'}</TableCell>
@@ -58,3 +68,5 @@ export default function MQTTTable({messageList}: Prop) {
     </Paper>
   );
 }
+
+export default React.memo(MQTTTable);

@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────
 // HELPERS: Decoders para cada tipo de mensaje
 // ─────────────────────────────────────────────
-import { Message_NUMERIC_TYPES, type MessageNumericType, type MessageDecodedReturns, type MessageTypes } from "../constants/types.js";
+import { type MessageDecodedReturns } from "../constants/types.js";
 
 export default function messageDecoder(hexData: string, format: MessageTypes): MessageDecodedReturns {
   const bytes = new Uint8Array(
@@ -9,8 +9,8 @@ export default function messageDecoder(hexData: string, format: MessageTypes): M
   );
 
   switch (format) {
-    case 'string': return decodeString(bytes);
-    case 'ascii': return decodeAscii(bytes);
+    case 'ascii': return decodeString(bytes);
+    case 'asciiCode': return decodeAscii(bytes);
     case 'hex': return decodeHex(hexData);
     case 'json': return decodeJson(bytes);
     default: return decodeString(bytes);
@@ -18,7 +18,7 @@ export default function messageDecoder(hexData: string, format: MessageTypes): M
 }
 
 function decodeString(bytes: Uint8Array) {
-  return new TextDecoder('utf-8').decode(bytes);
+  return new TextDecoder('ascii').decode(bytes);
 }
 
 function decodeAscii(bytes: Uint8Array) {
