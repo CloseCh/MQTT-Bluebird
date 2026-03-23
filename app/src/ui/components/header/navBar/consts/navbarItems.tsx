@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import SubscriptionsIcon from '@mui/icons-material/subscriptions';
+import SubscriptionsIcon from '@mui/icons-material/Subscript';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import HomeIcon from '@mui/icons-material/Home';
