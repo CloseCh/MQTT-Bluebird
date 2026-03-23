@@ -12,8 +12,20 @@ export default defineConfig({
         vite: {
           build: {
             outDir: 'dist-electron',
+            minify: true,
+            sourcemap: false,
             rollupOptions: {
-              external: ['electron', 'bufferutil', 'utf-8-validate']
+              external: [
+                'electron', 
+                'bufferutil', 
+                'utf-8-validate',
+                'mqtt',
+                'os-utils',
+                'dotenv',
+              ],
+              output: {
+                format: 'cjs'
+              }
             }
           }
         }
@@ -27,8 +39,12 @@ export default defineConfig({
         vite: {
           build: {
             outDir: 'dist-preload',
+            minify: true,
             rollupOptions: {
-              external: ['electron']
+              external: ['electron'],
+              output: {
+                format: 'cjs'
+              }
             }
           }
         }
@@ -36,11 +52,27 @@ export default defineConfig({
     ])
   ],
   base: './',
+
+
   build: {
     outDir: 'dist-react',
+    minify: true,              // Oxc — rápido y eficiente
+    sourcemap: false,
+    reportCompressedSize: false, // acelera el build (no calcula gzip al final)
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router'],
+          'vendor-mui':   ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
+          'vendor-charts': ['recharts'],
+        }
+      }
+    },
+    chunkSizeWarningLimit: 800,
   },
+
   server: {
     port: 5123,
     strictPort: true,
   },
-});
+})
