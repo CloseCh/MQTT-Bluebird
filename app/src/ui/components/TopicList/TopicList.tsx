@@ -1,5 +1,5 @@
 import React from 'react';
-import MQTTListItem from "./MQTTListItem.jsx";
+import MQTTListItem from "./TopicListItem/TopicListItem.js";
 import List from '@mui/material/List';
 
 interface MQTTListProps {
@@ -8,7 +8,7 @@ interface MQTTListProps {
   selectedTopic: string;
 }
 
-function MQTTList({ handleClick, topics, selectedTopic }: MQTTListProps) {
+function TopicList({ handleClick, topics, selectedTopic }: MQTTListProps) {
   return (
     <List sx={{ width: '100%' }}>
       {topics.map((topic: string) => (
@@ -23,4 +23,4 @@ function MQTTList({ handleClick, topics, selectedTopic }: MQTTListProps) {
   );
 }
 
-export default React.memo(MQTTList);
+export default React.memo(TopicList);

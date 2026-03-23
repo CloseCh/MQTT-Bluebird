@@ -10,7 +10,7 @@ interface MQTTListItemProps {
   selected: boolean;
 }
 
-function MQTTListItem({ topic, handleClick, selected }: MQTTListItemProps) {
+function TopicListItem({ topic, handleClick, selected }: MQTTListItemProps) {
   const handleClickMemo = useCallback(() => {
     handleClick(topic);
   }, [topic, handleClick]);
@@ -35,4 +35,4 @@ function MQTTListItem({ topic, handleClick, selected }: MQTTListItemProps) {
   );
 }
 
-export default React.memo(MQTTListItem);
+export default React.memo(TopicListItem);

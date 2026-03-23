@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -27,7 +27,7 @@ interface Prop {
   handleClick: (message: MQTTMessage) => void;
 }
 
-function MQTTTable({ handleClick, messageList}: Prop) {
+function HistoryTable({ handleClick, messageList}: Prop) {
   
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
@@ -69,4 +69,4 @@ function MQTTTable({ handleClick, messageList}: Prop) {
   );
 }
 
-export default React.memo(MQTTTable);
+export default React.memo(HistoryTable);

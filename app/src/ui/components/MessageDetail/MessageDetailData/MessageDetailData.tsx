@@ -2,7 +2,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import messageDecoder from '../../function/messageDecorder.js';
+import messageDecoder from '../../../function/messageDecorder.js';
 type Packet = import('mqtt').IPublishPacket;
 
 interface Prop {
@@ -10,7 +10,7 @@ interface Prop {
   messageFormat: MessageTypes
 }
 
-export default function MQTTDetailedMessageData ({ message, messageFormat }: Prop) {
+export default function MessageDetailData ({ message, messageFormat }: Prop) {
   const packet: Packet = message.packet
 
   return (

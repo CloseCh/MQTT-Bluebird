@@ -2,10 +2,10 @@ import { useState, useCallback } from "react";
 import { HEADER_HEIGHT } from "../../constants/layout.js";
 import Drawer from "@mui/material/Drawer";
 import Grid from "@mui/material/Grid";
-import MQTTDetailedMessageData from "./MQTTDetailedMessageData.jsx";
+import MessageDetailData from "./MessageDetailData/MessageDetailData.js";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import MQTTDetailedSelector from "./MQTTDetailedSelector.jsx";
+import MQTTDetailedSelector from "../DataTypeSelector/DataTypeSelector.js";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
@@ -16,7 +16,7 @@ interface Prop {
   setMessageFormat: (topic: string, format: MessageTypes) => void;
 }
 
-export default function MQTTDetailed ({ handleClick, message, messageFormat, setMessageFormat}: Prop) {
+export default function MessageDetail ({ handleClick, message, messageFormat, setMessageFormat}: Prop) {
   const [drawerWidth, setDrawerWidth] = useState(400);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -102,7 +102,7 @@ export default function MQTTDetailed ({ handleClick, message, messageFormat, set
           </Stack>
         </Grid>
         <Grid size={12}>
-          <MQTTDetailedMessageData message={message} messageFormat={messageFormat}/>
+          <MessageDetailData message={message} messageFormat={messageFormat}/>
         </Grid>
         <Grid size={12}>
         </Grid>

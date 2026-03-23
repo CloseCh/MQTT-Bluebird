@@ -6,7 +6,7 @@ import '@fontsource/roboto/700.css';
 import { Outlet } from 'react-router';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Header from './components/header/Header';
+import Header from './components/Header/Header';
 
 export default function App() {
   return (

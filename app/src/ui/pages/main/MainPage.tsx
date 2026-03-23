@@ -5,9 +5,9 @@ import Grid from "@mui/material/Grid";
 import { HEADER_HEIGHT } from "../../constants/layout.js";
 import { useMQTT } from "../../function/messageManagement.js";
 
-import MQTTList from "../../components/MQTTList/MQTTList.jsx";
-import MQTTTable from "../../components/mqttTable/MQTTTable.jsx";
-import MQTTDetailed from "../../components/mqttDetailed/MQTTDetailed.jsx";
+import TopicList from "../../components/TopicList/TopicList.jsx";
+import HistoryTable from "../../components/HistoryTable/HistoryTable.jsx";
+import MessageDetail from "../../components/MessageDetail/MessageDetail.jsx";
 
 export default function MainPage() {
 	const [ selectedTopic, setSelectedTopic ] = useState("");
@@ -37,14 +37,14 @@ export default function MainPage() {
 				sx={{ width: '100%', height: "100%", marginTop: `${HEADER_HEIGHT}px` }}
 			>
 				<Grid size={{ xs: 6, md: 2 }} sx={{ height: '100%' }}>
-					<MQTTList handleClick={handleClick} topics={topics} selectedTopic={selectedTopic}/>
+					<TopicList handleClick={handleClick} topics={topics} selectedTopic={selectedTopic}/>
 				</Grid>
 				<Grid size={{ xs: 6, md: 10 }} sx={{ height: '100%' }}>
-					<MQTTTable handleClick={handleTableClick} messageList={typedMessageList.messageList ?? []}/>
+					<HistoryTable handleClick={handleTableClick} messageList={typedMessageList.messageList ?? []}/>
 				</Grid>
 			</Grid>
 			{selectedMessage !== null ? 
-				<MQTTDetailed 
+				<MessageDetail 
 					handleClick={handleCloseDetailedClick} 
 					message={selectedMessage} 
 					messageFormat={typedMessageList.format}
