@@ -7,7 +7,6 @@ export default defineConfig({
     react(),
     electron([
       {
-        // Main process
         entry: 'src/electron/main.ts',
         vite: {
           build: {
@@ -28,7 +27,6 @@ export default defineConfig({
         }
       },
       {
-        // Preload — se copia tal cual
         entry: 'src/preload/preload.js',
         onstart(options) {
           options.reload()
@@ -53,9 +51,9 @@ export default defineConfig({
 
   build: {
     outDir: 'dist-react',
-    minify: true,              // Oxc — rápido y eficiente
+    minify: true,
     sourcemap: false,
-    reportCompressedSize: false, // acelera el build (no calcula gzip al final)
+    reportCompressedSize: false,
     rollupOptions: {
       output: {
         manualChunks: {
