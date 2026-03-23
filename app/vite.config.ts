@@ -19,9 +19,6 @@ export default defineConfig({
                 'electron', 
                 'bufferutil', 
                 'utf-8-validate',
-                'mqtt',
-                'os-utils',
-                'dotenv',
               ],
               output: {
                 format: 'cjs'
