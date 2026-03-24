@@ -2,8 +2,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import messageDecoder from '../../../../../function/messageDecorder.js';
-import type { MessageFormatEnum } from '../../../types/mqtt.types.js';
 import CardHeader from '@mui/material/CardHeader';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
@@ -15,6 +13,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
+
+import type { MessageFormatEnum } from '../../../types/mqtt.types.js';
+import DecoderService from '../../../service/DecorderService.js';
+
 type Packet = import('mqtt').IPublishPacket;
 
 interface Prop {
@@ -26,7 +28,7 @@ export default function MessageDetailData ({ messageSelected, messageFormat }: P
   const messagePacket: Packet = messageSelected.packet;
 
   const formatPayload = (data: string, format: MessageFormatEnum) => {
-    const decoded = messageDecoder(data, format);
+    const decoded = DecoderService(data, format);
     try {
       return JSON.stringify(JSON.parse(decoded), null, 2);
     } catch {

@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useMQTTContext } from '../../hooks/useMQTTContext/useMQTTContext';
-import useDecoder from '../../service/DecorderService';
+import DecoderService from '../../service/DecorderService';
 import type { MessageFormatEnum, MQTTMessageList } from '../../types/mqtt.types';
 
 interface Column {
@@ -65,7 +65,7 @@ function HistoryTable({ handleClick }: Prop) {
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 75}}>{message.timeStamp}</TableCell>
-                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 200}}>{useDecoder(message.data, messageFormat)}</TableCell>
+                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 200}}>{DecoderService(message.data, messageFormat)}</TableCell>
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 50}}>{message.packet.qos}</TableCell>
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 100}}>{message.packet.retain ? 'Yes' : 'No'}</TableCell>
               </TableRow>

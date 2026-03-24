@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import useMQTT, { type MQTTContextValue } from '../../service/MQTTService.js';
+import MQTTService, { type MQTTContextValue } from '../../service/MQTTService.js';
 
 const MQTTContext = createContext<MQTTContextValue | null>(null);
 
@@ -10,7 +10,7 @@ interface MQTTProviderProps {
 
 export function MQTTProvider({ dataPointCount, children }: MQTTProviderProps) {
 
-  const mqtt = useMQTT(dataPointCount);
+  const mqtt = MQTTService(dataPointCount);
 
   return (
     <MQTTContext.Provider value={mqtt}>

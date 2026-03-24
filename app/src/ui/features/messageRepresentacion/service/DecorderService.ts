@@ -1,9 +1,6 @@
-// ─────────────────────────────────────────────
-// HELPERS: Decoders para cada tipo de mensaje
-// ─────────────────────────────────────────────
 import type { MessageFormatEnum } from "../types/mqtt.types.js";
 
-export default function useDecoder(hexData: string, format: MessageFormatEnum) {
+export default function DecoderService(hexData: string, format: MessageFormatEnum) {
   const bytes = new Uint8Array(
     hexData.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16))
   );

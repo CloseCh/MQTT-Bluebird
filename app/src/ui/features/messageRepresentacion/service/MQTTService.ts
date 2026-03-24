@@ -20,7 +20,7 @@ export interface MQTTContextValue {
  * @param dataPointCount Cantidad de mensajes en la lista
  * @returns lista de topics, metodos para obtener datos del mensaje
  */
-function useMQTT(dataPointCount: number): MQTTContextValue {
+function MQTTService(dataPointCount: number): MQTTContextValue {
   const [topicList, setTopicList] = useState<TopicList>([]);
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
   const [selectedTopic, setSelectedTopic] = useState<Topic>("");
@@ -91,4 +91,4 @@ function useMQTT(dataPointCount: number): MQTTContextValue {
   };
 }
 
-export default useMQTT;
+export default MQTTService;
