@@ -1,9 +1,5 @@
 import { useState, useCallback} from "react";
 
-import Grid from "@mui/material/Grid";
-
-import { HEADER_HEIGHT } from "../../constants/layout.js";
-
 import { TopicList, HistoryTable, MessageDetail } from "@/features/messageRepresentacion";
 
 import { useMQTTContext } from '@/features/messageRepresentacion';

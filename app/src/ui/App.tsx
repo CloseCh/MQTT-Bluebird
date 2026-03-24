@@ -5,12 +5,11 @@ import '@fontsource/roboto/700.css';
 
 import { Outlet } from 'react-router';
 import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
 import Header from './components/Header/Header';
+import Stack from '@mui/material/Stack';
 
 import { MQTTProvider } from '@/features/messageRepresentacion';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+
 
 export default function App() {
   return (
