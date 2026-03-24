@@ -3,11 +3,14 @@ import { useState, useCallback} from "react";
 import { TopicList, HistoryTable, DataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
 
 import { useMQTTContext } from '@/features/messageRepresentacion';
+import { ResizeHandle } from '../../components/ResizeHandle/ResizeHandle.jsx';
+
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 
 export default function MainPage() {
 	const [ messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
+	const [sidebarWidth, setSidebarWidth] = useState(200);
 
 	const { getSelectedTopic } = useMQTTContext();
 
@@ -23,27 +26,38 @@ export default function MainPage() {
 
 	return (
 		<>
-			<Stack direction="row" sx={{ height: '100%', width: '100%' }}>
-				<Box sx={{ width: 200, flexShrink: 0, height: '100%' }}>
-					<TopicList />
-				</Box>
-				{selectedTopic !== "" && 
-					<Stack sx={{ height: '100%', width: '100%' }}>
-						<Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '20px 20px 0px 20px' }}>
-							<Box>
-								<DataTypeSelector selectedTopic={selectedTopic}/>
-							</Box>
-						</Stack>
-						<Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'auto' }}>
-							<HistoryTable handleClick={handleTableClick} />
-						</Box>
-					</Stack>
-				}
-			</Stack>
-			{messageSelected
-				? <MessageDetail messageSelected={messageSelected} selectedTopic={selectedTopic} handleClick={handleCloseDetailedClick}/> 
-				: <></>
-			}
-		</>
+    <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
+
+      <Box sx={{ width: sidebarWidth, flexShrink: 0, height: '100%' }}>
+        <TopicList />
+      </Box>
+
+      {/* Handle de resize */}
+      <ResizeHandle
+				initialSize={sidebarWidth}
+				onResize={setSidebarWidth}
+				min={100}
+				max={500}
+			/>
+
+      {selectedTopic !== "" && 
+        <Stack sx={{ height: '100%', flex: 1, minWidth: 0 }}>
+          <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '20px 20px 0px 20px' }}>
+            <Box>
+              <DataTypeSelector selectedTopic={selectedTopic}/>
+            </Box>
+          </Stack>
+          <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'auto' }}>
+            <HistoryTable handleClick={handleTableClick} />
+          </Box>
+        </Stack>
+      }
+
+    </Stack>
+    {messageSelected
+      ? <MessageDetail messageSelected={messageSelected} selectedTopic={selectedTopic} handleClick={handleCloseDetailedClick}/> 
+      : <></>
+    }
+  </>
 	);
 }
