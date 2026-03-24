@@ -3,13 +3,14 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import type { MessageFormatEnum } from "../../types/mqtt.types";
 
 interface Prop {
   handleChange: (event: SelectChangeEvent) => void;
-  messageFormat: MessageTypes;
+  messageFormat: MessageFormatEnum;
 }
 
-export default function MQTTDetailedSelector ({ handleChange, messageFormat}: Prop) {
+function DataTypeSelector ({ handleChange, messageFormat}: Prop) {
   return (
     <FormControl fullWidth>
       <InputLabel id="label">Message Type</InputLabel>
@@ -37,3 +38,5 @@ export default function MQTTDetailedSelector ({ handleChange, messageFormat}: Pr
     </FormControl>
   );
 }
+
+export { DataTypeSelector };

@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import MessageDetailData from "./MessageDetailData/MessageDetailData.js";
 import Box from "@mui/material/Box";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
-import type { Topic, MessageFormatEnum } from "../../../../types/mqtt.types.js";
+import type { Topic, MessageFormatEnum } from "../../types/mqtt.types.js";
 import { useMQTTContext } from "../../hooks/useMQTTContext/useMQTTContext.js";
 
 interface Prop {
@@ -14,7 +14,7 @@ interface Prop {
   selectedTopic: Topic;
 }
 
-export default function MessageDetail ({ messageSelected, selectedTopic, handleClick }: Prop) {
+function MessageDetail ({ messageSelected, selectedTopic, handleClick }: Prop) {
   const [drawerWidth, setDrawerWidth] = useState(400);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -99,3 +99,5 @@ export default function MessageDetail ({ messageSelected, selectedTopic, handleC
     </Drawer>
   );
 }
+
+export { MessageDetail };

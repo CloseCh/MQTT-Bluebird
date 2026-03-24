@@ -74,4 +74,6 @@ function HistoryTable({ handleClick }: Prop) {
   );
 }
 
-export default React.memo(HistoryTable);
+const HistoryTableMemo = React.memo(HistoryTable);
+
+export { HistoryTableMemo as HistoryTable };

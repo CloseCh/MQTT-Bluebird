@@ -7,7 +7,8 @@ import { Outlet } from 'react-router';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Header from './components/Header/Header';
-import { MQTTProvider } from './hooks/useMQTTContext/useMQTTContext';
+
+import { MQTTProvider } from '@/features/messageRepresentacion';
 
 export default function App() {
   return (

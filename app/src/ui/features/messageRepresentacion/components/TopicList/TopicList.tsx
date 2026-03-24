@@ -24,4 +24,6 @@ function TopicList({ }: MQTTListProps) {
   );
 }
 
-export default React.memo(TopicList);
+const TopicListMemo = React.memo(TopicList);
+
+export { TopicListMemo as TopicList }

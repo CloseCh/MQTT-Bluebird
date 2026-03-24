@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────
 // HELPERS: Decoders para cada tipo de mensaje
 // ─────────────────────────────────────────────
-import type { MessageFormatEnum } from "../types/mqtt.types.js";
+import type { MessageFormatEnum } from "../features/messageRepresentacion/types/mqtt.types.js";
 import { type MessageDecodedReturns } from "../types/types.js";
 
 export default function messageDecoder(hexData: string, format: MessageFormatEnum): MessageDecodedReturns {

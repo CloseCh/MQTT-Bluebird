@@ -4,11 +4,9 @@ import Grid from "@mui/material/Grid";
 
 import { HEADER_HEIGHT } from "../../constants/layout.js";
 
-import TopicList from "../../components/TopicList/TopicList.jsx";
-import HistoryTable from "../../components/HistoryTable/HistoryTable.jsx";
-import MessageDetail from "../../components/MessageDetail/MessageDetail.jsx";
+import { TopicList, HistoryTable, MessageDetail } from "@/features/messageRepresentacion";
 
-import { useMQTTContext } from "../../hooks/useMQTTContext/useMQTTContext.js";
+import { useMQTTContext } from '@/features/messageRepresentacion';
 
 export default function MainPage() {
 	const [ messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import type { Topic, TopicList , PacketFormatList, MessageFormatEnum } from '../../types/mqtt.types';
+import type { Topic, TopicList , PacketFormatList, MessageFormatEnum } from '../types/mqtt.types';
 
 // Metodos del contexto, y los cuales usables por el custom hook
 export interface MQTTContextValue {

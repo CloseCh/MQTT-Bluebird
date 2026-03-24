@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import useMQTT, { type MQTTContextValue } from './MQTTManager.js';
+import useMQTT, { type MQTTContextValue } from '../../service/MQTTService.js';
 
 const MQTTContext = createContext<MQTTContextValue | null>(null);
 
