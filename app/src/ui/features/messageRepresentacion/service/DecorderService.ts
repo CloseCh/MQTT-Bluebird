@@ -30,8 +30,7 @@ function decodeString(bytes: Uint8Array) {
 
 function decodeAscii(bytes: Uint8Array) {
   return Array.from(bytes)
-    .map(b => b.toString(10))
-    .join(' ');
+    .map(b => b.toString(10));
 }
 
 function decodeHex(hexData: string) {
