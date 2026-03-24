@@ -6,8 +6,6 @@ interface MQTTMessage {
   packet: import('mqtt').IPublishPacket;
 };
 
-type MessageTypes = 'ascii' | 'hex' | 'json' | 'utf8' | 'asciiCode' | 'int8'| 'uint8'| 'int16'| 'uint16'| 'int32'| 'uint32'| 'int64'| 'uint64';
-
 interface MQTTMessageList {
   messageList: MQTTMessage[];
   format: MessageTypes;
