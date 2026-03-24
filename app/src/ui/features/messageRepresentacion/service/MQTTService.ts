@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import type { Topic, TopicList , PacketFormatList, MessageFormatEnum } from '../types/mqtt.types';
+import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTMessageList } from '../types/mqtt.types';
 
 // Metodos del contexto, y los cuales usables por el custom hook
 export interface MQTTContextValue {
@@ -64,12 +64,17 @@ function useMQTT(dataPointCount: number): MQTTContextValue {
     return unsub;
   }, [onMessage]);
 
-  const handleFormat = useCallback((topic: Topic, format: MessageFormatEnum) => {
-    console.log('setFormat called', topic, format);
-    setMessageListByTopic(prev => ({
-      ...prev,
-      [topic]: { ...prev[topic], format }
-    }));
+  const handleMessageFormat = useCallback((topic: Topic, format: MessageFormatEnum) => {
+    
+    setMessageListByTopic(prev => {
+      const current = prev[topic] ?? emptyMessage;
+
+      return {
+        ...prev,
+        [topic]: { ...current, format}
+      }
+    });
+
   }, []);
 
   const handleSelectedTopic = (topic: Topic) => {
@@ -81,8 +86,8 @@ function useMQTT(dataPointCount: number): MQTTContextValue {
     getSelectedTopic: () => selectedTopic,
     setSelectedTopic: handleSelectedTopic,
     getTypedMessageList: topic => messageListByTopic[topic] ?? emptyMessage,
-    setMessageFormat: handleFormat,
-    getMessageFormat: topic => messageListByTopic[topic].format
+    setMessageFormat: handleMessageFormat,
+    getMessageFormat: topic => messageListByTopic[topic]?.format ?? emptyMessage.format
   };
 }
 

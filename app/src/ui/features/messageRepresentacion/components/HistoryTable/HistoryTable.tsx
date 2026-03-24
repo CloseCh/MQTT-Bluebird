@@ -7,13 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useMQTTContext } from '../../hooks/useMQTTContext/useMQTTContext';
+import useDecoder from '../../service/DecorderService';
+import type { MessageFormatEnum, MQTTMessageList } from '../../types/mqtt.types';
 
 interface Column {
   id: 'time' | 'content' | 'qos' | 'retention' | 'density';
   label: string;
   width?: number;
   align?: 'right';
-  format?: (value: number) => string;
 }
 
 const columns: readonly Column[] = [
@@ -32,7 +33,9 @@ function HistoryTable({ handleClick }: Prop) {
 
   const selectedTopic = getSelectedTopic();
 
-  const messageList: MQTTMessage[] = getTypedMessageList(selectedTopic).messageList;
+  const message: MQTTMessageList = getTypedMessageList(selectedTopic);
+
+  const messageFormat: MessageFormatEnum = message.format;
 
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
@@ -52,7 +55,7 @@ function HistoryTable({ handleClick }: Prop) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {messageList.map((message) => (
+            {message.messageList.map((message) => (
               <TableRow 
                 hover 
                 role="checkbox" 
@@ -62,7 +65,7 @@ function HistoryTable({ handleClick }: Prop) {
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 75}}>{message.timeStamp}</TableCell>
-                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 200}}>{message.data}</TableCell>
+                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 200}}>{useDecoder(message.data, messageFormat)}</TableCell>
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 50}}>{message.packet.qos}</TableCell>
                 <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 100}}>{message.packet.retain ? 'Yes' : 'No'}</TableCell>
               </TableRow>

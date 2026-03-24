@@ -1,5 +1,10 @@
 export type Topic = string;
 
+export interface MQTTMessageList {
+  messageList: MQTTMessage[];
+  format: MessageFormatEnum;
+};
+
 export type PacketFormatList = Record<Topic, MQTTMessageList>;
 
 export type TopicList = Topic[];

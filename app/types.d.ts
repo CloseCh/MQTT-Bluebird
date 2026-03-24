@@ -6,11 +6,6 @@ interface MQTTMessage {
   packet: import('mqtt').IPublishPacket;
 };
 
-interface MQTTMessageList {
-  messageList: MQTTMessage[];
-  format: MessageTypes;
-};
-
 interface PublishPayload {
   topic: string;
   payload: string;
