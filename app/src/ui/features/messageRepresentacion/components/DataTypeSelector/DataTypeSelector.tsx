@@ -3,16 +3,28 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import type { MessageFormatEnum } from "../../types/mqtt.types";
+
+import type { MessageFormatEnum, Topic } from '@/features/messageRepresentacion';
+
+import { useMQTTContext } from '@/features/messageRepresentacion';
 
 interface Prop {
-  handleChange: (event: SelectChangeEvent) => void;
-  messageFormat: MessageFormatEnum;
+  selectedTopic: Topic;
 }
 
-function DataTypeSelector ({ handleChange, messageFormat}: Prop) {
+function DataTypeSelector ({ selectedTopic }: Prop) {
+  const { setMessageFormat, getMessageFormat } = useMQTTContext();
+
+  const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
+
+  const handleChange = (event: SelectChangeEvent<MessageFormatEnum>) => {
+    const value = event.target.value;
+
+    setMessageFormat(selectedTopic, value); 
+  }
+
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth sx={{ minWidth: '200px'}}>
       <InputLabel id="label">Message Type</InputLabel>
       <Select
         labelId="label"
@@ -21,11 +33,11 @@ function DataTypeSelector ({ handleChange, messageFormat}: Prop) {
         label="MessageType"
         onChange={handleChange}
       >
-        <MenuItem value={"string"}>String</MenuItem>
         <MenuItem value={"ascii"}>Ascii</MenuItem>
         <MenuItem value={"hex"}>hex</MenuItem>
         <MenuItem value={"json"}>json</MenuItem>
         <MenuItem value={"utf8"}>utf8</MenuItem>
+        <MenuItem value={"asciiCode"}>asciiCode</MenuItem>
         <MenuItem value={"int8"}>int8</MenuItem>
         <MenuItem value={"uint8"}>uint8</MenuItem>
         <MenuItem value={"int16"}>int16</MenuItem>

@@ -24,7 +24,7 @@ function useMQTT(dataPointCount: number): MQTTContextValue {
   const [topicList, setTopicList] = useState<TopicList>([]);
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
   const [selectedTopic, setSelectedTopic] = useState<Topic>("");
-  
+
   const emptyMessage: MQTTMessageList = { messageList: [], format: 'ascii' };
 
   const onMessage = useCallback((message: MQTTMessage) => {
