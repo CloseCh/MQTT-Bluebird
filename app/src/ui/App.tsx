@@ -9,29 +9,23 @@ import Grid from '@mui/material/Grid';
 import Header from './components/Header/Header';
 
 import { MQTTProvider } from '@/features/messageRepresentacion';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 
 export default function App() {
   return (
     <>
       <CssBaseline />
         <MQTTProvider dataPointCount={100}>
-        <Grid container direction="column" sx={{ height: '100vh', width: '100vw' }}>
-          <Grid size={12}>
-            <Header />
-          </Grid>
-          <Grid
-            container
-            size={12}
-            sx={{
-              flexGrow: 1,
-              height: '100vh', 
-              width: '100vw',
-              overflow: 'hidden'
-            }}
-          >
-            <Outlet />
-          </Grid>
-        </Grid>
+        <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
+
+  <Header />  {/* ocupa su altura natural */}
+
+  <Stack sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+    <Outlet />
+  </Stack>
+
+</Stack>
       </MQTTProvider>
     </>
   )

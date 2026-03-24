@@ -7,6 +7,8 @@ import { HEADER_HEIGHT } from "../../constants/layout.js";
 import { TopicList, HistoryTable, MessageDetail } from "@/features/messageRepresentacion";
 
 import { useMQTTContext } from '@/features/messageRepresentacion';
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 
 export default function MainPage() {
 	const [ messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
@@ -25,21 +27,17 @@ export default function MainPage() {
 
 	return (
 		<>
-			<Grid 
-				container 
-				spacing={0}
-				sx={{ width: '100%', height: "100%", marginTop: `${HEADER_HEIGHT}px` }}
-			>
-				<Grid size={{ xs: 6, md: 2 }} sx={{ height: '100%' }}>
+			<Stack direction="row" sx={{ height: '100%', width: '100%' }}>
+  
+				<Box sx={{ width: 200, flexShrink: 0, height: '100%' }}>
 					<TopicList />
-				</Grid>
-				<Grid size={{ xs: 6, md: 10 }} sx={{ height: '100%' }}>
-					{selectedTopic !== ""
-						? <HistoryTable handleClick={handleTableClick} />
-						: <></>
-					}
-				</Grid>
-			</Grid>
+				</Box>
+
+				<Box sx={{ flex: 1, height: '100%', overflow: 'auto' }}>
+					{selectedTopic !== "" && <HistoryTable handleClick={handleTableClick} />}
+				</Box>
+
+			</Stack>
 			{messageSelected
 				? <MessageDetail messageSelected={messageSelected} selectedTopic={selectedTopic} handleClick={handleCloseDetailedClick}/> 
 				: <></>
