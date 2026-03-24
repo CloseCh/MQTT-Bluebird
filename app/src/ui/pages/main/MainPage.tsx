@@ -3,32 +3,28 @@ import { useState, useCallback} from "react";
 import Grid from "@mui/material/Grid";
 
 import { HEADER_HEIGHT } from "../../constants/layout.js";
-import { useMQTT } from "../../function/messageManagement.js";
 
 import TopicList from "../../components/TopicList/TopicList.jsx";
 import HistoryTable from "../../components/HistoryTable/HistoryTable.jsx";
 import MessageDetail from "../../components/MessageDetail/MessageDetail.jsx";
 
-export default function MainPage() {
-	const [ selectedTopic, setSelectedTopic ] = useState("");
-	const [ selectedMessage, setSelectedMessage] = useState<MQTTMessage | null>(null);
-	
-	const { topics, getTypedMessageList, setFormat } = useMQTT(100);
+import { useMQTTContext } from "../../hooks/useMQTTContext/useMQTTContext.js";
 
-	const handleClick = useCallback((topic: string) => {
-    setSelectedTopic(topic);
-  }, []);
+export default function MainPage() {
+	const [ messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
+
+	const { getSelectedTopic } = useMQTTContext();
+
+	const selectedTopic = getSelectedTopic();
 
 	const handleTableClick = useCallback((message: MQTTMessage) => {
-		setSelectedMessage(message);
+		setMessageSelected(message);
 	}, []);
 
 	const handleCloseDetailedClick = () => {
-		setSelectedMessage(null);
+		setMessageSelected(null);
 	};
 
-	const typedMessageList: MQTTMessageList = getTypedMessageList(selectedTopic);
-	
 	return (
 		<>
 			<Grid 
@@ -37,23 +33,19 @@ export default function MainPage() {
 				sx={{ width: '100%', height: "100%", marginTop: `${HEADER_HEIGHT}px` }}
 			>
 				<Grid size={{ xs: 6, md: 2 }} sx={{ height: '100%' }}>
-					<TopicList handleClick={handleClick} topics={topics} selectedTopic={selectedTopic}/>
+					<TopicList />
 				</Grid>
 				<Grid size={{ xs: 6, md: 10 }} sx={{ height: '100%' }}>
-					<HistoryTable handleClick={handleTableClick} messageList={typedMessageList.messageList ?? []}/>
+					{selectedTopic !== ""
+						? <HistoryTable handleClick={handleTableClick} />
+						: <></>
+					}
 				</Grid>
 			</Grid>
-			{selectedMessage !== null ? 
-				<MessageDetail 
-					handleClick={handleCloseDetailedClick} 
-					message={selectedMessage} 
-					messageFormat={typedMessageList.format}
-					setMessageFormat={setFormat}
-				/> 
-				: 
-				<></>
+			{messageSelected
+				? <MessageDetail messageSelected={messageSelected} selectedTopic={selectedTopic} handleClick={handleCloseDetailedClick}/> 
+				: <></>
 			}
-			
 		</>
 	);
 }

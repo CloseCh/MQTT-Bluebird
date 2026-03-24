@@ -6,6 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useMQTTContext } from '../../hooks/useMQTTContext/useMQTTContext';
 
 interface Column {
   id: 'time' | 'content' | 'qos' | 'retention' | 'density';
@@ -23,12 +24,16 @@ const columns: readonly Column[] = [
 ];
 
 interface Prop {
-  messageList: MQTTMessage[];
   handleClick: (message: MQTTMessage) => void;
 }
 
-function HistoryTable({ handleClick, messageList}: Prop) {
-  
+function HistoryTable({ handleClick }: Prop) {
+  const { getSelectedTopic, getTypedMessageList } = useMQTTContext(); 
+
+  const selectedTopic = getSelectedTopic();
+
+  const messageList: MQTTMessage[] = getTypedMessageList(selectedTopic).messageList;
+
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ height: '100%' }}>

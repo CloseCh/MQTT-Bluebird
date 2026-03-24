@@ -3,25 +3,25 @@ import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import messageDecoder from '../../../function/messageDecorder.js';
+import type { MessageFormatEnum } from '../../../types/mqtt.types.js';
 type Packet = import('mqtt').IPublishPacket;
 
 interface Prop {
-  message: MQTTMessage
-  messageFormat: MessageTypes
+  messageSelected: MQTTMessage;
+  messageFormat: MessageFormatEnum;
 }
 
-export default function MessageDetailData ({ message, messageFormat }: Prop) {
-  const packet: Packet = message.packet
-
+export default function MessageDetailData ({ messageSelected, messageFormat }: Prop) {
+  const messagePacket: Packet = messageSelected.packet;
   return (
     <>
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
         <List>
-          <ListItem> Topic: {message.topic} </ListItem>
-          <ListItem> Message: <pre>{messageDecoder(message.data, messageFormat)}</pre> </ListItem>
-          <ListItem> QoS: {packet.qos} </ListItem>
-          <ListItem> Retain: {packet.retain} </ListItem>
+          <ListItem> Topic: {messageSelected.topic} </ListItem>
+          <ListItem> Message: <pre>{messageDecoder(messageSelected.data, messageFormat)}</pre> </ListItem>
+          <ListItem> QoS: {messagePacket.qos} </ListItem>
+          <ListItem> Retain: {messagePacket.retain} </ListItem>
         </List>
       </CardContent>
     </Card>

@@ -1,24 +1,21 @@
 import React from 'react';
-import { useCallback } from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
-
 import MailIcon from '@mui/icons-material/Mail'
 
+import type { Topic } from '../../../types/mqtt.types';
+import { useMQTTContext } from '../../../hooks/useMQTTContext/useMQTTContext';
+
 interface MQTTListItemProps {
-  topic: string;
-  handleClick: (topic: string) => void;
-  selected: boolean;
+  topic: Topic;
 }
 
-function TopicListItem({ topic, handleClick, selected }: MQTTListItemProps) {
-  const handleClickMemo = useCallback(() => {
-    handleClick(topic);
-  }, [topic, handleClick]);
+function TopicListItem({ topic }: MQTTListItemProps) {
+  const { getSelectedTopic, setSelectedTopic } = useMQTTContext();
 
   return (
     <ListItemButton
-      onClick={handleClickMemo}
-      selected={selected}
+      onClick={() => setSelectedTopic(topic)}
+      selected={getSelectedTopic() === topic}
       sx={{
         '&.Mui-selected': {
           backgroundColor: 'primary.main',

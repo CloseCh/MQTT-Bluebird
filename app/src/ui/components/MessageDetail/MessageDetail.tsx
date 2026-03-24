@@ -3,20 +3,18 @@ import { HEADER_HEIGHT } from "../../constants/layout.js";
 import Drawer from "@mui/material/Drawer";
 import Grid from "@mui/material/Grid";
 import MessageDetailData from "./MessageDetailData/MessageDetailData.js";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import MQTTDetailedSelector from "../DataTypeSelector/DataTypeSelector.js";
-import type { SelectChangeEvent } from "@mui/material/Select";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import type { Topic, MessageFormatEnum } from "../../types/mqtt.types.js";
+import { useMQTTContext } from "../../hooks/useMQTTContext/useMQTTContext.js";
 
 interface Prop {
   handleClick: () => void;
-  message: MQTTMessage;
-  messageFormat: MessageTypes;
-  setMessageFormat: (topic: string, format: MessageTypes) => void;
+  messageSelected: MQTTMessage;
+  selectedTopic: Topic;
 }
 
-export default function MessageDetail ({ handleClick, message, messageFormat, setMessageFormat}: Prop) {
+export default function MessageDetail ({ messageSelected, selectedTopic, handleClick }: Prop) {
   const [drawerWidth, setDrawerWidth] = useState(400);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -40,15 +38,14 @@ export default function MessageDetail ({ handleClick, message, messageFormat, se
     document.addEventListener('mouseup', onMouseUp);
   }, [drawerWidth]);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    const newFormat = event.target.value as MessageTypes;
-    setMessageFormat(message.topic, newFormat);
-  };
+  const { getMessageFormat } = useMQTTContext();
+
+  const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
   
   return (
     <Drawer
       anchor="right"
-      open={message != null}
+      open={messageSelected != null}
       onClose={handleClick}
       sx={{
         '& .MuiDrawer-paper': {
@@ -92,17 +89,9 @@ export default function MessageDetail ({ handleClick, message, messageFormat, se
 
       <Grid container>
         <Grid size={12}>
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ padding: '20px 20px 0px 20px'}}>
-            <Box sx={{ flex: 1 }}>
-              <MQTTDetailedSelector 
-                handleChange={handleChange} 
-                messageFormat={messageFormat} 
-              />
-            </Box>
-          </Stack>
         </Grid>
         <Grid size={12}>
-          <MessageDetailData message={message} messageFormat={messageFormat}/>
+          <MessageDetailData messageSelected={messageSelected} messageFormat={messageFormat}/>
         </Grid>
         <Grid size={12}>
         </Grid>

@@ -1,22 +1,23 @@
 import React from 'react';
-import MQTTListItem from "./TopicListItem/TopicListItem.js";
+import TopicListItem from "./TopicListItem/TopicListItem.js";
 import List from '@mui/material/List';
+import { useMQTTContext } from '../../hooks/useMQTTContext/useMQTTContext.js';
+
+import type { Topic, TopicList } from '../../types/mqtt.types.js';
 
 interface MQTTListProps {
-  handleClick: (topic: string) => void;
-  topics: string[];
-  selectedTopic: string;
+
 }
 
-function TopicList({ handleClick, topics, selectedTopic }: MQTTListProps) {
+function TopicList({ }: MQTTListProps) {
+  const { topicList } = useMQTTContext();
+
   return (
     <List sx={{ width: '100%' }}>
-      {topics.map((topic: string) => (
-        <MQTTListItem
-          key={topic}
+      {topicList.map((topic: Topic, index: number) => (
+        <TopicListItem
+          key={index}
           topic={topic}
-          handleClick={handleClick}
-          selected={topic===selectedTopic}
         />
       ))}
     </List>
