@@ -9,22 +9,20 @@ import Header from './components/Header/Header';
 import Stack from '@mui/material/Stack';
 
 import { MQTTProvider } from '@/features/messageRepresentacion';
-
+import NavBar from './components/NavBar/NavBar.jsx';
 
 export default function App() {
   return (
     <>
       <CssBaseline />
-        <MQTTProvider dataPointCount={100}>
+      <MQTTProvider dataPointCount={100}>
         <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
-
-  <Header />  {/* ocupa su altura natural */}
-
-  <Stack sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
-    <Outlet />
-  </Stack>
-
-</Stack>
+          <Header />
+          <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+            <NavBar />
+            <Outlet />
+          </Stack>
+        </Stack>
       </MQTTProvider>
     </>
   )

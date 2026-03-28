@@ -1,19 +1,20 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import NavBar from './NavBar/NavBar.js';
+import {
+  Box,
+  Typography,
+  AppBar,
+  Toolbar
+} from "@mui/material";
 
 export default function Header() {
   return (
-    <>
+    <Box sx={{ display: "flex" }}>
       <AppBar position="sticky">
-        <Toolbar variant="dense">
-          <NavBar />
-          <Typography variant="h6" color="inherit" component="div">
-            MQTTC
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </>
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit" component="div">
+              MQTTC
+            </Typography>
+          </Toolbar>
+        </AppBar>
+    </Box>
   );
 }
