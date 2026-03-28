@@ -12,16 +12,16 @@ interface Props {
 }
 
 export function ResizeHandle({ onResize, initialSize, min = 100, max = 500, direction = 'horizontal' }: Props) {
-  
   const isHorizontal = direction === 'horizontal';
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     const startPos = isHorizontal ? e.clientX : e.clientY;
+    const startSize = initialSize;
 
     const onMouseMove = (e: MouseEvent) => {
       const delta = (isHorizontal ? e.clientX : e.clientY) - startPos;
-      const newSize = Math.min(Math.max(initialSize + delta, min), max);
+      const newSize = Math.min(Math.max(startSize + delta, min), max);
       onResize(newSize);
     };
 

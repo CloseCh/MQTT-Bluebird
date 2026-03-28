@@ -5,7 +5,6 @@ import ListItem from '@mui/material/ListItem';
 import CardHeader from '@mui/material/CardHeader';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
@@ -27,15 +26,6 @@ interface Prop {
 export default function MessageDetailData ({ messageSelected, messageFormat }: Prop) {
   const messagePacket: Packet = messageSelected.packet;
 
-  const formatPayload = (data: string, format: MessageFormatEnum) => {
-    const decoded = DecoderService(data, format);
-    try {
-      return JSON.stringify(JSON.parse(decoded), null, 2);
-    } catch {
-      return decoded;
-    }
-  };
-
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
@@ -48,15 +38,6 @@ export default function MessageDetailData ({ messageSelected, messageFormat }: P
             {messagePacket.dup && <Chip label="DUP" size="small" />}
             {messagePacket.retain && <Chip label="RETAIN" color="warning" size="small" />}
           </Stack>
-
-          {/* Payload raw */}
-          <TextField
-            label="Payload"
-            value={messagePacket.payload.toString()}
-            multiline
-            fullWidth
-            slotProps={{ input: { readOnly: true } }}
-          />
 
           {/* Message decodificado */}
           <Typography variant="subtitle2" color="text.secondary" mt={2} mb={0.5}>
@@ -72,7 +53,7 @@ export default function MessageDetailData ({ messageSelected, messageFormat }: P
             }}
           >
             <pre style={{ margin: 0, fontFamily: "monospace", fontSize: "0.875rem" }}>
-              {formatPayload(messageSelected.data, messageFormat)}
+              {DecoderService(messageSelected.data, messageFormat)}
             </pre>
           </Paper>
 

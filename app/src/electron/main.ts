@@ -10,8 +10,8 @@ const createWindow = () => {
     webPreferences: {
       preload: getPreloadPath(),
     },
-    width: 1400,
-    height: 1000
+    width: 1200,
+    height: 800
   });
 
   if (isDev()){

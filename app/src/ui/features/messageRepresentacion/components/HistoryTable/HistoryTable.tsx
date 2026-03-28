@@ -18,11 +18,19 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'time', label: 'TimeStamp', width: 75 },
-  { id: 'content', label: 'Content', width: 200 },
-  { id: 'qos', label: 'QoS', width: 50 },
+  { id: 'time',      label: 'TimeStamp', width: 75  },
+  { id: 'content',   label: 'Content',   width: 250 },
+  { id: 'qos',       label: 'QoS',       width: 50  },
   { id: 'retention', label: 'Retention', width: 50 },
 ];
+const truncateStyles = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  borderRight: '1px solid',
+  borderLeft: '1px solid',
+  borderColor: 'divider',
+} as const;
 
 interface Prop {
   handleClick: (message: MQTTMessage) => void;
@@ -39,15 +47,15 @@ function HistoryTable({ handleClick }: Prop) {
 
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ height: '100%' }}>
-        <Table stickyHeader aria-label="sticky table">
+      <TableContainer sx={{ height: '100%', overflowX: 'auto', border: '1px solid', borderColor: 'divider' }}>
+        <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: 'fixed', minWidth: 1000 }}>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.width, maxWidth: column.width }}
+                  sx={{ width: column.width, ...truncateStyles }}
                 >
                   {column.label}
                 </TableCell>
@@ -64,10 +72,10 @@ function HistoryTable({ handleClick }: Prop) {
                 onClick={() => handleClick(message)}
                 sx={{ cursor: 'pointer' }}
               >
-                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 75}}>{message.timeStamp}</TableCell>
-                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 200}}>{DecoderService(message.data, messageFormat)}</TableCell>
-                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 50}}>{message.packet.qos}</TableCell>
-                <TableCell sx={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 100}}>{message.packet.retain ? 'Yes' : 'No'}</TableCell>
+                <TableCell sx={truncateStyles}>{message.timeStamp}</TableCell>
+                <TableCell sx={truncateStyles}>{DecoderService(message.data, messageFormat)}</TableCell>
+                <TableCell sx={truncateStyles}>{message.packet.qos}</TableCell>
+                <TableCell sx={truncateStyles}>{message.packet.retain ? 'Yes' : 'No'}</TableCell>
               </TableRow>
             ))}
           </TableBody>

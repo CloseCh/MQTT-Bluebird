@@ -28,7 +28,12 @@ export default function MainPage() {
 		<>
     <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
 
-      <Box sx={{ width: sidebarWidth, flexShrink: 0, height: '100%' }}>
+      <Box sx={{ 
+        width: sidebarWidth, 
+        flexShrink: 0, 
+        height: '100%' ,
+        overflow: 'hidden'}}
+      >
         <TopicList />
       </Box>
 
@@ -41,13 +46,13 @@ export default function MainPage() {
 			/>
 
       {selectedTopic !== "" && 
-        <Stack sx={{ height: '100%', flex: 1, minWidth: 0 }}>
-          <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '20px 20px 0px 20px' }}>
+        <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
+          <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '10px 10px 10px 10px' }}>
             <Box>
               <DataTypeSelector selectedTopic={selectedTopic}/>
             </Box>
           </Stack>
-          <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'auto' }}>
+          <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <HistoryTable handleClick={handleTableClick} />
           </Box>
         </Stack>
