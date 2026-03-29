@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron';
 import { IPublishPacket } from 'mqtt';
-import { connectClient } from './MQTTConnection.js';
-import { ipcWebContentsSend } from '../util/until.js';
+import { connectClient } from './mqttConnection.js';
+import { ipcWebContentsSend } from '../../util/until.js';
 
 const subscriptions: string[] = ['#'];
 

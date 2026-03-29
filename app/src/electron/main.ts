@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron';
-import { destroyClient } from './services/MQTTConnection.js';
+import { destroyClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
 
 app.on('ready', () => {

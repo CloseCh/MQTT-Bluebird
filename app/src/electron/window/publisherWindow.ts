@@ -1,7 +1,7 @@
 import { BrowserWindow } from "electron";
 import { getPreloadPath, getUIPath } from "../util/pathResolver.js";
 import { isDev } from "../util/until.js";
-import { setupPublisher } from "../services/MQTTPublisher.js";
+import { setupPublisher } from "../services/mqtt/mqttPublisher.js";
 
 function publisherWindow(parent?: BrowserWindow) {
   const publisherWindow = new BrowserWindow({

@@ -17,6 +17,7 @@ interface PublishPayload {
 type EventPayloadMapping = {
   message: MQTTmessage;
   mqttPublish: PublishPayload;
+  openWindow: number;
 };
 
 type UnsubscribeFunction = () => void;
@@ -25,5 +26,6 @@ interface Window {
   electron: {
     subscribeMQTT: (callback: (message: MQTTmessage) => void) => void;
     publishMQTT: (message: PublishPayload) => Promise<void>;
+    openWindow: (windowId: number) => Promise<void>;
   };
 }

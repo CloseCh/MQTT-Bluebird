@@ -27,4 +27,7 @@ electron.contextBridge.exposeInMainWorld('electron', {
     }),
   publishMQTT: (message) =>
     ipcInvoke('mqttPublish', message),
+
+  openWindow: (windowId) =>
+    ipcInvoke('openWindow', windowId)
 });

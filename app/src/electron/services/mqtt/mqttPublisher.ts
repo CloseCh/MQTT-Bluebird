@@ -1,5 +1,5 @@
-import { getClient } from './MQTTConnection.js';
-import { ipcMainHandle } from '../util/until.js';
+import { getClient } from './mqttConnection.js';
+import { ipcMainHandle } from '../../util/until.js';
 
 export function setupPublisher(): void {
   ipcMainHandle('mqttPublish', (message) => {
