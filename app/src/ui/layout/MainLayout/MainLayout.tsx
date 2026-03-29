@@ -6,8 +6,8 @@ import {
 } from '@mui/material';
 
 import { MQTTProvider } from '@/features/messageRepresentacion';
-import NavBar from '../../components/NavBar/NavBar.jsx';
 import Header from '../../components/Header/Header.jsx';
+import { NavBar, NavigationProvider } from '@/features/navigation/index.js';
 
 export default function MainLayout() {
   return (
@@ -17,8 +17,10 @@ export default function MainLayout() {
         <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
           <Header title='MQTTClient' />
           <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
-            <NavBar />
-            <Outlet />
+            <NavigationProvider>
+              <NavBar/>
+              <Outlet />
+            </NavigationProvider>
           </Stack>
         </Stack>
       </MQTTProvider>
