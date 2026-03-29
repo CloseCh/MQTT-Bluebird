@@ -7,8 +7,16 @@ import {
   ListItemIcon
 } from "@mui/material";
 import { DRAWER_WIDTH, navItems } from "../../constants/navbarConstants";
+import { useNavigationContext } from "../../hooks/useNavigationContext";
+
 
 export function NavBar() {
+  const { openWindow } = useNavigationContext();
+
+  const handleClick = (label:string) => {
+    openWindow(label);
+  }
+
   return (
     <Box>
       <Drawer
@@ -29,6 +37,7 @@ export function NavBar() {
             {navItems.map((item, index) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton
+                  onClick={() => handleClick(item.label)}
                   sx={{ borderRadius: 2, mb: 0.5, justifyContent: "center" }}
                 >
                   <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>

@@ -19,8 +19,8 @@ export default function MainLayout() {
           <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
             <NavigationProvider>
               <NavBar/>
-              <Outlet />
             </NavigationProvider>
+            <Outlet />
           </Stack>
         </Stack>
       </MQTTProvider>
