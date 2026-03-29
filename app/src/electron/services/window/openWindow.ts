@@ -3,7 +3,7 @@ import publisherWindow from "../../window/publisherWindow.js";
 
 export function openWindow(windowId: string | number, parent?: BrowserWindow): void {
   switch (String(windowId)) {
-    case 'publisher':
+    case 'publish':
       publisherWindow(parent);
       break;
     default:

@@ -3,7 +3,7 @@ import { getPreloadPath, getUIPath } from "../util/pathResolver.js";
 import { isDev } from "../util/until.js";
 import { setupSubscriptor } from "../services/mqtt/mqttSubscriptor.js";
 
-function createMainWindow () {
+function createMainWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: getPreloadPath(),
@@ -19,6 +19,8 @@ function createMainWindow () {
   }
 
   setupSubscriptor(mainWindow);
+
+  return mainWindow;
 }
 
 export default createMainWindow;
