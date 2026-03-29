@@ -1,0 +1,1 @@
+export { PublisherTable } from "./components/PublisherTable/PublisherTable";

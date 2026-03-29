@@ -3,7 +3,7 @@ import { useState, useCallback} from "react";
 import { TopicList, HistoryTable, DataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
 
 import { useMQTTContext } from '@/features/messageRepresentacion';
-import { ResizeHandle } from '../../../components/ResizeHandle/ResizeHandle.jsx';
+import { ResizeHandle } from '../../../components/ResizeHandle/ResizeHandle.js';
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";

@@ -4,11 +4,11 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { HashRouter, Route, Routes } from 'react-router';
 
-import MainPage from './layout/pages/main/MainPage';
+import MainPage from './layout/MainLayout/page/MainPage';
 import MainLayout from './layout/MainLayout/MainLayout';
 
 import PublishLayout from './layout/PublishLayout/PublishLayout';
-import PublishPage from './layout/pages/publish/PublishPage';
+import PublishPage from './layout/PublishLayout/page/PublishPage';
 
 import './index.css';
 
