@@ -5,13 +5,17 @@ import {
   Toolbar
 } from "@mui/material";
 
-export default function Header() {
+interface Prop {
+  title: string;
+}
+
+export default function Header({title}: Prop) {
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar position="sticky">
           <Toolbar variant="dense">
             <Typography variant="h6" color="inherit" component="div">
-              MQTTC
+              {title}
             </Typography>
           </Toolbar>
         </AppBar>
