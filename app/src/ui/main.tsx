@@ -4,24 +4,26 @@ import {
   HashRouter,
   Routes,
   Route 
-} from "react-router";
+} from 'react-router';
 
-import MainPage from './pages/main/MainPage.jsx';
-import Subscription from './pages/subscription/Subscription.jsx';
-import PublishPage from './pages/publish/PublishPage.jsx';
+import App from './App.tsx';
+import MainPage from './layout/pages/main/MainPage.jsx';
+
+import PublishLayout from './layout/PublishLayout/PublishLayout.tsx';
+import PublishPage from './layout/pages/publish/PublishPage.tsx';
 
 import './index.css';
-import App from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HashRouter>
       <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<MainPage />} />
-          <Route path="main" element={<MainPage />} />
-          <Route path="publish" element={<PublishPage />} />
-          <Route path="subscription" element={<Subscription />} />
+        <Route element={<App />}>
+          <Route path='/' element={<MainPage />} />
+        </Route>
+
+        <Route element={<PublishLayout />}>
+          <Route path='publish' element={<PublishPage/>}/>
         </Route>
       </Routes>
     </HashRouter>

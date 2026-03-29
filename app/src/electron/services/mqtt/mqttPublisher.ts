@@ -1,11 +1,4 @@
 import { getClient } from './mqttConnection.js';
-import { ipcMainHandle } from '../../util/until.js';
-
-export function setupPublisher(): void {
-  ipcMainHandle('mqttPublish', (message) => {
-    publishMessage(message);
-  });
-}
 
 export function publishMessage({ topic, payload, format, qos = 1, retain = false }: PublishPayload): void {
   const client = getClient();
