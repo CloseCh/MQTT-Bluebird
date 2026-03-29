@@ -1,3 +1,4 @@
 export interface NavigationContextValue {
-  openWindow: (pageName:string) => Promise<void>; 
+  windowOpenList: Set<string>
+  openWindow: (windowName:string) => void; 
 }

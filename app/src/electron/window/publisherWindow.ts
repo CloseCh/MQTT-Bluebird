@@ -2,7 +2,7 @@ import { BrowserWindow } from "electron";
 import { getPreloadPath, getUIPath } from "../util/pathResolver.js";
 import { isDev } from "../util/until.js";
 
-function publisherWindow(parent?: BrowserWindow) {
+function publisherWindow(parent?: BrowserWindow): BrowserWindow {
   const publisherWindow = new BrowserWindow({
     webPreferences: {
       preload: getPreloadPath(),
@@ -17,6 +17,8 @@ function publisherWindow(parent?: BrowserWindow) {
   } else {
     publisherWindow.loadFile(getUIPath(), {hash: '/publish'});
   }
+
+  return publisherWindow;
 }
 
 export default publisherWindow;

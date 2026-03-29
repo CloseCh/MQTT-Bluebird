@@ -1,14 +1,19 @@
 import { app, BrowserWindow } from 'electron';
 import { destroyClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
-import { ipcMainHandle } from './util/until.js';
-import { openWindow } from './services/window/openWindow.js';
+import { ipcMainHandle, ipcWebContentsSend } from './util/until.js';
+import { openWindow, closeWindow } from './services/window/windowManagement.js';
 
 app.on('ready', () => {
   const mainWindow = createMainWindow();
 
   ipcMainHandle('openWindow', (windowId) => {
-    openWindow(windowId, mainWindow);
+    const window: BrowserWindow | null = openWindow(windowId, mainWindow);
+    
+    window?.on('closed', () => {
+      closeWindow(windowId);
+      ipcWebContentsSend('closedWindow', mainWindow.webContents, windowId);
+    });
   });
 
   app.on('activate', () => {

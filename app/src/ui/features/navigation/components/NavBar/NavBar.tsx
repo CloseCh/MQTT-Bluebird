@@ -11,7 +11,7 @@ import { useNavigationContext } from "../../hooks/useNavigationContext";
 
 
 export function NavBar() {
-  const { openWindow } = useNavigationContext();
+  const { windowOpenList, openWindow } = useNavigationContext();
 
   const handleClick = (label:string) => {
     openWindow(label);
@@ -38,6 +38,7 @@ export function NavBar() {
               <ListItem key={index} disablePadding>
                 <ListItemButton
                   onClick={() => handleClick(item.label)}
+                  selected={windowOpenList.has(item.label)}
                   sx={{ borderRadius: 2, mb: 0.5, justifyContent: "center" }}
                 >
                   <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>

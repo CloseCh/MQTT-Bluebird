@@ -25,9 +25,15 @@ electron.contextBridge.exposeInMainWorld('electron', {
     ipcOn('message', (temp) => {
       callback(temp);
     }),
+
   publishMQTT: (message) =>
     ipcInvoke('mqttPublish', message),
 
   openWindow: (windowId) =>
-    ipcInvoke('openWindow', windowId)
+    ipcInvoke('openWindow', windowId),
+
+  closedWindow: (callback) =>
+    ipcOn('closedWindow', (temp) => {
+      callback(temp);
+    }),
 });
