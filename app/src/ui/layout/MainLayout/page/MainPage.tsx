@@ -34,6 +34,7 @@ export default function MainPage() {
         height: '100%' ,
         overflow: 'hidden'}}
       >
+        <Box></Box>
         <TopicList />
       </Box>
 
