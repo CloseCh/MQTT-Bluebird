@@ -7,7 +7,7 @@ export default defineConfig({
     build: {
       outDir: 'dist-electron',
       minify: true,
-      sourcemap: true,
+      sourcemap: false,
       rollupOptions: {
         external: (id) => {
           return (
@@ -26,7 +26,7 @@ export default defineConfig({
   preload: {
     build: {
       outDir: 'dist-preload',
-      minify: false,
+      minify: true,
       rollupOptions: {
         external: ['electron'], 
         output: {
@@ -78,6 +78,7 @@ export default defineConfig({
               if (id.includes('recharts')) {
                 return 'vendor-charts';
               }
+              return 'vendor-misc';
             }
           }
         }

@@ -2,12 +2,14 @@
   "appId": "com.weiyu.MQTTclient",
   "icon": "./public/test.png",
   "asar": true,
-  "compression": "maximum",
+  "compression": "normal",
   "files": [
     "dist-electron",
     "dist-react",
     "dist-preload",
-    "!node_modules/**/*"
+    "!node_modules/**/*",
+    "!**/*.map",
+    "!**/*.d.ts"  
   ],
   "mac": {
     "target": "dmg"
