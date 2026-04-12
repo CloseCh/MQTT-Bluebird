@@ -7,7 +7,7 @@ import { ResizeHandle } from '../../../components/ResizeHandle/ResizeHandle.js';
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { useNavigationContext } from "@/features/navigation/index.js";
+import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
 
 export default function MainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
@@ -27,24 +27,18 @@ export default function MainPage() {
     setMessageSelected(null);
   };
 
-  const showBar = barOpen === 'subcription';
+  const showSidebar = barOpen === 'subcription';
 
   return (
     <>
       <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
 
-        <Box sx={{
-          width: showBar ? sidebarWidth : 0,
-          flexShrink: 0,
-          height: '100%',
-          overflow: 'hidden'
-        }}
-        >
+        <SideBar showSidebar={showSidebar} sidebarWidth={sidebarWidth}>
           <TopicList />
-        </Box>
+        </SideBar>
 
         {/* Handle de resize */}
-        {showBar ?
+        {showSidebar ?
           <ResizeHandle
             initialSize={sidebarWidth}
             onResize={setSidebarWidth}
