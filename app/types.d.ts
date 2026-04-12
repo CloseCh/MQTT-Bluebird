@@ -1,4 +1,4 @@
-//Global types
+/// <reference types="vite/client" />
 interface MQTTMessage {
   topic: string;
   data: string;

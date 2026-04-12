@@ -4,7 +4,8 @@ import { isDev } from './until.js';
 
 export function getPreloadPath() {
   if (isDev()) {
-    return path.join(app.getAppPath(), 'src/preload/preload.js');
+    console.log(path.join(app.getAppPath(), 'src/electron/preload/preload.js'))
+    return path.join(app.getAppPath(), 'src/electron/preload/preload.js');
   }
   return path.join(app.getAppPath(), 'dist-preload/preload.js');
 }

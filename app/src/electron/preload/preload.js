@@ -1,4 +1,4 @@
-const electron = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
 /**
  * @template {keyof EventPayloadMapping} Key
@@ -6,7 +6,7 @@ const electron = require('electron');
  * @returns {Promise<EventPayloadMapping[Key]>}
  */
 function ipcInvoke(key, payload) {
-  return electron.ipcRenderer.invoke(key, payload);
+  return ipcRenderer.invoke(key, payload);
 }
 
 /**
@@ -16,22 +16,19 @@ function ipcInvoke(key, payload) {
  */
 function ipcOn(key, callback) {
   const cb = (_, payload) => callback(payload);
-  electron.ipcRenderer.on(key, cb);
-  return () => electron.ipcRenderer.off(key, cb);
+  ipcRenderer.on(key, cb);
+  return () => ipcRenderer.off(key, cb);
 }
 
-electron.contextBridge.exposeInMainWorld('electron', {
+contextBridge.exposeInMainWorld('electron', {
   subscribeMQTT: (callback) =>
     ipcOn('message', (temp) => {
       callback(temp);
     }),
-
   publishMQTT: (message) =>
     ipcInvoke('mqttPublish', message),
-
   openWindow: (windowId) =>
     ipcInvoke('openWindow', windowId),
-
   closedWindow: (callback) =>
     ipcOn('closedWindow', (temp) => {
       callback(temp);
