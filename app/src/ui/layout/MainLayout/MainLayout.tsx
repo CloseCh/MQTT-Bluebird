@@ -14,15 +14,15 @@ export default function MainLayout() {
     <>
       <CssBaseline />
       <MQTTProvider dataPointCount={100}>
+      <NavigationProvider>
         <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
           <Header title='MQTTClient' />
           <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
-            <NavigationProvider>
               <NavBar/>
-            </NavigationProvider>
             <Outlet />
           </Stack>
         </Stack>
+      </NavigationProvider>
       </MQTTProvider>
     </>
   )

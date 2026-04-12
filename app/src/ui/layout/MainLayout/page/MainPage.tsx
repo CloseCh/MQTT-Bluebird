@@ -1,4 +1,4 @@
-import { useState, useCallback} from "react";
+import { useState, useCallback } from "react";
 
 import { TopicList, HistoryTable, DataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
 
@@ -7,62 +7,71 @@ import { ResizeHandle } from '../../../components/ResizeHandle/ResizeHandle.js';
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import { useNavigationContext } from "@/features/navigation/index.js";
 
 export default function MainPage() {
-	const [ messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
-	const [sidebarWidth, setSidebarWidth] = useState(200);
+  const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
+  const [sidebarWidth, setSidebarWidth] = useState(200);
 
-	const { getSelectedTopic } = useMQTTContext();
+  const { getSelectedTopic } = useMQTTContext();
 
-	const selectedTopic = getSelectedTopic();
+  const { barOpen } = useNavigationContext();
 
-	const handleTableClick = useCallback((message: MQTTMessage) => {
-		setMessageSelected(message);
-	}, []);
+  const selectedTopic = getSelectedTopic();
 
-	const handleCloseDetailedClick = () => {
-		setMessageSelected(null);
-	};
+  const handleTableClick = useCallback((message: MQTTMessage) => {
+    setMessageSelected(message);
+  }, []);
 
-	return (
-		<>
-    <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
+  const handleCloseDetailedClick = () => {
+    setMessageSelected(null);
+  };
 
-      <Box sx={{ 
-        width: sidebarWidth, 
-        flexShrink: 0, 
-        height: '100%' ,
-        overflow: 'hidden'}}
-      >
-        <TopicList />
-      </Box>
+  const showBar = barOpen === 'subcription';
 
-      {/* Handle de resize */}
-      <ResizeHandle
-				initialSize={sidebarWidth}
-				onResize={setSidebarWidth}
-				min={100}
-				max={500}
-			/>
+  return (
+    <>
+      <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
 
-      {selectedTopic !== "" && 
-        <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
-          <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '10px 10px 10px 10px' }}>
-            <Box>
-              <DataTypeSelector selectedTopic={selectedTopic}/>
+        <Box sx={{
+          width: showBar ? sidebarWidth : 0,
+          flexShrink: 0,
+          height: '100%',
+          overflow: 'hidden'
+        }}
+        >
+          <TopicList />
+        </Box>
+
+        {/* Handle de resize */}
+        {showBar ?
+          <ResizeHandle
+            initialSize={sidebarWidth}
+            onResize={setSidebarWidth}
+            min={100}
+            max={500}
+          />
+          : <></>
+        }
+
+        {selectedTopic !== "" &&
+          <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
+            <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '10px 10px 10px 10px' }}>
+              <Box>
+                <DataTypeSelector selectedTopic={selectedTopic} />
+              </Box>
+            </Stack>
+            <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <HistoryTable handleClick={handleTableClick} />
             </Box>
           </Stack>
-          <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <HistoryTable handleClick={handleTableClick} />
-          </Box>
-        </Stack>
-      }
+        }
 
-    </Stack>
-    {messageSelected
-      ? <MessageDetail messageSelected={messageSelected} selectedTopic={selectedTopic} handleClick={handleCloseDetailedClick}/> 
-      : <></>
-    }
-  </>
-	);
+      </Stack>
+      {messageSelected
+        ? <MessageDetail messageSelected={messageSelected} selectedTopic={selectedTopic} handleClick={handleCloseDetailedClick} />
+        : <></>
+      }
+    </>
+  );
 }

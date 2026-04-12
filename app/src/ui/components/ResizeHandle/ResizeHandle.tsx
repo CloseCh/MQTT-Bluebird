@@ -1,7 +1,6 @@
 // components/ui/ResizeHandle/ResizeHandle.tsx
 import { useCallback } from "react";
 import Box from "@mui/material/Box";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 interface Props {
   onResize: (newSize: number) => void;
@@ -61,24 +60,6 @@ export function ResizeHandle({ onResize, initialSize, min = 100, max = 500, dire
         }
       }}
     >
-      <Box
-        className="drag-icon"
-        sx={{
-          zIndex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'background.paper',
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: '4px',
-          width: isHorizontal ? '20px' : '44px',
-          height: isHorizontal ? '44px' : '20px',
-          color: 'text.secondary',
-        }}
-      >
-        <DragIndicatorIcon sx={{ fontSize: 16, transform: isHorizontal ? 'none' : 'rotate(90deg)' }} />
-      </Box>
     </Box>
   );
 }
