@@ -3,7 +3,6 @@ import { useState, useCallback } from "react";
 import { TopicList, HistoryTable, DataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
 
 import { useMQTTContext } from '@/features/messageRepresentacion';
-import { ResizeHandle } from '../../../components/ResizeHandle/ResizeHandle.js';
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -11,7 +10,7 @@ import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
 
 export default function MainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
-  const [sidebarWidth, setSidebarWidth] = useState(200);
+  
 
   const { getSelectedTopic } = useMQTTContext();
 
@@ -33,20 +32,9 @@ export default function MainPage() {
     <>
       <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
 
-        <SideBar showSidebar={showSidebar} sidebarWidth={sidebarWidth}>
+        <SideBar showSidebar={showSidebar}>
           <TopicList />
         </SideBar>
-
-        {/* Handle de resize */}
-        {showSidebar ?
-          <ResizeHandle
-            initialSize={sidebarWidth}
-            onResize={setSidebarWidth}
-            min={100}
-            max={500}
-          />
-          : <></>
-        }
 
         {selectedTopic !== "" &&
           <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
