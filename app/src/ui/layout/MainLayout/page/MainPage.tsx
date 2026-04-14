@@ -10,7 +10,6 @@ import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
 
 export default function MainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
-  
 
   const { getSelectedTopic } = useMQTTContext();
 

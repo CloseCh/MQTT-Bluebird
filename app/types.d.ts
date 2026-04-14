@@ -21,6 +21,12 @@ type EventPayloadMapping = {
   mqttPublish: PublishPayload;
   openWindow: string;
   closedWindow: string;
+
+  // subscriptions
+  'mqtt:subscribe': string[];
+  'mqtt:unsubscribe': string[];
+  'mqtt:getSubscriptions': void;
+  'mqtt:subscriptionsUpdated': string[];
 };
 
 type UnsubscribeFunction = () => void;
@@ -31,5 +37,9 @@ interface Window {
     publishMQTT: (message: PublishPayload) => Promise<void>;
     openWindow: (windowId: string) => Promise<void>;
     closedWindow: (callback: (windowId: string) => void) => void;
+
+    mqttSubscribe: (topics: string[]) => Promise<string[]>;
+    mqttUnsubscribe: (topics: string[]) => Promise<string[]>;
+    mqttGetSubscriptions: () => Promise<string[]>;
   };
 }

@@ -33,4 +33,11 @@ contextBridge.exposeInMainWorld('electron', {
     ipcOn('closedWindow', (temp) => {
       callback(temp);
     }),
+  
+  mqttSubscribe: (topics) =>
+    ipcInvoke('mqtt:subscribe', topics),
+  mqttUnsubscribe: (topics) =>
+    ipcInvoke('mqtt:unsubscribe', topics),
+  mqttGetSubscriptions: () =>
+    ipcInvoke('mqtt:getSubscriptions', undefined),
 });

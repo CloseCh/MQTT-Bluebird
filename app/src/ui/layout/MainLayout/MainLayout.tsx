@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 
 import { MQTTProvider } from '@/features/messageRepresentacion';
+import { SubscriptionProvider } from '@/features/messageSubscription';
 import Header from '../../components/Header/Header.jsx';
 import { NavBar, NavigationProvider } from '@/features/navigation/index.js';
 
@@ -14,6 +15,7 @@ export default function MainLayout() {
     <>
       <CssBaseline />
       <MQTTProvider dataPointCount={100}>
+      <SubscriptionProvider>
       <NavigationProvider>
         <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
           <Header title='MQTTClient' />
@@ -23,6 +25,7 @@ export default function MainLayout() {
           </Stack>
         </Stack>
       </NavigationProvider>
+      </SubscriptionProvider>
       </MQTTProvider>
     </>
   )

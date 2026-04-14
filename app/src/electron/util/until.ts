@@ -24,6 +24,16 @@ export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
   webContents.send(key, payload);
 }
 
+export function ipcMainHandleWithReturn<Key extends keyof EventPayloadMapping>(
+  key: Key,
+  handler: (payload: EventPayloadMapping[Key]) => unknown
+) {
+  ipcMain.handle(key, (event, payload: EventPayloadMapping[Key]) => {
+    validateEventFrame(event.senderFrame);
+    return handler(payload);
+  });
+}
+
 export function validateEventFrame(frame: WebFrameMain | null) {
   if (!frame) {
     throw new Error("El frame es null");

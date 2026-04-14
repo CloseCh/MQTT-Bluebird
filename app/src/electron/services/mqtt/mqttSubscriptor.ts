@@ -1,16 +1,17 @@
 import { BrowserWindow } from 'electron';
 import { IPublishPacket } from 'mqtt';
 import { connectClient } from './mqttConnection.js';
-import { ipcWebContentsSend } from '../../util/until.js';
+import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/until.js';
 
-const subscriptions: string[] = ['#'];
+let activeSubscriptions: Set<string> = new Set();
 
 export function setupSubscriptor(mainWindow: BrowserWindow): void {
   const client = connectClient();
 
   client.on('connect', () => {
-    console.log('Conexion establecida');
-    client.subscribe(subscriptions);
+    if (activeSubscriptions.size > 0) {
+      client.subscribe([...activeSubscriptions]);
+    }
   });
 
   client.on('message', (topic: string, data: Buffer, packet: IPublishPacket) => {
@@ -25,5 +26,29 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
     };
 
     ipcWebContentsSend('message', mainWindow.webContents, messageReceived);
+  });
+
+  ipcMainHandleWithReturn('mqtt:subscribe', (topics) => {
+    return new Promise((resolve, reject) => {
+      client.subscribe(topics, (err) => {
+        if (err) return reject(err);
+        topics.forEach(t => activeSubscriptions.add(t));
+        resolve([...activeSubscriptions]);
+      });
+    });
+  });
+
+  ipcMainHandleWithReturn('mqtt:unsubscribe', (topics) => {
+    return new Promise((resolve, reject) => {
+      client.unsubscribe(topics, (err) => {
+        if (err) return reject(err);
+        topics.forEach(t => activeSubscriptions.delete(t));
+        resolve([...activeSubscriptions]);
+      });
+    });
+  });
+
+  ipcMainHandleWithReturn('mqtt:getSubscriptions', () => {
+    return [...activeSubscriptions];
   });
 }
