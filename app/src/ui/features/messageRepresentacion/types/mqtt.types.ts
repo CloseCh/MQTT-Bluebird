@@ -9,4 +9,4 @@ export type PacketFormatList = Record<Topic, MQTTMessageList>;
 
 export type TopicList = Topic[];
 
-export type MessageFormatEnum = 'ascii' | 'hex' | 'json' | 'asciiCode' | 'int8'| 'uint8'| 'int16'| 'uint16'| 'int32'| 'uint32'| 'int64'| 'uint64';
+export type MessageFormatEnum = 'UTF-8' | 'HEX' | 'JSON' | 'ASCIICode' | 'int8'| 'uint8'| 'int16'| 'uint16'| 'int32'| 'uint32'| 'int64'| 'uint64';

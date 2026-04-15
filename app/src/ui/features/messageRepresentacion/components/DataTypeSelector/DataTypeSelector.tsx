@@ -3,22 +3,24 @@ import { useMQTTContext } from '@/features/messageRepresentacion';
 import { NestedMenuItem } from 'mui-nested-menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { FormControl, InputLabel, Select } from '@mui/material';
 
 interface Prop {
   selectedTopic: Topic;
 }
 
 function DataTypeSelector({ selectedTopic }: Prop) {
+  const selectRef = useRef<HTMLDivElement>(null);
+  
   const { setMessageFormat, getMessageFormat } = useMQTTContext();
   const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  function handleOpen(event: React.MouseEvent<HTMLElement>) {
-    setAnchorEl(event.currentTarget);
+  function handleOpen() {
+    setAnchorEl(selectRef.current);
   }
 
   function handleClose() {
@@ -32,20 +34,31 @@ function DataTypeSelector({ selectedTopic }: Prop) {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleOpen}>
-        {messageFormat ?? 'Message Format'}
-      </Button>
+      <FormControl fullWidth sx={{ minWidth: '200px' }} ref={selectRef}>
+        <InputLabel id="label">Message Format</InputLabel>
+        <Select
+          labelId="label"
+          label="Message Format"
+          value={messageFormat}
+          open={false}
+          onOpen={handleOpen}
+          onClick={handleOpen}
+          readOnly
+        >
+          <MenuItem value={messageFormat}>{messageFormat}</MenuItem>
+        </Select>
+      </FormControl>
 
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose} sx={{ minWidth: '200px' }} >
 
-        <NestedMenuItem label="Texto" parentMenuOpen={open}>
-          <MenuItem onClick={() => handleSelect("utf8")}>UTF-8</MenuItem>
-          <MenuItem onClick={() => handleSelect("asciiCode")}>ASCII</MenuItem>
-          <MenuItem onClick={() => handleSelect("json")}>JSON</MenuItem>
-          <MenuItem onClick={() => handleSelect("hex")}>HEX</MenuItem>
+        <NestedMenuItem label="Texto" parentMenuOpen={open} sx={{ minWidth: '200px' }} >
+          <MenuItem onClick={() => handleSelect("UTF-8")}>UTF-8</MenuItem>
+          <MenuItem onClick={() => handleSelect("ASCIICode")}>ASCII</MenuItem>
+          <MenuItem onClick={() => handleSelect("JSON")}>JSON</MenuItem>
+          <MenuItem onClick={() => handleSelect("HEX")}>HEX</MenuItem>
         </NestedMenuItem>
 
-        <NestedMenuItem label="Numérico" parentMenuOpen={open}>
+        <NestedMenuItem label="Numérico" parentMenuOpen={open} sx={{ minWidth: '200px' }} >
           <MenuItem onClick={() => handleSelect("int8")}>int8</MenuItem>
           <MenuItem onClick={() => handleSelect("uint8")}>uint8</MenuItem>
           <MenuItem onClick={() => handleSelect("int16")}>int16</MenuItem>

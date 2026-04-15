@@ -8,10 +8,9 @@ export default function DecoderService(hexData: string, format: MessageFormatEnu
   const view = new DataView(bytes.buffer);
 
   switch (format) {
-    case 'ascii':   return decodeString(bytes);
-    case 'asciiCode': return decodeAscii(bytes);
-    case 'hex':     return decodeHex(hexData);
-    case 'json':    return decodeJson(bytes);
+    case 'ASCIICode': return decodeAscii(bytes);
+    case 'HEX':     return decodeHex(hexData);
+    case 'JSON':    return decodeJson(bytes);
     case 'int8':    return String(view.getInt8(0));
     case 'uint8':   return String(view.getUint8(0));
     case 'int16':   return String(view.getInt16(0, false));
@@ -25,7 +24,7 @@ export default function DecoderService(hexData: string, format: MessageFormatEnu
 }
 
 function decodeString(bytes: Uint8Array) {
-  return new TextDecoder('ascii').decode(bytes);
+  return new TextDecoder('UTF-8').decode(bytes);
 }
 
 function decodeAscii(bytes: Uint8Array) {
