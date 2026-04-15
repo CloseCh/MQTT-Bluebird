@@ -1,14 +1,18 @@
 import { Box } from "@mui/material";
 import { useState, type ReactElement } from "react";
 import { ResizeHandle } from "./ResizeHandle/ResizeHandle";
+import { useNavigationContext } from "../../hooks/useNavigationContext";
 
 interface Prop {
-  showSidebar: boolean;
   children: ReactElement;
 }
 
-export function SideBar({ showSidebar, children }: Prop) {
+export function SideBar({ children }: Prop) {
   const [sidebarWidth, setSidebarWidth] = useState(200);
+
+  const { barOpen } = useNavigationContext();
+
+  const showSidebar = barOpen != "subscription";
 
   return (
     <>

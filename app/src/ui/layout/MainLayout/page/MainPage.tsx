@@ -6,7 +6,7 @@ import { useMQTTContext } from '@/features/messageRepresentacion';
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
+import { SideBar } from "@/features/navigation/index.js";
 import { SubscriptionField, SubscriptionList } from "@/features/messageSubscription";
 import { Divider } from "@mui/material";
 
@@ -14,8 +14,6 @@ export default function MainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
 
   const { getSelectedTopic } = useMQTTContext();
-
-  const { barOpen } = useNavigationContext();
 
   const selectedTopic = getSelectedTopic();
 
@@ -27,31 +25,11 @@ export default function MainPage() {
     setMessageSelected(null);
   };
 
-  const showSidebar = barOpen === 'subcription';
-
   return (
     <>
       <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
 
-        <SideBar showSidebar={showSidebar}>
-          <Stack sx={{ height: '100%', width: '100%' }}>
-            <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
-              <Stack>
-                <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
-                  <SubscriptionField />
-                </Box>
-                <Divider />
-                <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
-                  <SubscriptionList />
-                </Box>
-              </Stack>
-            </Box>
-            <Divider />
-            <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
-              <TopicList />
-            </Box>
-          </Stack>
-        </SideBar>
+        {SubscriptionSideBar()}
 
         {selectedTopic !== "" &&
           <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
@@ -72,5 +50,29 @@ export default function MainPage() {
         : <></>
       }
     </>
+  );
+}
+
+function SubscriptionSideBar() {
+  return (
+    <SideBar>
+      <Stack sx={{ height: '100%', width: '100%' }}>
+        <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
+          <Stack>
+            <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
+              <SubscriptionField />
+            </Box>
+            <Divider />
+            <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
+              <SubscriptionList />
+            </Box>
+          </Stack>
+        </Box>
+        <Divider />
+        <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
+          <TopicList />
+        </Box>
+      </Stack>
+    </SideBar>
   );
 }
