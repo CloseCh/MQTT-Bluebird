@@ -23,7 +23,7 @@ export function SubscriptionListItem({ labelId, index, value, checked, handleTog
     <ListItem
       key={value}
       sx={{
-        pl: "10px"
+        width: "100%"
       }}
     >
       <Checkbox
@@ -34,7 +34,7 @@ export function SubscriptionListItem({ labelId, index, value, checked, handleTog
         slotProps={{ input: { 'aria-labelledby': labelId } }}
       />
       <ListItemText id={labelId} primary={`${value}`} />
-      <IconButton type="button" aria-label="Add" onClick={() => handleClick(value)}>
+      <IconButton type="button" aria-label="Add" onClick={() => handleClick(value)} edge="end">
         <DeleteOutlineIcon />
       </IconButton>
     </ListItem>
