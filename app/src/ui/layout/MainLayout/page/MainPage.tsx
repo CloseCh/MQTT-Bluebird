@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, type ReactElement } from "react";
 
 import { TopicList, HistoryTable, DataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
 
@@ -6,14 +6,17 @@ import { useMQTTContext } from '@/features/messageRepresentacion';
 
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { SideBar } from "@/features/navigation/index.js";
+import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
 import { SubscriptionField, SubscriptionList } from "@/features/messageSubscription";
 import { Divider } from "@mui/material";
+import { PublishForm } from "@/features/messagePublish";
 
 export default function MainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
 
   const { getSelectedTopic } = useMQTTContext();
+
+  const { barOpen } = useNavigationContext();
 
   const selectedTopic = getSelectedTopic();
 
@@ -25,11 +28,25 @@ export default function MainPage() {
     setMessageSelected(null);
   };
 
+  let sideBarOpened: ReactElement;
+
+  switch(barOpen) {
+    case "subcription":
+      sideBarOpened = SubscriptionSideBar();
+      break;
+    case "publish":
+      sideBarOpened = PublishSideBar();
+      break;
+    default:
+      sideBarOpened = <></>;
+  }
+
   return (
     <>
       <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
 
-        {SubscriptionSideBar()}
+        
+        {sideBarOpened}
 
         {selectedTopic !== "" &&
           <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
@@ -71,6 +88,18 @@ function SubscriptionSideBar() {
         <Divider />
         <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
           <TopicList />
+        </Box>
+      </Stack>
+    </SideBar>
+  );
+}
+
+function PublishSideBar() {
+  return (
+    <SideBar>
+      <Stack sx={{ height: '100%', width: '100%' }}>
+        <Box sx={{ height: '50%', width: '100%', overflow: 'auto' }}>
+          <PublishForm />
         </Box>
       </Stack>
     </SideBar>

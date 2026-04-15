@@ -5,10 +5,6 @@ import { HashRouter, Route, Routes } from 'react-router';
 
 import MainPage from './layout/MainLayout/page/MainPage';
 import MainLayout from './layout/MainLayout/MainLayout';
-
-import PublishLayout from './layout/PublishLayout/PublishLayout';
-import PublishPage from './layout/PublishLayout/page/PublishPage';
-
 import './index.css';
 
 export default function App() {
@@ -17,10 +13,6 @@ export default function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path='/' element={<MainPage />} />
-        </Route>
-
-        <Route element={<PublishLayout />}>
-          <Route path='publish' element={<PublishPage/>}/>
         </Route>
       </Routes>
     </HashRouter>

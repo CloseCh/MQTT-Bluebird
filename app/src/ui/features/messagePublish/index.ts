@@ -1,1 +1,1 @@
-export { PublisherTable } from "./components/PublisherTable/PublisherTable";
+export { PublishForm } from "./components/PublishForm/PublishForm";
