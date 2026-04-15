@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import MessageDetailData from "./MessageDetailData/MessageDetailData.js";
 import ResizeHandle from "./ResizeHandle/ResizeHandle.jsx";
 import type { Topic, MessageFormatEnum } from "../../types/mqtt.types.js";
-import { useMQTTContext } from "../../hooks/useMQTTContext/useMQTTContext.js";
+import { useMQTTContext } from "../../hooks/useMQTTContext.js";
 
 interface Prop {
   handleClick: () => void;

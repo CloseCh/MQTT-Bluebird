@@ -1,7 +1,7 @@
 import React from 'react';
 import TopicListItem from "./TopicListItem/TopicListItem.js";
 import List from '@mui/material/List';
-import { useMQTTContext } from '../../hooks/useMQTTContext/useMQTTContext.js';
+import { useMQTTContext } from '../../hooks/useMQTTContext.js';
 
 import type { Topic, TopicList } from '../../types/mqtt.types.js';
 

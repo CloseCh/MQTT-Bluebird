@@ -3,7 +3,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import MailIcon from '@mui/icons-material/Mail'
 
 import type { Topic } from '../../../types/mqtt.types';
-import { useMQTTContext } from '../../../hooks/useMQTTContext/useMQTTContext';
+import { useMQTTContext } from '../../../hooks/useMQTTContext';
 
 interface MQTTListItemProps {
   topic: Topic;

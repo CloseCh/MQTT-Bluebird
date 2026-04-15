@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { useMQTTContext } from '../../hooks/useMQTTContext/useMQTTContext';
+import { useMQTTContext } from '../../hooks/useMQTTContext';
 import DecoderService from '../../service/DecorderService';
 import type { MessageFormatEnum, MQTTMessageList } from '../../types/mqtt.types';
 
