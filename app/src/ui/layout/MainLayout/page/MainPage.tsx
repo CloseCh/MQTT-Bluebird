@@ -34,20 +34,20 @@ export default function MainPage() {
       <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
 
         <SideBar showSidebar={showSidebar}>
-          <Stack sx={{ height: '100%', width: '100%'}}>
-            <Box sx={{ height: '40%', width: '100%' , overflow: 'auto' }}>
+          <Stack sx={{ height: '100%', width: '100%' }}>
+            <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
               <Stack>
-                  <Box sx={{ height: '40%', width: '100%' , overflow: 'auto' }}>
-                    <SubscriptionField />
-                  </Box>
-                  <Divider />
-                  <Box sx={{ height: '60%', width: '100%' , overflow: 'auto' }}>
+                <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
+                  <SubscriptionField />
+                </Box>
+                <Divider />
+                <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
                   <SubscriptionList />
-                  </Box>
+                </Box>
               </Stack>
             </Box>
             <Divider />
-            <Box sx={{ height: '60%', width: '100%' , overflow: 'auto' }}>
+            <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
               <TopicList />
             </Box>
           </Stack>
