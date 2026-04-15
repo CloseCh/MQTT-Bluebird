@@ -1,8 +1,13 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { SubscriptionContextValue, SubscriptionList } from "../types/subscription.types";
 
 export function subscriptionService(): SubscriptionContextValue {
-  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>(["#"]);
+  const defaultSubscription = ["#"];
+  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>(defaultSubscription);
+
+  useEffect(() => {
+    subscribe(defaultSubscription)
+  }, []);
 
   const subscribe = useCallback(async (topics: string[]) => {
     try {

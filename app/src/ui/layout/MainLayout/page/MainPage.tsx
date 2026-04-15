@@ -7,12 +7,11 @@ import { useMQTTContext } from '@/features/messageRepresentacion';
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
-import { SubscriptionList, useSubscriptionContext } from "@/features/messageSubscription";
+import { SubscriptionField, SubscriptionList } from "@/features/messageSubscription";
+import { Divider } from "@mui/material";
 
 export default function MainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
-
-  const { subscribe } = useSubscriptionContext();
 
   const { getSelectedTopic } = useMQTTContext();
 
@@ -30,8 +29,6 @@ export default function MainPage() {
 
   const showSidebar = barOpen === 'subcription';
 
-  subscribe(["#"]);
-
   return (
     <>
       <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
@@ -39,8 +36,17 @@ export default function MainPage() {
         <SideBar showSidebar={showSidebar}>
           <Stack sx={{ height: '100%', width: '100%'}}>
             <Box sx={{ height: '40%', width: '100%' , overflow: 'auto' }}>
-              <SubscriptionList />
+              <Stack>
+                  <Box sx={{ height: '40%', width: '100%' , overflow: 'auto' }}>
+                    <SubscriptionField />
+                  </Box>
+                  <Divider />
+                  <Box sx={{ height: '60%', width: '100%' , overflow: 'auto' }}>
+                  <SubscriptionList />
+                  </Box>
+              </Stack>
             </Box>
+            <Divider />
             <Box sx={{ height: '60%', width: '100%' , overflow: 'auto' }}>
               <TopicList />
             </Box>
