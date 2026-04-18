@@ -5,18 +5,22 @@ import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/until.js
 
 let activeSubscriptions: Set<string> = new Set();
 
+let handlersRegistered: boolean = false;
+
 export function setupSubscriptor(mainWindow: BrowserWindow): void {
   const client = connectClient();
 
   client.on('connect', () => {
     if (activeSubscriptions.size > 0) {
-      client.subscribe([...activeSubscriptions]);
+      client.subscribe([...activeSubscriptions], (err) => {
+        if (err) console.error('Error re-subscribing on reconnect:', err);
+      });
     }
   });
 
   client.on('message', (topic: string, data: Buffer, packet: IPublishPacket) => {
     const date = new Date();
-    const time = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}:${String(date.getMilliseconds()).padStart(3, '0')}`;
+    const time = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`;
 
     const messageReceived: MQTTMessage = {
       topic,
@@ -28,27 +32,36 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
     ipcWebContentsSend('message', mainWindow.webContents, messageReceived);
   });
 
-  ipcMainHandleWithReturn('mqtt:subscribe', (topics) => {
-    return new Promise((resolve, reject) => {
-      client.subscribe(topics, (err) => {
-        if (err) return reject(err);
-        topics.forEach(t => activeSubscriptions.add(t));
-        resolve([...activeSubscriptions]);
-      });
-    });
+  mainWindow.on('closed', () => {
+    client.end();
+    activeSubscriptions.clear();
   });
 
-  ipcMainHandleWithReturn('mqtt:unsubscribe', (topics) => {
-    return new Promise((resolve, reject) => {
-      client.unsubscribe(topics, (err) => {
-        if (err) return reject(err);
-        topics.forEach(t => activeSubscriptions.delete(t));
-        resolve([...activeSubscriptions]);
+  if (!handlersRegistered) {
+    handlersRegistered = true;
+
+    ipcMainHandleWithReturn('mqtt:subscribe', (topics) => {
+      return new Promise((resolve, reject) => {
+        client.subscribe(topics, (err) => {
+          if (err) return reject(err);
+          topics.forEach(t => activeSubscriptions.add(t));
+          resolve([...activeSubscriptions]);
+        });
       });
     });
-  });
 
-  ipcMainHandleWithReturn('mqtt:getSubscriptions', () => {
-    return [...activeSubscriptions];
-  });
+    ipcMainHandleWithReturn('mqtt:unsubscribe', (topics) => {
+      return new Promise((resolve, reject) => {
+        client.unsubscribe(topics, (err) => {
+          if (err) return reject(err);
+          topics.forEach(t => activeSubscriptions.delete(t));
+          resolve([...activeSubscriptions]);
+        });
+      });
+    });
+
+    ipcMainHandleWithReturn('mqtt:getSubscriptions', () => {
+      return [...activeSubscriptions];
+    });
+  }
 }
