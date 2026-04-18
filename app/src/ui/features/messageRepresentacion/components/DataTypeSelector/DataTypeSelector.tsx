@@ -5,6 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useCallback, useRef, useState } from 'react';
 import { FormControl, InputLabel, Select } from '@mui/material';
+import { NUM_FORMATS, TEXT_FORMATS } from '../../constants/TypeSelector.constants';
 
 interface Prop {
   selectedTopic: Topic;
@@ -58,24 +59,17 @@ function DataTypeSelector({ selectedTopic }: Prop) {
         sx={{ minWidth: '200px' }} disableRestoreFocus={false}
       >
 
-        <NestedMenuItem label="Texto" parentMenuOpen={open} sx={{ minWidth: '200px' }} >
-          <MenuItem onClick={() => handleSelect("UTF-8")}>UTF-8</MenuItem>
-          <MenuItem onClick={() => handleSelect("ASCIICode")}>ASCII</MenuItem>
-          <MenuItem onClick={() => handleSelect("JSON")}>JSON</MenuItem>
-          <MenuItem onClick={() => handleSelect("HEX")}>HEX</MenuItem>
+        <NestedMenuItem label="Texto" parentMenuOpen={open} sx={{ minWidth: '200px' }}>
+          {TEXT_FORMATS.map((f: MessageFormatEnum) => (
+            <MenuItem key={f} onClick={() => handleSelect(f)}>{f}</MenuItem>
+          ))}
         </NestedMenuItem>
 
-        <NestedMenuItem label="Numérico" parentMenuOpen={open} sx={{ minWidth: '200px' }} >
-          <MenuItem onClick={() => handleSelect("int8")}>int8</MenuItem>
-          <MenuItem onClick={() => handleSelect("uint8")}>uint8</MenuItem>
-          <MenuItem onClick={() => handleSelect("int16")}>int16</MenuItem>
-          <MenuItem onClick={() => handleSelect("uint16")}>uint16</MenuItem>
-          <MenuItem onClick={() => handleSelect("int32")}>int32</MenuItem>
-          <MenuItem onClick={() => handleSelect("uint32")}>uint32</MenuItem>
-          <MenuItem onClick={() => handleSelect("int64")}>int64</MenuItem>
-          <MenuItem onClick={() => handleSelect("uint64")}>uint64</MenuItem>
+        <NestedMenuItem label="Numérico" parentMenuOpen={open} sx={{ minWidth: '200px' }}>
+          {NUM_FORMATS.map((f: MessageFormatEnum) => (
+            <MenuItem key={f} onClick={() => handleSelect(f)}>{f}</MenuItem>
+          ))}
         </NestedMenuItem>
-
       </Menu>
     </>
   );
