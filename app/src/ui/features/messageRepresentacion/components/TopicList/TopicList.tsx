@@ -4,6 +4,8 @@ import List from '@mui/material/List';
 import { useMQTTContext } from '../../hooks/useMQTTContext.js';
 
 import type { Topic, TopicList } from '../../types/mqtt.types.js';
+import { useSubscriptionContext } from '@/features/messageSubscription/index.js';
+import { filterBySubscriptions } from '@/shared/service/topicFilter.js';
 
 interface MQTTListProps {
 
@@ -11,10 +13,15 @@ interface MQTTListProps {
 
 function TopicList({ }: MQTTListProps) {
   const { topicList } = useMQTTContext();
+  const { subscriptionList } = useSubscriptionContext();
+
+  const selectedSubscription = Object.keys(subscriptionList).filter(key => subscriptionList[key]);
+
+  const filteredTopicList = filterBySubscriptions(topicList, selectedSubscription);
 
   return (
     <List sx={{ width: '100%' }}>
-      {topicList.map((topic: Topic) => (
+      {filteredTopicList.map((topic: Topic) => (
         <TopicListItem
           key={topic}
           topic={topic}

@@ -7,7 +7,7 @@ import {
 
 import { MQTTProvider } from '@/features/messageRepresentacion';
 import { SubscriptionProvider } from '@/features/messageSubscription';
-import Header from '../../components/Header/Header.jsx';
+import Header from '../../shared/components/Header/Header.js';
 import { NavBar, NavigationProvider } from '@/features/navigation/index.js';
 
 export default function MainLayout() {
