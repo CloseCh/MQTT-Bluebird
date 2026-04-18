@@ -3,7 +3,7 @@ import { useMQTTContext } from '@/features/messageRepresentacion';
 import { NestedMenuItem } from 'mui-nested-menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { FormControl, InputLabel, Select } from '@mui/material';
 
 interface Prop {
@@ -12,25 +12,28 @@ interface Prop {
 
 function DataTypeSelector({ selectedTopic }: Prop) {
   const selectRef = useRef<HTMLDivElement>(null);
-  
+
   const { setMessageFormat, getMessageFormat } = useMQTTContext();
   const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  function handleOpen() {
+  const handleOpen = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
     setAnchorEl(selectRef.current);
-  }
+  }, []);
 
-  function handleClose() {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  }
+  }, []);
 
-  function handleSelect(format: MessageFormatEnum) {
-    setMessageFormat(selectedTopic, format);
-    handleClose();
-  }
+  const handleSelect = useCallback((format: MessageFormatEnum) => {
+    setAnchorEl(null);
+    setTimeout(() => {
+      setMessageFormat(selectedTopic, format);
+    }, 0);
+  }, [selectedTopic, setMessageFormat]);
 
   return (
     <>
@@ -41,7 +44,6 @@ function DataTypeSelector({ selectedTopic }: Prop) {
           label="Message Format"
           value={messageFormat}
           open={false}
-          onOpen={handleOpen}
           onClick={handleOpen}
           readOnly
         >
@@ -49,7 +51,12 @@ function DataTypeSelector({ selectedTopic }: Prop) {
         </Select>
       </FormControl>
 
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose} sx={{ minWidth: '200px' }} >
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        sx={{ minWidth: '200px' }} disableRestoreFocus={false}
+      >
 
         <NestedMenuItem label="Texto" parentMenuOpen={open} sx={{ minWidth: '200px' }} >
           <MenuItem onClick={() => handleSelect("UTF-8")}>UTF-8</MenuItem>
