@@ -32,6 +32,7 @@ export function SubscriptionList({ }: Prop) {
 
         return (
           <SubscriptionListItem
+            key={index}
             labelId={labelId}
             value={value}
             index={index}

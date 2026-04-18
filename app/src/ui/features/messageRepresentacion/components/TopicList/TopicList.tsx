@@ -14,9 +14,9 @@ function TopicList({ }: MQTTListProps) {
 
   return (
     <List sx={{ width: '100%' }}>
-      {topicList.map((topic: Topic, index: number) => (
+      {topicList.map((topic: Topic) => (
         <TopicListItem
-          key={index}
+          key={topic}
           topic={topic}
         />
       ))}
