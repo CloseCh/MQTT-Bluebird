@@ -1,46 +1,63 @@
 import { useState, useCallback, useEffect } from "react";
 import type { SubscriptionContextValue, SubscriptionList } from "../types/subscription.types";
 
-export function subscriptionService(): SubscriptionContextValue {
-  const defaultSubscription = ["#"];
-  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>(defaultSubscription);
+const defaultSubscription: SubscriptionList = {"#": false};
 
-  useEffect(() => {
-    subscribe(defaultSubscription)
-  }, []);
+export function subscriptionService(): SubscriptionContextValue {
+  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>(defaultSubscription);
 
   const subscribe = useCallback(async (topics: string[]) => {
     try {
-      const updated = await window.electron.mqttSubscribe(topics);
-      setSubscriptionList(updated);
+      const notSubscribed = topics.filter(
+        (key) => !subscriptionList[key]
+      );
+      
+      if (notSubscribed.length === 0) return;
+
+      await window.electron.mqttSubscribe(notSubscribed);
+
+      setSubscriptionList((prev) => {
+        const newSubscriptionList = {...prev};
+        notSubscribed.forEach(key => {
+          newSubscriptionList[key] = false;
+        });
+        return newSubscriptionList;
+      });
     } catch (err) {
       console.error('Error al suscribirse:', err);
     }
   }, []);
 
-  const unsubscribe = useCallback(async (topics: string[]) => {
+  const unsubscribe = useCallback(async (topic: string) => {
     try {
-      const updated = await window.electron.mqttUnsubscribe(topics);
-      setSubscriptionList(updated);
+      await window.electron.mqttUnsubscribe([topic]);
+
+      setSubscriptionList(prev => {
+        const newSubscriptionList = {...prev};
+        delete newSubscriptionList[topic];
+        return newSubscriptionList;
+      });
     } catch (err) {
       console.error('Error al desuscribirse:', err);
     }
   }, []);
 
-  const getSubscriptions = useCallback(async () => {
-    try {
-      const current = await window.electron.mqttGetSubscriptions();
-      setSubscriptionList(current);
-    } catch (err) {
-      console.error('Error al obtener suscripciones:', err);
-    }
-  }, []);
+  function updateSubscriptionState (topic: string) {
+    setSubscriptionList(prev => ({
+      ...prev,
+      [topic]: !prev[topic]
+    }));
+  };
+
+  useEffect(() => {
+    subscribe(Object.keys(defaultSubscription));
+  }, [subscribe]);
 
   return {
     subscriptionList,
+    updateSubscriptionState,
     subscribe,
     unsubscribe,
-    getSubscriptions,
   };
 }
 

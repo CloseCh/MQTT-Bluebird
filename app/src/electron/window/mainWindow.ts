@@ -12,13 +12,13 @@ function createMainWindow(): BrowserWindow {
     height: 800
   });
 
+  setupSubscriptor(mainWindow);
+
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5123/');
   } else {
     mainWindow.loadFile(getUIPath());
   }
-
-  setupSubscriptor(mainWindow);
 
   return mainWindow;
 }
