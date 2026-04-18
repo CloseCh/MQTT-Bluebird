@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,8 +20,6 @@ interface Column {
 const columns: readonly Column[] = [
   { id: 'time',      label: 'TimeStamp', width: 75  },
   { id: 'content',   label: 'Content',   width: 250 },
-  { id: 'qos',       label: 'QoS',       width: 50  },
-  { id: 'retention', label: 'Retention', width: 50 },
 ];
 const truncateStyles = {
   overflow: 'hidden',
@@ -45,9 +43,19 @@ function HistoryTable({ handleClick }: Prop) {
 
   const messageFormat: MessageFormatEnum = message.format;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
+  }, [selectedTopic]);
+
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ height: '100%', overflowX: 'auto', border: '1px solid', borderColor: 'divider' }}>
+      <TableContainer 
+        ref={containerRef} 
+        sx={{ height: '100%', overflowX: 'auto', border: '1px solid', borderColor: 'divider' }}
+      >
         <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: 'fixed', minWidth: 1000 }}>
           <TableHead>
             <TableRow>
@@ -62,20 +70,20 @@ function HistoryTable({ handleClick }: Prop) {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {message.messageList.map((message) => (
-              <TableRow 
-                hover 
-                role="checkbox" 
-                tabIndex={-1} 
-                key={message.timeStamp}
-                onClick={() => handleClick(message)}
+          <TableBody key={selectedTopic}>
+            {message.messageList.map((msg, index) => (
+              <TableRow
+                hover
+                role="checkbox"
+                tabIndex={-1}
+                key={`${msg.timeStamp}-${index}`}
+                onClick={() => handleClick(msg)}
                 sx={{ cursor: 'pointer' }}
               >
-                <TableCell sx={truncateStyles}>{message.timeStamp}</TableCell>
-                <TableCell sx={truncateStyles}>{DecoderService(message.data, messageFormat)}</TableCell>
-                <TableCell sx={truncateStyles}>{message.packet.qos}</TableCell>
-                <TableCell sx={truncateStyles}>{message.packet.retain ? 'Yes' : 'No'}</TableCell>
+                <TableCell sx={truncateStyles}>{msg.timeStamp}</TableCell>
+                <TableCell sx={truncateStyles}>
+                  {DecoderService(msg.data, messageFormat)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
