@@ -1,1 +1,3 @@
-export { PublishForm } from "./components/PublishForm/PublishForm";
+export { PublishForm } from "./components/PublishForm";
+
+export { PublishDataTypeSelector } from './components/PublishDataTypeSelector'
