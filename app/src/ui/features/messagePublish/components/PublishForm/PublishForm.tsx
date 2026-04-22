@@ -5,7 +5,7 @@ import { PublishDataTypeSelector } from "../PublishDataTypeSelector";
 type PublishFormValues = {
   topic: string;
   message: string;
-  dataType: string;
+  dataType: MessageFormatEnum;
 };
 
 export function PublishForm() {
@@ -18,12 +18,18 @@ export function PublishForm() {
     defaultValues: {
       topic: "",
       message: "",
-      dataType: "",
+      dataType: undefined,
     },
   });
 
   const onSubmit = (data: PublishFormValues) => {
-    console.log(data);
+    const publishData: PublishPayload = {
+      topic: data.topic,
+      format: data.dataType,
+      payload: data.message
+    };
+
+    window.electron.publishMQTT(publishData);
   };
 
   return (
@@ -47,7 +53,7 @@ export function PublishForm() {
           <Controller
             name="dataType"
             control={control}
-            defaultValue=""
+            defaultValue={undefined}
             render={({ field }) => <PublishDataTypeSelector {...field} />}
           />
           <Button type="submit" variant="contained">

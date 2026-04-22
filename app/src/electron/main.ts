@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron';
-import { destroyClient } from './services/mqtt/mqttConnection.js';
+import { destroyClient, getClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
 import { ipcMainHandle, ipcWebContentsSend } from './util/until.js';
 import { openWindow, closeWindow } from './services/window/windowManagement.js';
@@ -13,6 +13,17 @@ app.on('ready', () => {
     window?.on('closed', () => {
       closeWindow(windowId);
       ipcWebContentsSend('closedWindow', mainWindow.webContents, windowId);
+    });
+  });
+
+  ipcMainHandle('mqttPublish', (payload) => {
+    const client = getClient();
+    if (!client) {
+      throw new Error('MQTT client no está conectado');
+    }
+    client.publish(payload.topic, payload.payload, {
+      qos: payload.qos ?? 0,
+      retain: payload.retain ?? false,
     });
   });
 

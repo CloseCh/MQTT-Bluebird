@@ -13,6 +13,7 @@ function createMainWindow(): BrowserWindow {
   });
 
   setupSubscriptor(mainWindow);
+  
 
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5123/');
