@@ -1,17 +1,60 @@
+import { useForm, Controller } from "react-hook-form";
 import { Button, Card, Stack, TextField } from "@mui/material";
+import { PublishDataTypeSelector } from "../PublishDataTypeSelector";
 
-export function PublishForm(){
+type PublishFormValues = {
+  topic: string;
+  message: string;
+  dataType: string;
+};
+
+export function PublishForm() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<PublishFormValues>({
+    defaultValues: {
+      topic: "",
+      message: "",
+      dataType: "",
+    },
+  });
+
+  const onSubmit = (data: PublishFormValues) => {
+    console.log(data);
+  };
+
   return (
-    <Card 
-      sx={{
-        p: "10px"
-      }}
-    >
-      <Stack spacing={1}>
-        <TextField label="Topic" variant="outlined"/>
-        <TextField label="Message" variant="outlined"/>
-        <Button variant="contained">Enviar</Button>
-      </Stack>
+    <Card sx={{ p: "10px" }}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Stack spacing={1}>
+          <TextField
+            label="Topic"
+            variant="outlined"
+            {...register("topic", { required: "El topic es requerido" })}
+            error={!!errors.topic}
+            helperText={errors.topic?.message}
+          />
+          <TextField
+            label="Message"
+            variant="outlined"
+            {...register("message", { required: "El mensaje es requerido" })}
+            error={!!errors.message}
+            helperText={errors.message?.message}
+          />
+          <Controller
+            name="dataType"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <PublishDataTypeSelector {...field} />}
+          />
+          <Button type="submit" variant="contained">
+            Enviar
+          </Button>
+        </Stack>
+      </form>
     </Card>
   );
 }

@@ -20,7 +20,8 @@
     "dotenv": "17.4.1",
     "mqtt": "5.15.1",
     "mui-nested-menu": "^4.0.3",
-    "os-utils": "0.0.14"
+    "os-utils": "0.0.14",
+    "react-hook-form": "^7.73.1"
   },
   "devDependencies": {
     "@emotion/react": "11.14.0",
