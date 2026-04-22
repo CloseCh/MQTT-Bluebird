@@ -11,7 +11,7 @@ interface Prop {
   selectedTopic: Topic;
 }
 
-function DataTypeSelector({ selectedTopic }: Prop) {
+function RepresentationDataTypeSelector({ selectedTopic }: Prop) {
   const selectRef = useRef<HTMLDivElement>(null);
 
   const { setMessageFormat, getMessageFormat } = useMQTTContext();
@@ -61,13 +61,13 @@ function DataTypeSelector({ selectedTopic }: Prop) {
 
         <NestedMenuItem label="Texto" parentMenuOpen={open} sx={{ minWidth: '200px' }}>
           {TEXT_FORMATS.map((f: MessageFormatEnum) => (
-            <MenuItem key={f} onClick={() => handleSelect(f)}>{f}</MenuItem>
+            <MenuItem key={f} sx={{ minWidth: '200px' }} onClick={() => handleSelect(f)}>{f}</MenuItem>
           ))}
         </NestedMenuItem>
 
         <NestedMenuItem label="Numérico" parentMenuOpen={open} sx={{ minWidth: '200px' }}>
           {NUM_FORMATS.map((f: MessageFormatEnum) => (
-            <MenuItem key={f} onClick={() => handleSelect(f)}>{f}</MenuItem>
+            <MenuItem key={f} sx={{ minWidth: '200px' }} onClick={() => handleSelect(f)}>{f}</MenuItem>
           ))}
         </NestedMenuItem>
       </Menu>
@@ -75,4 +75,4 @@ function DataTypeSelector({ selectedTopic }: Prop) {
   );
 }
 
-export { DataTypeSelector };
+export { RepresentationDataTypeSelector };

@@ -1,6 +1,6 @@
 import { useState, useCallback, type ReactElement } from "react";
 
-import { TopicList, HistoryTable, DataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
+import { TopicList, HistoryTable, RepresentationDataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
 
 import { useMQTTContext } from '@/features/messageRepresentacion';
 
@@ -52,7 +52,7 @@ export default function MainPage() {
           <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
             <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '10px 10px 10px 10px' }}>
               <Box>
-                <DataTypeSelector selectedTopic={selectedTopic} />
+                <RepresentationDataTypeSelector selectedTopic={selectedTopic} />
               </Box>
             </Stack>
             <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
