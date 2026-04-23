@@ -16,9 +16,9 @@ function createMainWindow(): BrowserWindow {
   
 
   if (isDev()) {
-    mainWindow.loadURL('http://localhost:5123/');
+    mainWindow.loadURL('http://localhost:5123/#/login');
   } else {
-    mainWindow.loadFile(getUIPath());
+    mainWindow.loadFile(getUIPath(), { hash: '/login' });
   }
 
   return mainWindow;
