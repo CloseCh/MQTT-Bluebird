@@ -1,8 +1,9 @@
 import { app, BrowserWindow } from 'electron';
-import { destroyClient, getClient } from './services/mqtt/mqttConnection.js';
+import { destroyClient, getClient, connectClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
-import { ipcMainHandle, ipcWebContentsSend } from './util/until.js';
+import { ipcMainHandle, ipcWebContentsSend, ipcMainHandleWithReturn } from './util/until.js';
 import { openWindow, closeWindow } from './services/window/windowManagement.js';
+import { setupClientListeners } from './services/mqtt/mqttSubscriptor.js';
 
 app.on('ready', () => {
   const mainWindow = createMainWindow();
@@ -24,6 +25,27 @@ app.on('ready', () => {
     client.publish(payload.topic, payload.payload, {
       qos: payload.qos ?? 0,
       retain: payload.retain ?? false,
+    });
+  });
+
+  ipcMainHandleWithReturn('mqtt:connection', (endpoint) => {
+    return new Promise((resolve) => {
+      const client = connectClient(endpoint);
+
+      if (client.connected) {
+        setupClientListeners(mainWindow); // ← setup listeners tras conectar
+        resolve(true);
+        return;
+      }
+
+      client.once('connect', () => {
+        setupClientListeners(mainWindow);
+        resolve(true);
+      });
+
+      client.once('error', () => resolve(false));
+      
+      setTimeout(() => resolve(false), 5000);
     });
   });
 

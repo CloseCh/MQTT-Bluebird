@@ -1,21 +1,22 @@
 import { ConnectionForm } from "@/features/brockerConnection";
+import { useConnectionContext } from "@/features/brockerConnection/hooks";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 function LoginPage() {
   const navigate = useNavigate();
-  debugger
-  const handleLogin = async () => {
-    // tu lógica de autenticación...
-    const success = true;
-
-    if (success) {
-      navigate('/'); // redirige a MainLayout
-    }
-  };
   
+  const { success, handleConnection } = useConnectionContext();
+
+  useEffect(() => {
+    if (success) {
+      navigate('/');
+    }
+  }, [success]);
+
   return (
     <>
-      <ConnectionForm />
+      <ConnectionForm handleConnection={handleConnection}/>
     </>
   )
 }

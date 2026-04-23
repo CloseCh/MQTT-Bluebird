@@ -4,15 +4,23 @@ import {
   Stack
 } from '@mui/material';
 
+import { ConnectionProvider } from '@/features/brockerConnection/hooks';
+
 
 export default function LoginLayout() {
   return (
     <>
-      <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
-        <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+      <ConnectionProvider>
+        <Stack
+          sx={{
+            height: '100vh',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <Outlet />
         </Stack>
-      </Stack>
+      </ConnectionProvider>
     </>
   )
 }

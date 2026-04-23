@@ -27,6 +27,7 @@ type EventPayloadMapping = {
   'mqtt:unsubscribe': string[];
   'mqtt:getSubscriptions': void;
   'mqtt:subscriptionsUpdated': string[];
+  'mqtt:connection': string
 };
 
 type UnsubscribeFunction = () => void;
@@ -41,5 +42,7 @@ interface Window {
     mqttSubscribe: (topics: string[]) => Promise<string[]>;
     mqttUnsubscribe: (topics: string[]) => Promise<string[]>;
     mqttGetSubscriptions: () => Promise<string[]>;
+
+    mqttConnection: (endpoint: string) => Promise<boolean>;
   };
 }

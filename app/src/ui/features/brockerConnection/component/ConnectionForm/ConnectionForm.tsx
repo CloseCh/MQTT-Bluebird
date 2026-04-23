@@ -1,15 +1,16 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import type { ConnectionFormValues } from "../../types";
 
-interface ConnectionFormValues {
-  endpoint: string;
-};
+interface Prop {
+  handleConnection: (endpoint: string) => Promise<void>;
+}
 
-export function ConnectionForm(){
+export function ConnectionForm({ handleConnection }: Prop){
   const form = useForm<ConnectionFormValues>();
 
   const onSubmit= (data: ConnectionFormValues) => {
-    console.log(data)
+    handleConnection(data.endpoint);
   };  
 
   return (
@@ -19,6 +20,7 @@ export function ConnectionForm(){
           <TextField 
             label="Endpoint"
             variant="outlined"
+            placeholder="https://ejemplo.com"
             {...form.register("endpoint", { required: "El endpoint es necesario."})}
             error={!!form.formState.errors.endpoint}
             helperText={form.formState.errors.endpoint?.message}

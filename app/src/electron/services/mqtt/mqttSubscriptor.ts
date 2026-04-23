@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
 import { IPublishPacket } from 'mqtt';
-import { connectClient } from './mqttConnection.js';
+import { getClient } from './mqttConnection.js';
 import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/until.js';
 
 let activeSubscriptions: Set<string> = new Set();
@@ -8,7 +8,50 @@ let activeSubscriptions: Set<string> = new Set();
 let handlersRegistered: boolean = false;
 
 export function setupSubscriptor(mainWindow: BrowserWindow): void {
-  const client = connectClient();
+  if (!handlersRegistered) {
+    handlersRegistered = true;
+
+    ipcMainHandleWithReturn('mqtt:subscribe', (topics) => {
+      return new Promise((resolve, reject) => {
+        const client = getClient();
+        if (!client) return reject(new Error('Cliente MQTT no conectado'));
+
+        client.subscribe(topics, (err) => {
+          if (err) return reject(err);
+          topics.forEach(t => activeSubscriptions.add(t));
+          resolve([...activeSubscriptions]);
+        });
+      });
+    });
+
+    ipcMainHandleWithReturn('mqtt:unsubscribe', (topics) => {
+      return new Promise((resolve, reject) => {
+        const client = getClient();
+        if (!client) return reject(new Error('Cliente MQTT no conectado'));
+
+        client.unsubscribe(topics, (err) => {
+          if (err) return reject(err);
+          topics.forEach(t => activeSubscriptions.delete(t));
+          resolve([...activeSubscriptions]);
+        });
+      });
+    });
+
+    ipcMainHandleWithReturn('mqtt:getSubscriptions', () => {
+      return [...activeSubscriptions];
+    });
+  }
+
+  mainWindow.on('closed', () => {
+    const client = getClient();
+    if (client) client.end();
+    activeSubscriptions.clear();
+  });
+}
+
+export function setupClientListeners(mainWindow: BrowserWindow): void {
+  const client = getClient();
+  if (!client) return;
 
   client.on('connect', () => {
     if (activeSubscriptions.size > 0) {
@@ -31,37 +74,4 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
 
     ipcWebContentsSend('message', mainWindow.webContents, messageReceived);
   });
-
-  mainWindow.on('closed', () => {
-    client.end();
-    activeSubscriptions.clear();
-  });
-
-  if (!handlersRegistered) {
-    handlersRegistered = true;
-
-    ipcMainHandleWithReturn('mqtt:subscribe', (topics) => {
-      return new Promise((resolve, reject) => {
-        client.subscribe(topics, (err) => {
-          if (err) return reject(err);
-          topics.forEach(t => activeSubscriptions.add(t));
-          resolve([...activeSubscriptions]);
-        });
-      });
-    });
-
-    ipcMainHandleWithReturn('mqtt:unsubscribe', (topics) => {
-      return new Promise((resolve, reject) => {
-        client.unsubscribe(topics, (err) => {
-          if (err) return reject(err);
-          topics.forEach(t => activeSubscriptions.delete(t));
-          resolve([...activeSubscriptions]);
-        });
-      });
-    });
-
-    ipcMainHandleWithReturn('mqtt:getSubscriptions', () => {
-      return [...activeSubscriptions];
-    });
-  }
 }
