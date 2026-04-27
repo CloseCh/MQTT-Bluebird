@@ -2,20 +2,10 @@ import { app, BrowserWindow } from 'electron';
 import { destroyClient, getClient, connectClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
 import { ipcMainHandle, ipcWebContentsSend, ipcMainHandleWithReturn } from './util/until.js';
-import { openWindow, closeWindow } from './services/window/windowManagement.js';
 import { setupClientListeners } from './services/mqtt/mqttSubscriptor.js';
 
 app.on('ready', () => {
   const mainWindow = createMainWindow();
-
-  ipcMainHandle('openWindow', (windowId) => {
-    const window: BrowserWindow | null = openWindow(windowId, mainWindow);
-    
-    window?.on('closed', () => {
-      closeWindow(windowId);
-      ipcWebContentsSend('closedWindow', mainWindow.webContents, windowId);
-    });
-  });
 
   ipcMainHandle('mqttPublish', (payload) => {
     const client = getClient();

@@ -19,8 +19,6 @@ interface PublishPayload {
 type EventPayloadMapping = {
   message: MQTTmessage;
   mqttPublish: PublishPayload;
-  openWindow: string;
-  closedWindow: string;
 
   // subscriptions
   'mqtt:subscribe': string[];
@@ -36,8 +34,6 @@ interface Window {
   electron: {
     subscribeMQTT: (callback: (message: MQTTmessage) => void) => void;
     publishMQTT: (message: PublishPayload) => Promise<void>;
-    openWindow: (windowId: string) => Promise<void>;
-    closedWindow: (callback: (windowId: string) => void) => void;
 
     mqttSubscribe: (topics: string[]) => Promise<string[]>;
     mqttUnsubscribe: (topics: string[]) => Promise<string[]>;

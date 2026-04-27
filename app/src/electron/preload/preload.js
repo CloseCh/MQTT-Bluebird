@@ -27,12 +27,6 @@ contextBridge.exposeInMainWorld('electron', {
     }),
   publishMQTT: (message) =>
     ipcInvoke('mqttPublish', message),
-  openWindow: (windowId) =>
-    ipcInvoke('openWindow', windowId),
-  closedWindow: (callback) =>
-    ipcOn('closedWindow', (temp) => {
-      callback(temp);
-    }),
   
   mqttSubscribe: (topics) =>
     ipcInvoke('mqtt:subscribe', topics),
