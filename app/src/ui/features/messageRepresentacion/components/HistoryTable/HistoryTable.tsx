@@ -1,98 +1,64 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { DataGrid, type GridColDef, type GridRowParams } from '@mui/x-data-grid';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 import DecoderService from '../../service/DecorderService';
-import type { MessageFormatEnum, MQTTMessageList } from '../../types/mqtt.types';
-
-interface Column {
-  id: 'time' | 'content' | 'qos' | 'retention' | 'density';
-  label: string;
-  width?: number;
-  align?: 'right';
-}
-
-const columns: readonly Column[] = [
-  { id: 'time',      label: 'TimeStamp', width: 75  },
-  { id: 'content',   label: 'Content',   width: 250 },
-];
-const truncateStyles = {
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  borderRight: '1px solid',
-  borderLeft: '1px solid',
-  borderColor: 'divider',
-} as const;
+import type { MQTTMessageList } from '../../types/mqtt.types';
 
 interface Prop {
   handleClick: (message: MQTTMessage) => void;
 }
 
 function HistoryTable({ handleClick }: Prop) {
-  const { getSelectedTopic, getTypedMessageList } = useMQTTContext(); 
+  const { getSelectedTopic, getTypedMessageList } = useMQTTContext();
 
   const selectedTopic = getSelectedTopic();
-
   const message: MQTTMessageList = getTypedMessageList(selectedTopic);
 
-  const messageFormat: MessageFormatEnum = message.format;
+  const columns: GridColDef[] = [
+    {
+      field: 'timeStamp',
+      headerName: 'TimeStamp',
+      width: 125,
+    },
+    {
+      field: 'content',
+      headerName: 'Content',
+      flex: 1,
+      renderCell: (params) =>
+        DecoderService(params.row.data, message.format),
+    },
+  ];
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = 0;
-    }
-  }, [selectedTopic]);
+  const rows = message.messageList.map((msg, index) => ({
+    id: `${msg.timeStamp}-${index}`,
+    ...msg,
+  }));
 
   return (
-    <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <TableContainer 
-        ref={containerRef} 
-        sx={{ height: '100%', overflowX: 'auto', border: '1px solid', borderColor: 'divider' }}
-      >
-        <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: 'fixed', minWidth: 1000 }}>
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  sx={{ width: column.width, ...truncateStyles }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody key={selectedTopic}>
-            {message.messageList.map((msg, index) => (
-              <TableRow
-                hover
-                role="checkbox"
-                tabIndex={-1}
-                key={`${msg.timeStamp}-${index}`}
-                onClick={() => handleClick(msg)}
-                sx={{ cursor: 'pointer' }}
-              >
-                <TableCell sx={truncateStyles}>{msg.timeStamp}</TableCell>
-                <TableCell sx={truncateStyles}>
-                  {DecoderService(msg.data, messageFormat)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <Paper sx={{ width: '100%', height: '100%' }}>
+      <DataGrid
+        key={selectedTopic}
+        rows={rows}
+        columns={columns}
+        onRowClick={(params: GridRowParams) =>
+          handleClick(params.row as MQTTMessage)
+        }
+        disableColumnMenu
+        hideFooter
+        sx={{
+          height: '100%',
+          '& .MuiDataGrid-cell': {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          },
+          cursor: 'pointer',
+        }}
+      />
     </Paper>
   );
 }
 
 const HistoryTableMemo = React.memo(HistoryTable);
-
 export { HistoryTableMemo as HistoryTable };
