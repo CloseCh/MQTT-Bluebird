@@ -9,24 +9,23 @@ import LoginLayout from './layout/LoginLayout/LoginLayout';
 import LoginPage from './layout/LoginLayout/page/LoginPage';
 import './index.css';
 import CssBaseline from '@mui/material/CssBaseline';
+import { AppProviders } from './utils/composeProviders';
 
 export default function App() {
   return (
-    <>
-      <CssBaseline />
-      <HashRouter>
+    <HashRouter>
+      <AppProviders>
+        <CssBaseline />
         <Routes>
           <Route element={<LoginLayout />}>
             <Route path='/login' element={<LoginPage />} />
           </Route>
-
           <Route element={<MainLayout />}>
             <Route path='/' element={<MainPage />} />
           </Route>
-
           <Route path='*' element={<Navigate to='/login' replace />} />
         </Routes>
-      </HashRouter>
-    </>
+      </AppProviders>
+    </HashRouter>
   )
 }

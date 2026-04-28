@@ -1,3 +1,4 @@
+import StatusButton from "@/features/brockerConnection/component/StatusButton/StatusButton";
 import {
   Box,
   Typography,
@@ -17,6 +18,10 @@ export default function Header({title}: Prop) {
             <Typography variant="h6" color="inherit" component="div">
               {title}
             </Typography>
+
+            <Box sx={{ ml: "auto" }}>
+              <StatusButton/>
+            </Box>
           </Toolbar>
         </AppBar>
     </Box>

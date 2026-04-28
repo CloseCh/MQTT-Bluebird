@@ -1,23 +1,27 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { ConnectionContextValue } from "../types";
 
 export function connectionService(): ConnectionContextValue {
-  const [success, setSuccess] = useState<boolean>(false);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [connectedEndpoint, setConnectedEndpoint] = useState<string | null>(null);
 
+  const handleConnection = useCallback(async (endpoint: string): Promise<boolean> => {
+    const result = await window.electron.mqttConnection(endpoint);
+    setIsConnected(result);
+    if (result) setConnectedEndpoint(endpoint);
+    return result;
+  }, []);
 
-  const handleConnection = async (endpoint: string): Promise<void> => {
-    const result: boolean = await window.electron.mqttConnection(endpoint);
+  const handleDisconnection = useCallback(async (): Promise<void> => {
+    await window.electron.mqttDisconnect();
+    setIsConnected(false);
+    setConnectedEndpoint(null);
+  }, []);
 
-    if (result) {
-      setSuccess(result);
-    } else {
-      setSuccess(result);
-    }
-  };
-
-  
   return {
-    success,
-    handleConnection
+    isConnected,
+    connectedEndpoint,
+    handleConnection,
+    handleDisconnection,
   };
 }

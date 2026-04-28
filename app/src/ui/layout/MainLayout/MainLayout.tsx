@@ -1,32 +1,29 @@
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 
 import {
-  CssBaseline, 
   Stack
 } from '@mui/material';
 
-import { MQTTProvider } from '@/features/messageRepresentacion';
-import { SubscriptionProvider } from '@/features/messageSubscription';
 import Header from '../../shared/components/Header/Header.js';
-import { NavBar, NavigationProvider } from '@/features/navigation/index.js';
+import { NavBar } from '@/features/navigation/index.js';
+import { useConnectionContext } from '@/features/brockerConnection/hooks';
+import { useEffect } from 'react';
 
 export default function MainLayout() {
+  const { isConnected } = useConnectionContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isConnected) navigate('/login');
+  }, [isConnected, navigate]);
+  
   return (
-    <>
-      <CssBaseline />
-      <MQTTProvider dataPointCount={100}>
-      <SubscriptionProvider>
-      <NavigationProvider>
-        <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
-          <Header title='MQTTClient' />
-          <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
-              <NavBar/>
-            <Outlet />
-          </Stack>
-        </Stack>
-      </NavigationProvider>
-      </SubscriptionProvider>
-      </MQTTProvider>
-    </>
+    <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
+      <Header title='MQTTClient' />
+      <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+        <NavBar />
+        <Outlet />
+      </Stack>
+    </Stack>
   )
 }

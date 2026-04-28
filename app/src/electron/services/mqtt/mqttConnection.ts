@@ -9,6 +9,11 @@ export function getClient(): MqttClient | null {
 export function connectClient(endpoint: string): MqttClient {
   if (client) return client;
 
+  const url = new URL(endpoint);
+  if (!['mqtt:', 'mqtts:', 'ws:', 'wss:'].includes(url.protocol)) {
+    throw new Error(`Protocolo no soportado: ${url.protocol}`);
+  }
+
   client = mqtt.connect(endpoint, {
     clientId: 'mqtt_client_' + Math.random().toString(16).substring(2, 8),
     clean: true,
@@ -18,7 +23,10 @@ export function connectClient(endpoint: string): MqttClient {
 
   client.on('error', (err) => {
     console.error('Error MQTT:', err);
-    destroyClient();
+    
+    if (isUnrecoverableError(err)) {
+      destroyClient();
+    }
   });
 
   client.on('offline', () => console.warn('Cliente MQTT desconectado / sin red'));
@@ -31,4 +39,15 @@ export function destroyClient(): void {
     client.end(true);
     client = null;
   }
+}
+
+function isUnrecoverableError(err: Error): boolean {
+  const msg = err.message.toLowerCase();
+  
+  return (
+    msg.includes('not authorized') ||
+    msg.includes('bad user name') ||
+    msg.includes('connection refused') ||
+    msg.includes('invalid protocol')
+  );
 }

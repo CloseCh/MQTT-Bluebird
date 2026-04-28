@@ -34,6 +34,9 @@ contextBridge.exposeInMainWorld('electron', {
     ipcInvoke('mqtt:unsubscribe', topics),
   mqttGetSubscriptions: () =>
     ipcInvoke('mqtt:getSubscriptions', undefined),
+
   mqttConnection: (endpoint) =>
     ipcInvoke('mqtt:connection', endpoint),
+  mqttDisconnect: () =>
+    ipcInvoke('mqtt:disconnect', undefined),
 });

@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import { destroyClient, getClient, connectClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
-import { ipcMainHandle, ipcWebContentsSend, ipcMainHandleWithReturn } from './util/until.js';
+import { ipcMainHandle, ipcMainHandleWithReturn } from './util/until.js';
 import { setupClientListeners } from './services/mqtt/mqttSubscriptor.js';
 
 app.on('ready', () => {
@@ -23,7 +23,7 @@ app.on('ready', () => {
       const client = connectClient(endpoint);
 
       if (client.connected) {
-        setupClientListeners(mainWindow); // ← setup listeners tras conectar
+        setupClientListeners(mainWindow);
         resolve(true);
         return;
       }
@@ -34,9 +34,13 @@ app.on('ready', () => {
       });
 
       client.once('error', () => resolve(false));
-      
+
       setTimeout(() => resolve(false), 5000);
     });
+  });
+
+  ipcMainHandle('mqtt:disconnect', () => {
+    destroyClient();
   });
 
   app.on('activate', () => {
@@ -46,10 +50,9 @@ app.on('ready', () => {
   });
 });
 
-// quitting the app when no windows are open on non-macOS platforms
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
   destroyClient();
 });
