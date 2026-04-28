@@ -1,49 +1,23 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
-import { DataGrid, type GridColDef, type GridRowParams } from '@mui/x-data-grid';
-import { useMQTTContext } from '../../hooks/useMQTTContext';
-import DecoderService from '../../service/DecorderService';
-import type { MQTTMessageList } from '../../types/mqtt.types';
+import { DataGrid, type GridRowParams } from '@mui/x-data-grid';
+import { useHistoryTable } from './hook/useHistoryTable';
 
-interface Prop {
+interface Props {
   handleClick: (message: MQTTMessage) => void;
 }
 
-function HistoryTable({ handleClick }: Prop) {
-  const { getSelectedTopic, getTypedMessageList } = useMQTTContext();
-
-  const selectedTopic = getSelectedTopic();
-  const message: MQTTMessageList = getTypedMessageList(selectedTopic);
-
-  const columns: GridColDef[] = [
-    {
-      field: 'timeStamp',
-      headerName: 'TimeStamp',
-      width: 125,
-    },
-    {
-      field: 'content',
-      headerName: 'Content',
-      flex: 1,
-      renderCell: (params) =>
-        DecoderService(params.row.data, message.format),
-    },
-  ];
-
-  const rows = message.messageList.map((msg, index) => ({
-    id: `${msg.timeStamp}-${index}`,
-    ...msg,
-  }));
+function HistoryTable({ handleClick }: Props) {
+  const { selectedTopic, columns, rows } = useHistoryTable();
 
   return (
     <Paper sx={{ width: '100%', height: '100%' }}>
+      {/* key fuerza remount al cambiar de topic para resetear el estado del DataGrid */}
       <DataGrid
         key={selectedTopic}
         rows={rows}
         columns={columns}
-        onRowClick={(params: GridRowParams) =>
-          handleClick(params.row as MQTTMessage)
-        }
+        onRowClick={(params: GridRowParams) => handleClick(params.row as MQTTMessage)}
         disableColumnMenu
         hideFooter
         sx={{
