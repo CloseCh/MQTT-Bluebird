@@ -11,7 +11,7 @@ export function SubscriptionList({ }: Prop) {
 
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {Object.entries(subscriptionList).map(([value, isChecked], index) => {
+      {Object.entries(subscriptionList).map(([value, isChecked], index) => {
         const labelId = `checkbox-list-label-${value}`;
 
         return (

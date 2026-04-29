@@ -9,7 +9,6 @@ interface SubscriptionProviderProp {
 }
 
 export function SubscriptionProvider({ children }: SubscriptionProviderProp) {
-
   const subscription = subscriptionService();
 
   return (

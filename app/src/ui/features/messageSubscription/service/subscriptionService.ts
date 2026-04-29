@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import type { SubscriptionContextValue, SubscriptionList } from "../types/subscription.types";
 import { useConnectionContext } from "@/features/brockerConnection/hooks"; 
 
-const defaultSubscription: SubscriptionList = {"#": false};
+const defaultSubscription: SubscriptionList = {"#": true};
 
 export function subscriptionService(): SubscriptionContextValue {
   const { isConnected } = useConnectionContext();
@@ -21,7 +21,7 @@ export function subscriptionService(): SubscriptionContextValue {
       setSubscriptionList((prev) => {
         const newSubscriptionList = {...prev};
         notSubscribed.forEach(key => {
-          newSubscriptionList[key] = false;
+          newSubscriptionList[key] = true;
         });
         return newSubscriptionList;
       });

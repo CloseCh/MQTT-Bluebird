@@ -10,8 +10,12 @@ interface Prop {
   handleToggle: (value: string) => void;
 }
 
-export function SubscriptionListItem({ labelId, value, checked, handleToggle }: Prop) {
-
+export function SubscriptionListItem({ 
+  labelId, 
+  value, 
+  checked, 
+  handleToggle 
+}: Prop) {
   const { unsubscribe } = useSubscriptionContext();
 
   return (

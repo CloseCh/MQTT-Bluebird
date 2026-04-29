@@ -1,4 +1,5 @@
 export type Subscription = string;
+
 export type Selected = boolean;
 
 export type SubscriptionList = Record<Subscription, Selected>;
