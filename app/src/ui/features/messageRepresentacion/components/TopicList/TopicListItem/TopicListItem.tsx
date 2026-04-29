@@ -1,6 +1,5 @@
 import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
-import MailIcon from '@mui/icons-material/Mail'
 
 import type { Topic } from '../../../types/mqtt.types';
 import { useMQTTContext } from '../../../hooks/useMQTTContext';
@@ -26,7 +25,6 @@ function TopicListItem({ topic }: MQTTListItemProps) {
         }
       }}
     >
-      <MailIcon sx={{ marginRight: '10px' }} />
       <span>{topic}</span>
     </ListItemButton>
   );

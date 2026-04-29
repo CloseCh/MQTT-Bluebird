@@ -1,5 +1,3 @@
-import { useRef, useState } from "react";
-
 import { 
   Paper,
   InputBase,
@@ -8,51 +6,32 @@ import {
 
 import AddIcon from "@mui/icons-material/Add";
 
-import { useSubscriptionContext } from "../../hooks";
-import { findCoveringSubscriptions } from "../../utils";
-import { DuplicateSubscriptionModal } from "../DuplicatedSubscriptionModal";
+import { DuplicateSubscriptionModal } from "../DuplicatedSubscriptionModal/DuplicatedSubscriptionModal";
+import { useSubscriptionField } from "./useSubscriptionField";
 
 export function SubscriptionField() {
-  const { subscribe, subscriptionList } = useSubscriptionContext();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [pendingTopic, setPendingTopic] = useState<string | null>(null);
-  const [coveringTopics, setCoveringTopics] = useState<string[]>([]);
-
-  function trySubscribe(topic: string) {
-    const covering = findCoveringSubscriptions(topic, subscriptionList);
-    if (covering.length > 0) {
-      setPendingTopic(topic);
-      setCoveringTopics(covering);
-    } else {
-      subscribe([topic]);
-    }
-  }
-
-  function handleClick() {
-    if (!inputRef.current) return;
-    const value = inputRef.current.value;
-    if (value.length > 0) {
-      trySubscribe(value);
-      inputRef.current.value = "";
-    }
-  }
-
-  function handleConfirm() {
-    if (pendingTopic) subscribe([pendingTopic]);
-    setPendingTopic(null);
-    setCoveringTopics([]);
-  }
-
-  function handleCancel() {
-    setPendingTopic(null);
-    setCoveringTopics([]);
-  }
+  const { 
+    inputRef,
+    handleClick,
+    pendingTopic,
+    coveringTopics,
+    handleConfirm,
+    handleCancel
+  } = useSubscriptionField();
 
   return (
     <>
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center" }}
+        elevation={0}
+        square
+        sx={{ 
+          p: "2px 4px", 
+          display: "flex", 
+          alignItems: "center", 
+          borderBottom: "1px solid", 
+          borderColor: "divider" 
+        }}
       >
         <InputBase
           sx={{ ml: 1, flex: 1 }}

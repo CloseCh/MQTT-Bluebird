@@ -13,7 +13,7 @@ interface Prop {
 export default function Header({title}: Prop) {
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar position="sticky">
+      <AppBar position="sticky" elevation={0}>
           <Toolbar variant="dense">
             <Typography variant="h6" color="inherit" component="div">
               {title}

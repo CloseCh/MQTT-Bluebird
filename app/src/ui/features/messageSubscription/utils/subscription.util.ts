@@ -1,4 +1,4 @@
-import type { SubscriptionList } from "../types";
+import type { SubscriptionList } from "../types/subscription.types";
 
 function mqttTopicToRegex(subscription: string): RegExp {
   const pattern = subscription

@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import { subscriptionService } from '../service';
-import type { SubscriptionContextValue } from '../types';
+import { subscriptionService } from '../service/subscriptionService';
+import type { SubscriptionContextValue } from '../types/subscription.types';
 
 const subscriptionContext = createContext<SubscriptionContextValue | null>(null);
 
