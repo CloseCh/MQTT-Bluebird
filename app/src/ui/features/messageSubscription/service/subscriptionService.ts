@@ -1,12 +1,10 @@
 import { useState, useCallback, useEffect } from "react";
 import type { SubscriptionContextValue, SubscriptionList } from "../types/subscription.types";
-import { useConnectionContext } from "@/features/brockerConnection/hooks"; 
-
-const defaultSubscription: SubscriptionList = {"#": true};
+import { useConnectionContext } from "@/features/brockerConnection"; 
 
 export function subscriptionService(): SubscriptionContextValue {
   const { isConnected } = useConnectionContext();
-  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>(defaultSubscription);
+  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>({});
 
   const subscribe = useCallback(async (topics: string[]) => {
     try {
@@ -53,7 +51,6 @@ export function subscriptionService(): SubscriptionContextValue {
 
   useEffect(() => {
     if (!isConnected) return;
-    subscribe(Object.keys(defaultSubscription));
   }, [isConnected]);
 
   return {

@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "electron-vite dev",
+    "type:validate": "tsc -b",
     "build": "tsc -b && electron-vite build",
     "lint": "eslint .",
     "dist:win": "tsc -b && electron-vite build && electron-builder --win --x64",

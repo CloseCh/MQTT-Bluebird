@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import { connectionService } from '../service';
-import type { ConnectionContextValue } from '../types';
+import { connectionService } from '../service/connectionService';
+import type { ConnectionContextValue } from '../types/connection.types';
 
 const ConnectionContext = createContext<ConnectionContextValue | null>(null);
 

@@ -1,4 +1,4 @@
-import { ConnectionProvider } from "@/features/brockerConnection/hooks";
+import { ConnectionProvider } from "@/features/brockerConnection";
 import { MQTTProvider } from "@/features/messageRepresentacion";
 import { SubscriptionProvider } from "@/features/messageSubscription";
 import { NavigationProvider } from "@/features/navigation";

@@ -6,7 +6,7 @@ import {
 
 import Header from '../../shared/components/Header/Header.js';
 import { NavBar } from '@/features/navigation/index.js';
-import { useConnectionContext } from '@/features/brockerConnection/hooks';
+import { useConnectionContext } from '@/features/brockerConnection/';
 import { useEffect } from 'react';
 
 export default function MainLayout() {

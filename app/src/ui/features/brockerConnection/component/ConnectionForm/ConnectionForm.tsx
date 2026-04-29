@@ -7,9 +7,8 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useConnectionForm } from "./hooks/useConnectionForm";
-import { PROTOCOLS } from "../../constants";
-import { validateHost, validatePort } from "./utils";
+import { useConnectionForm } from "./useConnectionForm";
+import { PROTOCOLS } from "../../constants/connection.constants";
 
 export function ConnectionForm() {
   const {
@@ -17,6 +16,8 @@ export function ConnectionForm() {
     status,
     isConnecting,
     errorMessage,
+    validateHost, 
+    validatePort,
     handleProtocolChange,
     onSubmit,
     dismissError,

@@ -1,4 +1,4 @@
-import type { ConnectionStatus, MqttProtocol } from "../types";
+import type { ConnectionStatus, MqttProtocol } from "../types/connection.types";
 
 export const PROTOCOLS: { value: MqttProtocol; label: string }[] = [
   { value: "mqtt", label: "mqtt://" },

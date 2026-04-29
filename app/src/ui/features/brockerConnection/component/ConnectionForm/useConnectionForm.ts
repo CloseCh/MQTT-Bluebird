@@ -1,23 +1,21 @@
 import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import {
-  type ConnectionFormValues,
-  type ConnectionStatus,
-  type MqttProtocol,
-} from "@/features/brockerConnection/types";
-import { useConnectionContext } from "@/features/brockerConnection/hooks";
-import { DEFAULT_PORTS } from "@/features/brockerConnection/constants";
+import type {
+  ConnectionFormValues,
+  ConnectionStatus,
+  MqttProtocol,
+} from "@/features/brockerConnection/types/connection.types";
+import { useConnectionContext } from "@/features/brockerConnection/hooks/useConnectionContext";
+import { DEFAULT_PORTS } from "@/features/brockerConnection/constants/connection.constants";
 import { useNavigate } from "react-router";
-import { buildEndpoint } from "../utils";
+import { buildEndpoint, validateHost, validatePort } from "../../utils/utils";
 
 export function useConnectionForm() {
   const navigate = useNavigate();
   const [status, setStatus] = useState<ConnectionStatus>("disconnected");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Estado de conexión real viene del provider
-  const { handleConnection } =
-    useConnectionContext();
+  const { handleConnection } = useConnectionContext();
 
   const form = useForm<ConnectionFormValues>({
     defaultValues: {
@@ -34,9 +32,7 @@ export function useConnectionForm() {
       const proto = e.target.value as MqttProtocol;
       form.setValue("protocol", proto);
       form.setValue("port", DEFAULT_PORTS[proto]);
-    },
-    [form]
-  );
+    }, [form]);
 
   const onSubmit = useCallback(async (data: ConnectionFormValues) => {
     setStatus("connecting");
@@ -62,6 +58,8 @@ export function useConnectionForm() {
     status,
     isConnecting,
     errorMessage,
+    validateHost, 
+    validatePort,
     handleProtocolChange,
     onSubmit,
     dismissError,

@@ -1,4 +1,4 @@
-import type { ConnectionFormValues } from "@/features/brockerConnection/types";
+import type { ConnectionFormValues } from "@/features/brockerConnection/types/connection.types";
 
 export function buildEndpoint(values: ConnectionFormValues): string {
   return `${values.protocol}://${values.host}:${values.port}`;
