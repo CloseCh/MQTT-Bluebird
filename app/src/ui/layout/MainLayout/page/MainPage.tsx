@@ -7,18 +7,22 @@ import { useMQTTContext } from '@/features/messageRepresentacion';
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
-import { SubscriptionField, SubscriptionList } from "@/features/messageSubscription";
+import { SubscriptionField, SubscriptionList, useSubscriptionContext } from "@/features/messageSubscription";
 import { Divider } from "@mui/material";
 import { PublishForm } from "@/features/messagePublish";
+import { filterBySubscriptions } from "@/shared/service/topicFilter";
 
 export default function MainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
 
-  const { getSelectedTopic } = useMQTTContext();
-
+  const { topicList, getSelectedTopic } = useMQTTContext();
+  const { getSelectedSubscriptions,  } = useSubscriptionContext();
   const { barOpen } = useNavigationContext();
 
   const selectedTopic = getSelectedTopic();
+  const selectedSubscription = getSelectedSubscriptions(); 
+  const filteredTopicList = filterBySubscriptions(topicList, selectedSubscription);
+  const showTable = filteredTopicList.includes(selectedTopic);
 
   const handleTableClick = useCallback((message: MQTTMessage) => {
     setMessageSelected(message);
@@ -48,7 +52,7 @@ export default function MainPage() {
         
         {sideBarOpened}
 
-        {selectedTopic !== "" &&
+        {selectedTopic !== "" && showTable &&
           <Stack sx={{ height: '100%', flex: 1, minWidth: 0, overflow: 'hidden' }}>
             <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '10px 10px 10px 10px' }}>
               <Box>

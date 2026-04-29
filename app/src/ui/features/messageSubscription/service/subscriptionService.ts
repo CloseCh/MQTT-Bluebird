@@ -61,6 +61,7 @@ export function subscriptionService(): SubscriptionContextValue {
     updateSubscriptionState,
     subscribe,
     unsubscribe,
+    getSelectedSubscriptions: () => Object.keys(subscriptionList).filter(key => subscriptionList[key])
   };
 }
 

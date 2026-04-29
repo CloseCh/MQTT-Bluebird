@@ -8,4 +8,5 @@ export interface SubscriptionContextValue {
   subscribe: (topics: string[]) => Promise<void>;
   updateSubscriptionState:  (topic: string) => void;
   unsubscribe: (topic: string) => Promise<void>;
+  getSelectedSubscriptions: () => string[]
 }

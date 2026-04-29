@@ -13,9 +13,9 @@ interface MQTTListProps {
 
 function TopicList({ }: MQTTListProps) {
   const { topicList } = useMQTTContext();
-  const { subscriptionList } = useSubscriptionContext();
+  const { getSelectedSubscriptions } = useSubscriptionContext();
 
-  const selectedSubscription = Object.keys(subscriptionList).filter(key => subscriptionList[key]);
+  const selectedSubscription = getSelectedSubscriptions();
 
   const filteredTopicList = filterBySubscriptions(topicList, selectedSubscription);
 
