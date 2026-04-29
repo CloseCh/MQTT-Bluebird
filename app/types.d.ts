@@ -6,7 +6,7 @@ interface MQTTMessage {
   packet: import('mqtt').IPublishPacket;
 };
 
-type MessageFormatEnum = 'UTF-8' | 'ASCIICode' | 'JSON'| 'HEX' | 'int8' | 'uint8' | 'int16' | 'uint16'| 'int32' | 'uint32'| 'int64'| 'uint64';;
+type MessageFormatEnum = 'UTF-8' | 'ASCIICode' | 'HEX' | 'int8' | 'uint8' | 'int16' | 'uint16'| 'int32' | 'uint32'| 'int64'| 'uint64';;
 
 interface PublishPayload {
   topic: string;

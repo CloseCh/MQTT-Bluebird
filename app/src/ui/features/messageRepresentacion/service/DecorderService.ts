@@ -10,7 +10,6 @@ export default function DecoderService(hexData: string, format: MessageFormatEnu
   switch (format) {
     case 'ASCIICode': return decodeAscii(bytes);
     case 'HEX':     return decodeHex(hexData);
-    case 'JSON':    return decodeJson(bytes);
     case 'int8':    return String(view.getInt8(0));
     case 'uint8':   return String(view.getUint8(0));
     case 'int16':   return String(view.getInt16(0, false));
@@ -19,12 +18,8 @@ export default function DecoderService(hexData: string, format: MessageFormatEnu
     case 'uint32':  return String(view.getUint32(0, false));
     case 'int64':   return String(view.getBigInt64(0, false));
     case 'uint64':  return String(view.getBigUint64(0, false));
-    default:        return decodeString(bytes);
+    default:        return decodeText(bytes);
   }
-}
-
-function decodeString(bytes: Uint8Array) {
-  return new TextDecoder('UTF-8').decode(bytes);
 }
 
 function decodeAscii(bytes: Uint8Array) {
@@ -36,12 +31,12 @@ function decodeHex(hexData: string) {
   return hexData.toUpperCase();
 }
 
-function decodeJson(bytes: Uint8Array) {
+function decodeText(bytes: Uint8Array) {
   try {
     const str = new TextDecoder('utf-8').decode(bytes);
     const parsed = JSON.parse(str);
     return JSON.stringify(parsed, null, 2);
   } catch {
-    return new TextDecoder('ascii').decode(bytes);
+    return new TextDecoder('UTF-8').decode(bytes);
   }
 }
