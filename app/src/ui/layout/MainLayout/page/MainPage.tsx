@@ -1,55 +1,24 @@
-import { useState, useCallback, type ReactElement } from "react";
+import { HistoryTable, RepresentationDataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
 
-import { TopicList, HistoryTable, RepresentationDataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
-
-import { useMQTTContext } from '@/features/messageRepresentacion';
-
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import { SideBar, useNavigationContext } from "@/features/navigation/index.js";
-import { SubscriptionField, SubscriptionList, useSubscriptionContext } from "@/features/messageSubscription";
-import { Divider } from "@mui/material";
-import { PublishForm } from "@/features/messagePublish";
-import { filterBySubscriptions } from "@/shared/service/topicFilter";
+import {
+  Box, 
+  Stack
+} from "@mui/material";
+import { useMainPage } from "./useMainPage";
 
 export default function MainPage() {
-  const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
-
-  const { topicList, getSelectedTopic } = useMQTTContext();
-  const { getSelectedSubscriptions,  } = useSubscriptionContext();
-  const { barOpen } = useNavigationContext();
-
-  const selectedTopic = getSelectedTopic();
-  const selectedSubscription = getSelectedSubscriptions(); 
-  const filteredTopicList = filterBySubscriptions(topicList, selectedSubscription);
-  const showTable = filteredTopicList.includes(selectedTopic);
-
-  const handleTableClick = useCallback((message: MQTTMessage) => {
-    setMessageSelected(message);
-  }, []);
-
-  const handleCloseDetailedClick = () => {
-    setMessageSelected(null);
-  };
-
-  let sideBarOpened: ReactElement;
-
-  switch(barOpen) {
-    case "subcription":
-      sideBarOpened = SubscriptionSideBar();
-      break;
-    case "publish":
-      sideBarOpened = PublishSideBar();
-      break;
-    default:
-      sideBarOpened = <></>;
-  }
+  const { 
+    sideBarOpened,
+    selectedTopic,
+    showTable,
+    handleTableClick,
+    messageSelected,
+    handleCloseDetailedClick
+  } = useMainPage();
 
   return (
     <>
       <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
-
-        
         {sideBarOpened}
 
         {selectedTopic !== "" && showTable &&
@@ -71,41 +40,5 @@ export default function MainPage() {
         : <></>
       }
     </>
-  );
-}
-
-function SubscriptionSideBar() {
-  return (
-    <SideBar>
-      <Stack sx={{ height: '100%', width: '100%' }}>
-        <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
-          <Stack>
-            <Box sx={{ height: '40%', width: '100%', overflow: 'auto' }}>
-              <SubscriptionField />
-            </Box>
-            <Divider />
-            <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
-              <SubscriptionList />
-            </Box>
-          </Stack>
-        </Box>
-        <Divider />
-        <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
-          <TopicList />
-        </Box>
-      </Stack>
-    </SideBar>
-  );
-}
-
-function PublishSideBar() {
-  return (
-    <SideBar>
-      <Stack sx={{ height: '100%', width: '100%' }}>
-        <Box sx={{ height: '50%', width: '100%', overflow: 'auto' }}>
-          <PublishForm />
-        </Box>
-      </Stack>
-    </SideBar>
   );
 }
