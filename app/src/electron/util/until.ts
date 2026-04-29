@@ -41,7 +41,9 @@ export function validateEventFrame(frame: WebFrameMain | null) {
   if (isDev() && new URL(frame.url).host === 'localhost:5123') {
     return;
   }
-  if (frame.url !== pathToFileURL(getUIPath()).toString()) {
+  const frameUrl = new URL(frame.url);
+  const uiUrl = pathToFileURL(getUIPath());
+  if (frameUrl.pathname !== uiUrl.pathname) {
     throw new Error('Malicious event');
   }
 }

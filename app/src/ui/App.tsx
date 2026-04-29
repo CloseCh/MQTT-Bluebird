@@ -1,6 +1,3 @@
-import '@fontsource/roboto/latin-400.css';
-import '@fontsource/roboto/latin-500.css';
-import '@fontsource/roboto/latin-700.css';
 import { HashRouter, Route, Routes, Navigate } from 'react-router';
 
 import MainPage from './layout/MainLayout/page/MainPage';

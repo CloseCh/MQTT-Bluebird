@@ -58,6 +58,7 @@ export default defineConfig({
 
     build: {
       outDir: 'dist-react',
+      chunkSizeWarningLimit: 1000,
       minify: true,
       sourcemap: false,
       reportCompressedSize: false,
