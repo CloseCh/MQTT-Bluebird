@@ -1,5 +1,9 @@
 import { HashRouter, Route, Routes, Navigate } from 'react-router';
 
+import '@fontsource/source-code-pro/400.css';
+import '@fontsource/source-code-pro/500.css';
+import '@fontsource/source-code-pro/700.css';
+
 import MainPage from './layout/MainLayout/page/MainPage';
 import MainLayout from './layout/MainLayout/MainLayout';
 import LoginLayout from './layout/LoginLayout/LoginLayout';
