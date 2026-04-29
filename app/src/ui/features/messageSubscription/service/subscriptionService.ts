@@ -28,7 +28,7 @@ export function subscriptionService(): SubscriptionContextValue {
     } catch (err) {
       console.error('Error al suscribirse:', err);
     }
-  }, []);
+  }, [subscriptionList]);
 
   const unsubscribe = useCallback(async (topic: string) => {
     try {
