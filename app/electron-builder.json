@@ -1,6 +1,7 @@
 {
-  "appId": "com.weiyu.MQTTclient",
-  "icon": "./public/test.png",
+  "productName": "MQTT Client",
+  "appId": "com.close.mqttclient",
+  "icon": "./public/icon.png",
   "asar": true,
   "compression": "normal",
   "files": [
@@ -19,6 +20,9 @@
     "category": "Utility"
   },
   "win": {
-    "target": "nsis"
+    "target": {
+      "target": "nsis",
+      "arch": ["x64"]
+    }
   }
 }

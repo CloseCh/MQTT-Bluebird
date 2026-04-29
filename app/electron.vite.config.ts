@@ -27,6 +27,7 @@ export default defineConfig({
     build: {
       outDir: 'dist-preload',
       minify: true,
+      sourcemap: false,
       rollupOptions: {
         external: ['electron'], 
         output: {
@@ -58,7 +59,7 @@ export default defineConfig({
 
     build: {
       outDir: 'dist-react',
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 500,
       minify: true,
       sourcemap: false,
       reportCompressedSize: false,

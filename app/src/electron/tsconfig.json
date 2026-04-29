@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    // require strict types (null-save)
-    "strict": true,
-    // tell TypeScript to generate ESM Syntax
-    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
     "module": "ESNext",
-    // define where to put generated JS
-    "outDir": "../../dist-electron",
-    // ignore errors from dependencies
+    "noEmit": true,
     "skipLibCheck": true,
-    // add global types
+    "verbatimModuleSyntax": true,
+    
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noUncheckedIndexedAccess": true,
+
     "types": ["../../types"]
   },
   "exclude": ["preload"]
