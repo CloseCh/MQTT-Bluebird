@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   Drawer,
   List,
   ListItem,
@@ -8,11 +9,12 @@ import {
 } from "@mui/material";
 import { DRAWER_WIDTH, navItems } from "../../constants/navbarConstants";
 import { useNavigationContext } from "../../hooks/useNavigationContext";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 export function NavBar() {
   const { barOpen, handleItemBarClick } = useNavigationContext();
 
-  const handleClick = (barItemlabel:string) => {
+  const handleClick = (barItemlabel: string) => {
     handleItemBarClick(barItemlabel);
   }
 
@@ -36,19 +38,31 @@ export function NavBar() {
         <Box sx={{ flex: 1, overflowY: "auto", p: 1 }}>
           <List disablePadding>
             {navItems.map((item, index) => (
-              <ListItem key={index} disablePadding>
-                <ListItemButton
-                  onClick={() => handleClick(item.label)}
-                  selected={item.label === barOpen}
-                  sx={{ borderRadius: 2, mb: 0.5, justifyContent: "center" }}
-                >
-                  <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
-                    {item.icon}
-                  </ListItemIcon>
-                </ListItemButton>
-              </ListItem>
+              <Box key={index}>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => handleClick(item.label)}
+                    selected={item.label === barOpen}
+                    sx={{ borderRadius: 2, mb: 0.5, justifyContent: "center" }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
+                      {item.icon}
+                    </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+                {item.dividerAfter && <Divider sx={{ my: 0.5 }} />}
+              </Box>
             ))}
           </List>
+        </Box>
+
+        <Box sx={{ p: 1 }}>
+          <Divider sx={{ mb: 0.5 }} />
+          <ListItemButton sx={{ borderRadius: 2, justifyContent: "center" }}>
+            <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
+              <SettingsIcon sx={{ fontSize: 30 }} />
+            </ListItemIcon>
+          </ListItemButton>
         </Box>
       </Drawer>
     </Box>
