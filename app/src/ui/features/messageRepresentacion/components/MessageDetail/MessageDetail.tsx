@@ -1,11 +1,9 @@
-import { useState, useCallback } from "react";
-import { HEADER_HEIGHT } from "../../../../constants/layout.js";
-import Drawer from "@mui/material/Drawer";
-import Grid from "@mui/material/Grid";
-import MessageDetailData from "./MessageDetailData/MessageDetailData.js";
-import ResizeHandle from "./ResizeHandle/ResizeHandle.jsx";
-import type { Topic, MessageFormatEnum } from "../../types/mqtt.types.js";
-import { useMQTTContext } from "../../hooks/useMQTTContext.js";
+import {Drawer, Grid} from "@mui/material";
+import MessageDetailData from "./MessageDetailData/MessageDetailData";
+import ResizeHandle from "./ResizeHandle/ResizeHandle";
+import type { Topic } from "../../types/mqtt.types";
+import { useMessageDetail } from "./useMessageDetail";
+import { HEADER_HEIGHT } from "../../../../constants/layout";
 
 interface Prop {
   handleClick: () => void;
@@ -13,33 +11,12 @@ interface Prop {
   selectedTopic: Topic;
 }
 
-function MessageDetail ({ messageSelected, selectedTopic, handleClick }: Prop) {
-  const [drawerWidth, setDrawerWidth] = useState(400);
-
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-
-    const startX = e.clientX;
-    const startWidth = drawerWidth;
-
-    const onMouseMove = (e: MouseEvent) => {
-      const delta = startX - e.clientX;
-      const newWidth = Math.min(Math.max(startWidth + delta, 200), 800);
-      setDrawerWidth(newWidth);
-    };
-
-    const onMouseUp = () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  }, [drawerWidth]);
-
-  const { getMessageFormat } = useMQTTContext();
-
-  const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
+export function MessageDetail ({ messageSelected, selectedTopic, handleClick }: Prop) {
+  const {
+    drawerWidth,
+    handleMouseDown,
+    messageFormat
+  } = useMessageDetail({selectedTopic});
   
   return (
     <Drawer
@@ -66,4 +43,4 @@ function MessageDetail ({ messageSelected, selectedTopic, handleClick }: Prop) {
   );
 }
 
-export { MessageDetail };
+export default MessageDetail;

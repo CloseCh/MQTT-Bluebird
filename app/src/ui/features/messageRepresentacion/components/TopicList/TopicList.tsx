@@ -7,11 +7,7 @@ import type { Topic, TopicList } from '../../types/mqtt.types.js';
 import { useSubscriptionContext } from '@/features/messageSubscription/index.js';
 import { filterBySubscriptions } from '@/shared/service/topicFilter.js';
 
-interface MQTTListProps {
-
-}
-
-function TopicList({ }: MQTTListProps) {
+function TopicList() {
   const { topicList } = useMQTTContext();
   const { getSelectedSubscriptions } = useSubscriptionContext();
 

@@ -1,40 +1,34 @@
-import type { MessageFormatEnum, Topic } from '@/features/messageRepresentacion';
-import { useMQTTContext } from '@/features/messageRepresentacion';
 import { NestedMenuItem } from 'mui-nested-menu';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useCallback, useRef, useState } from 'react';
-import { FormControl, InputLabel, Select } from '@mui/material';
+import {
+  FormControl, 
+  InputLabel, 
+  Select, 
+  MenuItem, 
+  Menu
+} from '@mui/material';
+
+import { useRepresentationDataTypeSelector } from './useRepresentationDataTypeSelector';
+
+import type { MessageFormatEnum, Topic } from '@/features/messageRepresentacion';
+
 import { NUM_FORMATS, TEXT_FORMATS } from '../../constants/TypeSelector.constants';
 
 interface Prop {
   selectedTopic: Topic;
 }
 
-function RepresentationDataTypeSelector({ selectedTopic }: Prop) {
-  const selectRef = useRef<HTMLDivElement>(null);
-
-  const { setMessageFormat, getMessageFormat } = useMQTTContext();
-  const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleOpen = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setAnchorEl(selectRef.current);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setAnchorEl(null);
-  }, []);
-
-  const handleSelect = useCallback((format: MessageFormatEnum) => {
-    setAnchorEl(null);
-    setTimeout(() => {
-      setMessageFormat(selectedTopic, format);
-    }, 0);
-  }, [selectedTopic, setMessageFormat]);
+export function RepresentationDataTypeSelector({ 
+  selectedTopic 
+}: Prop) {
+  const {
+    selectRef,
+    messageFormat,
+    anchorEl,
+    open,
+    handleOpen,
+    handleClose,
+    handleSelect
+  } = useRepresentationDataTypeSelector({ selectedTopic });
 
   return (
     <>
@@ -75,4 +69,4 @@ function RepresentationDataTypeSelector({ selectedTopic }: Prop) {
   );
 }
 
-export { RepresentationDataTypeSelector };
+export default RepresentationDataTypeSelector;

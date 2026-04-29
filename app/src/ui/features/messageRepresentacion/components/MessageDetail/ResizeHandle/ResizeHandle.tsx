@@ -1,11 +1,13 @@
 import Box from "@mui/material/Box";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
-interface ResizeHandleProps {
+interface Props {
   onMouseDown: (e: React.MouseEvent) => void;
 }
 
-function ResizeHandle({ onMouseDown }: ResizeHandleProps) {
+function ResizeHandle({ 
+  onMouseDown 
+}: Props) {
   return (
     <Box
       onMouseDown={onMouseDown}

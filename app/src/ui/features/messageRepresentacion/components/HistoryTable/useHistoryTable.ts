@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { type GridColDef } from '@mui/x-data-grid';
-import { useMQTTContext } from '../../../hooks/useMQTTContext';
-import DecoderService from '../../../service/DecorderService';
-import type { MQTTMessageList } from '../../../types/mqtt.types';
+import { useMQTTContext } from '../../hooks/useMQTTContext';
+import DecoderService from '../../service/DecorderService';
+import type { MQTTMessageList } from '../../types/mqtt.types';
+import type { GridColDef } from '@mui/x-data-grid';
 
 export function useHistoryTable() {
   const { getSelectedTopic, getTypedMessageList } = useMQTTContext();

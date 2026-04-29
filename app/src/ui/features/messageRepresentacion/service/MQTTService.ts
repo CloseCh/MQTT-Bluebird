@@ -1,15 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
-import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTMessageList } from '../types/mqtt.types';
+import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTMessageList, MQTTContextValue } from '../types/mqtt.types';
 
-// Metodos del contexto, y los cuales usables por el custom hook
-export interface MQTTContextValue {
-  topicList: TopicList;
-  getSelectedTopic: () => Topic;
-  setSelectedTopic: (topic: Topic) => void;
-  getTypedMessageList: (topic: Topic) => MQTTMessageList;
-  setMessageFormat: (topic: Topic, format: MessageFormatEnum) => void;
-  getMessageFormat: (topic: Topic) => MessageFormatEnum;
-}
 /**
  * Es un metodo que gestiona los mensajes que llega del main process en electrón,
  *    - Lista los topicos, mensajes

@@ -1,13 +1,15 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import { DataGrid, type GridRowParams } from '@mui/x-data-grid';
-import { useHistoryTable } from './hook/useHistoryTable';
+import { useHistoryTable } from './useHistoryTable';
 
 interface Props {
   handleClick: (message: MQTTMessage) => void;
 }
 
-function HistoryTable({ handleClick }: Props) {
+function HistoryTable({ 
+  handleClick 
+}: Props) {
   const { selectedTopic, columns, rows } = useHistoryTable();
 
   return (

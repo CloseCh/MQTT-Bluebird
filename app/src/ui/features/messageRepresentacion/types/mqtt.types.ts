@@ -1,3 +1,12 @@
+export interface MQTTContextValue {
+  topicList: TopicList;
+  getSelectedTopic: () => Topic;
+  setSelectedTopic: (topic: Topic) => void;
+  getTypedMessageList: (topic: Topic) => MQTTMessageList;
+  setMessageFormat: (topic: Topic, format: MessageFormatEnum) => void;
+  getMessageFormat: (topic: Topic) => MessageFormatEnum;
+}
+
 export type Topic = string;
 
 export interface MQTTMessageList {

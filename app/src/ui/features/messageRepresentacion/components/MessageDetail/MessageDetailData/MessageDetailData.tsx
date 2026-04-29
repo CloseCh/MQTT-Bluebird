@@ -23,7 +23,10 @@ interface Prop {
   messageFormat: MessageFormatEnum;
 }
 
-export default function MessageDetailData ({ messageSelected, messageFormat }: Prop) {
+export default function MessageDetailData ({ 
+  messageSelected, 
+  messageFormat 
+}: Prop) {
   const messagePacket: Packet = messageSelected.packet;
 
   return (

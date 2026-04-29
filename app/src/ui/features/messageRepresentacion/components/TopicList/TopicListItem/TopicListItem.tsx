@@ -8,7 +8,9 @@ interface MQTTListItemProps {
   topic: Topic;
 }
 
-function TopicListItem({ topic }: MQTTListItemProps) {
+function TopicListItem({ 
+  topic
+}: MQTTListItemProps) {
   const { getSelectedTopic, setSelectedTopic } = useMQTTContext();
 
   return (
