@@ -16,7 +16,7 @@ export function ConnectionForm() {
     status,
     isConnecting,
     errorMessage,
-    validateHost, 
+    validateHost,
     validatePort,
     handleProtocolChange,
     onSubmit,
@@ -70,6 +70,24 @@ export function ConnectionForm() {
             error={!!form.formState.errors.port}
             helperText={form.formState.errors.port?.message}
           />
+
+          {/* Credentials */}
+          <Stack direction="row" spacing={1}>
+            <TextField
+              label="Usuario"
+              fullWidth
+              placeholder="(opcional)"
+              {...form.register("username")}
+            />
+
+            <TextField
+              label="Contraseña"
+              fullWidth
+              placeholder="(opcional)"
+              type="password"
+              {...form.register("password")}
+            />
+          </Stack>
 
           {/* Error alert */}
           {status === "error" && errorMessage && (

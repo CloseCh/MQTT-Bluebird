@@ -18,9 +18,9 @@ app.on('ready', () => {
     });
   });
 
-  ipcMainHandleWithReturn('mqtt:connection', (endpoint) => {
+  ipcMainHandleWithReturn('mqtt:connection', (options) => {
     return new Promise((resolve) => {
-      const client = connectClient(endpoint);
+      const client = connectClient(options);
 
       if (client.connected) {
         setupClientListeners(mainWindow);

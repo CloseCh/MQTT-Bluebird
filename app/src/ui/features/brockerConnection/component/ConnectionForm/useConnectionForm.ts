@@ -22,6 +22,8 @@ export function useConnectionForm() {
       protocol: "mqtt",
       host: "localhost",
       port: DEFAULT_PORTS["mqtt"],
+      username: "",
+      password: "",
     },
   });
 
@@ -38,7 +40,7 @@ export function useConnectionForm() {
     setStatus("connecting");
     setErrorMessage(null);
     try {
-      const success = await handleConnection(buildEndpoint(data));
+      const success = await handleConnection(buildEndpoint(data), data.username, data.password);
       if (success) {
         navigate('/');
       } else {
@@ -58,7 +60,7 @@ export function useConnectionForm() {
     status,
     isConnecting,
     errorMessage,
-    validateHost, 
+    validateHost,
     validatePort,
     handleProtocolChange,
     onSubmit,

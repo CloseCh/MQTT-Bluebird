@@ -9,9 +9,9 @@ export const PROTOCOLS: { value: MqttProtocol; label: string }[] = [
 
 export const DEFAULT_PORTS: Record<MqttProtocol, string> = {
   mqtt: "1883",
-  mqtts: "8883",
-  ws: "8083",
-  wss: "8084",
+  mqtts: "1884",
+  ws: "9001",
+  wss: "9001",
 };
 
 export const STATUS_COLORS: Record<

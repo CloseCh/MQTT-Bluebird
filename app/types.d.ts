@@ -16,7 +16,13 @@ interface PublishPayload {
   retain?: boolean;
 }
 
-type EventPayloadMapping = {
+interface MqttConnectionOptions {
+  endpoint: string;
+  username?: string;
+  password?: string;
+}
+
+interface EventPayloadMapping {
   message: MQTTmessage;
   mqttPublish: PublishPayload;
 
@@ -27,7 +33,7 @@ type EventPayloadMapping = {
   'mqtt:subscriptionsUpdated': string[];
 
   // connection
-  'mqtt:connection': string
+  'mqtt:connection': MqttConnectionOptions
   'mqtt:disconnect': void;
 };
 
@@ -42,7 +48,7 @@ interface Window {
     mqttUnsubscribe: (topics: string[]) => Promise<string[]>;
     mqttGetSubscriptions: () => Promise<string[]>;
 
-    mqttConnection: (endpoint: string) => Promise<boolean>;
+    mqttConnection: (options: MqttConnectionOptions) => Promise<boolean>;
     mqttDisconnect: () => Promise<void>;
   };
 }
