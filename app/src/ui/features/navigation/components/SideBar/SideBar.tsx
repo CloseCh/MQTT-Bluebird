@@ -1,7 +1,9 @@
 import { Box } from "@mui/material";
-import { useState, type ReactElement } from "react";
+import { useState } from "react";
+import type { ReactElement } from "react";
 import { ResizeHandle } from "./ResizeHandle/ResizeHandle";
-import { useNavigationContext } from "../../hooks/useNavigationContext";
+import { useOverlayStore } from "@/stores/overlayStore";
+import { NAV_ITEMS_CONFIG } from "../../constants/navbarConstants";
 
 interface Prop {
   children: ReactElement;
@@ -10,9 +12,8 @@ interface Prop {
 export function SideBar({ children }: Prop) {
   const [sidebarWidth, setSidebarWidth] = useState(200);
 
-  const { barOpen } = useNavigationContext();
-
-  const showSidebar = barOpen != "subscription";
+  const overlays = useOverlayStore(s => s.overlays);
+  const showSidebar = NAV_ITEMS_CONFIG.some(item => overlays[item.overlayId] ?? false);
 
   return (
     <>
@@ -21,19 +22,13 @@ export function SideBar({ children }: Prop) {
         flexShrink: 0,
         height: '100%',
         overflow: 'hidden'
-      }}
-      >
+      }}>
         {children}
       </Box>
-      {showSidebar ?
-        <ResizeHandle
-          initialSize={sidebarWidth}
-          onResize={setSidebarWidth}
-          min={100}
-          max={500}
-        />
+      {showSidebar
+        ? <ResizeHandle initialSize={sidebarWidth} onResize={setSidebarWidth} min={100} max={500} />
         : <></>
       }
     </>
   );
-} 
+}

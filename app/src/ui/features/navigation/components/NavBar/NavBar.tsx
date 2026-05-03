@@ -1,48 +1,38 @@
 import {
-  Box,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon
+  Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon
 } from "@mui/material";
-import { DRAWER_WIDTH, navItems } from "../../constants/navbarConstants";
-import { useNavigationContext } from "../../hooks/useNavigationContext";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { DRAWER_WIDTH } from "../../constants/navbarConstants";
+import { useNavItems } from "../../hooks/useNavItems";
+import { useOverlayStore } from "@/stores/overlayStore";
+import { OVERLAY_IDS } from "@/stores/overlayIds";
 
 export function NavBar() {
-  const { barOpen, handleItemBarClick } = useNavigationContext();
-
-  const handleClick = (barItemlabel: string) => {
-    handleItemBarClick(barItemlabel);
-  }
+  const navItems = useNavItems();
+  const open = useOverlayStore(s => s.open);
 
   const barStyle = {
     width: DRAWER_WIDTH,
-    height: '100%',
+    height: "100%",
     flexShrink: 0,
     "& .MuiDrawer-paper": {
       width: DRAWER_WIDTH,
       boxSizing: "border-box",
       position: "relative",
-    }
-  }
+    },
+  };
 
   return (
     <Box>
-      <Drawer
-        variant="permanent"
-        sx={barStyle}
-      >
+      <Drawer variant="permanent" sx={barStyle}>
         <Box sx={{ flex: 1, overflowY: "auto", p: 1 }}>
           <List disablePadding>
-            {navItems.map((item, index) => (
-              <Box key={index}>
+            {navItems.map((item) => (
+              <Box key={item.id}>
                 <ListItem disablePadding>
                   <ListItemButton
-                    onClick={() => handleClick(item.label)}
-                    selected={item.label === barOpen}
+                    onClick={item.onClick}
+                    selected={item.selected}
                     sx={{ borderRadius: 2, mb: 0.5, justifyContent: "center" }}
                   >
                     <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
@@ -58,7 +48,10 @@ export function NavBar() {
 
         <Box sx={{ p: 1 }}>
           <Divider sx={{ mb: 0.5 }} />
-          <ListItemButton sx={{ borderRadius: 2, justifyContent: "center" }}>
+          <ListItemButton
+            onClick={() => open(OVERLAY_IDS.CONFIG_MODAL)}
+            sx={{ borderRadius: 2, justifyContent: "center" }}
+          >
             <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
               <SettingsIcon sx={{ fontSize: 30 }} />
             </ListItemIcon>

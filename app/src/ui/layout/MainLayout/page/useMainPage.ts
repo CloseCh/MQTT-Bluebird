@@ -1,6 +1,7 @@
 import { useMQTTContext } from "@/features/messageRepresentacion";
 import { useSubscriptionContext } from "@/features/messageSubscription";
-import { useNavigationContext } from "@/features/navigation";
+import { useOverlayStore } from "@/stores/overlayStore";
+import { OVERLAY_IDS } from "@/stores/overlayIds";
 import { filterBySubscriptions } from "@/shared/service/topicFilter";
 import { useCallback, useState, type ReactElement } from "react";
 import { EmptySidebar, PublishSidebar, SubscriptionSidebar } from "./SideBars";
@@ -9,11 +10,11 @@ export function useMainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
 
   const { topicList, getSelectedTopic } = useMQTTContext();
-  const { getSelectedSubscriptions,  } = useSubscriptionContext();
-  const { barOpen } = useNavigationContext();
+  const { getSelectedSubscriptions } = useSubscriptionContext();
+  const overlays = useOverlayStore(s => s.overlays);
 
   const selectedTopic = getSelectedTopic();
-  const selectedSubscription = getSelectedSubscriptions(); 
+  const selectedSubscription = getSelectedSubscriptions();
   const filteredTopicList = filterBySubscriptions(topicList, selectedSubscription);
   const showTable = filteredTopicList.includes(selectedTopic);
 
@@ -27,15 +28,12 @@ export function useMainPage() {
 
   let sideBarOpened: ReactElement;
 
-  switch(barOpen) {
-    case "subcription":
-      sideBarOpened = SubscriptionSidebar();
-      break;
-    case "publish":
-      sideBarOpened = PublishSidebar();
-      break;
-    default:
-      sideBarOpened = EmptySidebar();
+  if (overlays[OVERLAY_IDS.NAV_SUBSCRIPTION]) {
+    sideBarOpened = SubscriptionSidebar();
+  } else if (overlays[OVERLAY_IDS.NAV_PUBLISH]) {
+    sideBarOpened = PublishSidebar();
+  } else {
+    sideBarOpened = EmptySidebar();
   }
 
   return {
@@ -44,6 +42,6 @@ export function useMainPage() {
     showTable,
     handleTableClick,
     messageSelected,
-    handleCloseDetailedClick
-  }
+    handleCloseDetailedClick,
+  };
 }

@@ -27,7 +27,8 @@
     "mqtt": "5.15.1",
     "mui-nested-menu": "4.0.3",
     "os-utils": "0.0.14",
-    "react-hook-form": "7.73.1"
+    "react-hook-form": "7.73.1",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@emotion/react": "11.14.0",
