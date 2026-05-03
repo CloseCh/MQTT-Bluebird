@@ -14,24 +14,23 @@ import {
 import { PublishDataTypeSelector } from "./PublishDataTypeSelector/PublishDataTypeSelector";
 import type { PublishFormValues } from "../../types/publish.types";
 import EncoderService from "../../service/EncoderService";
+import { usePublishFormStore } from "../../stores/publishFormStore";
 
 export function PublishForm() {
+  const { lastValues, saveValues } = usePublishFormStore();
+
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<PublishFormValues>({
-    defaultValues: {
-      topic: "",
-      message: "",
-      dataType: "UTF-8",
-      qos: 0,
-      retain: false,
-    },
+    defaultValues: lastValues,
   });
 
   const onSubmit = (data: PublishFormValues) => {
+    saveValues(data);
+
     const encoded = EncoderService(data.message, data.dataType);
 
     window.electron.publishMQTT({
