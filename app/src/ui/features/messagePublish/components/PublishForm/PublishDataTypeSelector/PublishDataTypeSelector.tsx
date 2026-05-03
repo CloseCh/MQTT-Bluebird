@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useCallback, useRef, useState } from 'react';
 import { Box, FormControl, InputLabel, Select } from '@mui/material';
-import { NUM_FORMATS, TEXT_FORMATS } from '../../constants';
+import { NUM_FORMATS, TEXT_FORMATS } from '../../../constants';
 
 interface Props {
   value?: string;
@@ -33,7 +33,7 @@ function PublishDataTypeSelector({ value = "", onChange }: Props) {
   return (
     <Box sx={{ width: '100%' }}>
       <FormControl fullWidth  ref={selectRef}>
-        <InputLabel id="label">Message Format</InputLabel>
+        <InputLabel id="label" size='small'>Message Format</InputLabel>
         <Select
           labelId="label"
           label="Message Format"
@@ -41,8 +41,9 @@ function PublishDataTypeSelector({ value = "", onChange }: Props) {
           open={false}
           onClick={handleOpen}
           readOnly
+          size='small'
         >
-          <MenuItem value="">{''}</MenuItem>
+          <MenuItem value="" >{''}</MenuItem>
           {value && <MenuItem value={value}>{value}</MenuItem>}
         </Select>
       </FormControl>

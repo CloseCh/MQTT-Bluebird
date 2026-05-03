@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-import { IPublishPacket } from 'mqtt';
+import { type IPublishPacket } from 'mqtt';
 import { getClient } from './mqttConnection.js';
 import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/until.js';
 

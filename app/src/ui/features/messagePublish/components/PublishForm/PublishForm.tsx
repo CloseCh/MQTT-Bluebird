@@ -1,12 +1,19 @@
 import { useForm, Controller } from "react-hook-form";
-import { Button, Card, Stack, TextField } from "@mui/material";
-import { PublishDataTypeSelector } from "../PublishDataTypeSelector";
-
-type PublishFormValues = {
-  topic: string;
-  message: string;
-  dataType: MessageFormatEnum;
-};
+import {
+  Button,
+  Card,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
+import { PublishDataTypeSelector } from "./PublishDataTypeSelector/PublishDataTypeSelector";
+import type { PublishFormValues } from "../../types/publish.types";
+import EncoderService from "../../service/EncoderService";
 
 export function PublishForm() {
   const {
@@ -18,18 +25,21 @@ export function PublishForm() {
     defaultValues: {
       topic: "",
       message: "",
-      dataType: undefined,
+      dataType: "UTF-8",
+      qos: 0,
+      retain: false,
     },
   });
 
   const onSubmit = (data: PublishFormValues) => {
-    const publishData: PublishPayload = {
-      topic: data.topic,
-      format: data.dataType,
-      payload: data.message
-    };
+    const encoded = EncoderService(data.message, data.dataType);
 
-    window.electron.publishMQTT(publishData);
+    window.electron.publishMQTT({
+      topic: data.topic,
+      message: Array.from(encoded),
+      qos: data.qos,
+      retain: data.retain,
+    });
   };
 
   return (
@@ -39,22 +49,50 @@ export function PublishForm() {
           <TextField
             label="Topic"
             variant="outlined"
-            {...register("topic", { required: "El topic es requerido" })}
+            {...register("topic", { required: true })}
             error={!!errors.topic}
-            helperText={errors.topic?.message}
+            size="small"
           />
           <TextField
             label="Message"
             variant="outlined"
-            {...register("message", { required: "El mensaje es requerido" })}
+            {...register("message", { required: true })}
             error={!!errors.message}
-            helperText={errors.message?.message}
+            size="small"
           />
           <Controller
             name="dataType"
             control={control}
             defaultValue={undefined}
             render={({ field }) => <PublishDataTypeSelector {...field} />}
+          />
+          <Controller
+            name="qos"
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <InputLabel size='small'>QoS</InputLabel>
+                <Select
+                  {...field}
+                  label="QoS"
+                  size='small'
+                >
+                  <MenuItem value={0}>0 – At most once</MenuItem>
+                  <MenuItem value={1}>1 – At least once</MenuItem>
+                  <MenuItem value={2}>2 – Exactly once</MenuItem>
+                </Select>
+              </FormControl>
+            )}
+          />
+          <Controller
+            name="retain"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                label="Retain"
+                control={<Checkbox {...field} checked={field.value} />}
+              />
+            )}
           />
           <Button type="submit" variant="contained">
             Enviar

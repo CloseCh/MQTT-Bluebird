@@ -11,12 +11,10 @@ export type PublishList = Record<PublishConfigId, PublishConfig>;
 export interface PublishConfig {
   messageFormat: MessageFormatEnum;
   lastSend: string;
-  message: PublishMessage;
+  message: PublishFormValues;
 }
 
-export interface PublishMessage {
-  topic: string;
+export interface PublishFormValues extends Omit<PublishPayload, 'message'> {
   message: string;
-  qos: number;
-  retain: boolean;
-}
+  dataType: MessageFormatEnum;
+};

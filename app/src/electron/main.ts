@@ -1,21 +1,15 @@
 import { app, BrowserWindow } from 'electron';
-import { destroyClient, getClient, connectClient } from './services/mqtt/mqttConnection.js';
+import { destroyClient, connectClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
 import { ipcMainHandle, ipcMainHandleWithReturn } from './util/until.js';
 import { setupClientListeners } from './services/mqtt/mqttSubscriptor.js';
+import { publishMessage } from './services/mqtt/mqttPublisher.js';
 
 app.on('ready', () => {
   const mainWindow = createMainWindow();
 
   ipcMainHandle('mqttPublish', (payload) => {
-    const client = getClient();
-    if (!client) {
-      throw new Error('MQTT client no está conectado');
-    }
-    client.publish(payload.topic, payload.payload, {
-      qos: payload.qos ?? 0,
-      retain: payload.retain ?? false,
-    });
+    publishMessage(payload);
   });
 
   ipcMainHandleWithReturn('mqtt:connection', (options) => {
