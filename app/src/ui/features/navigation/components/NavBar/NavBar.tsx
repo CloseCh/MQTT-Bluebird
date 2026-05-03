@@ -4,9 +4,18 @@ import {
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DRAWER_WIDTH } from "../../constants/navbarConstants";
 import { useNavItems } from "./useNavItems";
+import { useNavigationStore } from "../../stores/navigationStore";
+import { useNavigate } from "react-router";
 
 export function NavBar() {
   const navItems = useNavItems();
+  const { settingsOpen, toggleSettings } = useNavigationStore();
+  const navigate = useNavigate();
+
+  const handleSettings = () => {
+    toggleSettings();
+    navigate(settingsOpen ? '/' : '/settings');
+  };
 
   const barStyle = {
     width: DRAWER_WIDTH,
@@ -46,6 +55,8 @@ export function NavBar() {
         <Box sx={{ p: 1 }}>
           <Divider sx={{ mb: 0.5 }} />
           <ListItemButton
+            onClick={handleSettings}
+            selected={settingsOpen}
             sx={{ borderRadius: 2, justifyContent: "center" }}
           >
             <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>

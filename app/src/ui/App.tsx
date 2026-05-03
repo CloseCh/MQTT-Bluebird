@@ -8,6 +8,7 @@ import MainPage from './layout/MainLayout/page/MainPage';
 import MainLayout from './layout/MainLayout/MainLayout';
 import LoginLayout from './layout/LoginLayout/LoginLayout';
 import LoginPage from './layout/LoginLayout/page/LoginPage';
+import SettingsPage from './features/settings/page/SettingsPage';
 import './index.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppProviders } from './utils/composeProviders';
@@ -23,6 +24,7 @@ export default function App() {
           </Route>
           <Route element={<MainLayout />}>
             <Route path='/' element={<MainPage />} />
+            <Route path='/settings' element={<SettingsPage />} />
           </Route>
           <Route path='*' element={<Navigate to='/login' replace />} />
         </Routes>

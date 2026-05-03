@@ -3,22 +3,27 @@ import { create } from "zustand";
 interface NavigationStore {
   openedSidebar: string;
   tableConfig: string;
-  openConfigModal: boolean;
-  openSidebar:   (id: string) => void;
+  settingsOpen: boolean;
+  openSidebar:    (id: string) => void;
+  toggleSettings: () => void;
+  closeSettings:  () => void;
 }
 
 export const useNavigationStore = create<NavigationStore>((set, get) => ({
   openedSidebar: "nav/subscription",
   tableConfig: "table/history",
-  openConfigModal: false,
-  
-  openSidebar:   (id) => {
+  settingsOpen: false,
+
+  openSidebar: (id) => {
     const actual: string = get().openedSidebar ?? "";
 
     if (id === null || id === undefined || id === actual) {
-      set({openedSidebar: ""});
+      set({ openedSidebar: "" });
     } else {
-      set({openedSidebar: id});
+      set({ openedSidebar: id });
     }
-  }
+  },
+
+  toggleSettings: () => set((s) => ({ settingsOpen: !s.settingsOpen })),
+  closeSettings:  () => set({ settingsOpen: false }),
 }));
