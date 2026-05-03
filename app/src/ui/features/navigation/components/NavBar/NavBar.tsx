@@ -3,13 +3,10 @@ import {
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DRAWER_WIDTH } from "../../constants/navbarConstants";
-import { useNavItems } from "../../hooks/useNavItems";
-import { useOverlayStore } from "@/stores/overlayStore";
-import { OVERLAY_IDS } from "@/stores/overlayIds";
+import { useNavItems } from "./useNavItems";
 
 export function NavBar() {
   const navItems = useNavItems();
-  const open = useOverlayStore(s => s.open);
 
   const barStyle = {
     width: DRAWER_WIDTH,
@@ -49,7 +46,6 @@ export function NavBar() {
         <Box sx={{ p: 1 }}>
           <Divider sx={{ mb: 0.5 }} />
           <ListItemButton
-            onClick={() => open(OVERLAY_IDS.CONFIG_MODAL)}
             sx={{ borderRadius: 2, justifyContent: "center" }}
           >
             <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>

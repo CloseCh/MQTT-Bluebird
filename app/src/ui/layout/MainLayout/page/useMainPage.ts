@@ -1,9 +1,10 @@
+import { useCallback, useState, type ReactElement } from "react";
+
 import { useMQTTContext } from "@/features/messageRepresentacion";
 import { useSubscriptionContext } from "@/features/messageSubscription";
-import { useOverlayStore } from "@/stores/overlayStore";
-import { OVERLAY_IDS } from "@/stores/overlayIds";
+import { useNavigationStore, OVERLAY_IDS } from "@/features/navigation";
 import { filterBySubscriptions } from "@/shared/service/topicFilter";
-import { useCallback, useState, type ReactElement } from "react";
+
 import { EmptySidebar, PublishSidebar, SubscriptionSidebar } from "./SideBars";
 
 export function useMainPage() {
@@ -11,7 +12,7 @@ export function useMainPage() {
 
   const { topicList, getSelectedTopic } = useMQTTContext();
   const { getSelectedSubscriptions } = useSubscriptionContext();
-  const overlays = useOverlayStore(s => s.overlays);
+  const openedSidebar = useNavigationStore(s => s.openedSidebar);
 
   const selectedTopic = getSelectedTopic();
   const selectedSubscription = getSelectedSubscriptions();
@@ -28,9 +29,9 @@ export function useMainPage() {
 
   let sideBarOpened: ReactElement;
 
-  if (overlays[OVERLAY_IDS.NAV_SUBSCRIPTION]) {
+  if (openedSidebar === OVERLAY_IDS.NAV_SUBSCRIPTION) {
     sideBarOpened = SubscriptionSidebar();
-  } else if (overlays[OVERLAY_IDS.NAV_PUBLISH]) {
+  } else if (openedSidebar === OVERLAY_IDS.NAV_PUBLISH) {
     sideBarOpened = PublishSidebar();
   } else {
     sideBarOpened = EmptySidebar();

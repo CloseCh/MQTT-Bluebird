@@ -9,6 +9,14 @@ export interface NavItem {
   onClick: () => void;
 }
 
+export interface NavItemConfig {
+  id: number;
+  label: string;
+  icon: ReactNode;
+  overlayId: string;
+  dividerAfter?: boolean;
+}
+
 export interface NavigationContextValue {
   navItems: NavItem[];
 }
