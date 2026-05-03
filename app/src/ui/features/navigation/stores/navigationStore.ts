@@ -5,6 +5,7 @@ interface NavigationStore {
   tableConfig: string;
   settingsOpen: boolean;
   openSidebar:    (id: string) => void;
+  handleChangeTable: (id: string) => void;
   toggleSettings: () => void;
   closeSettings:  () => void;
 }
@@ -21,6 +22,16 @@ export const useNavigationStore = create<NavigationStore>((set, get) => ({
       set({ openedSidebar: "" });
     } else {
       set({ openedSidebar: id });
+    }
+  },
+
+  handleChangeTable: (id) => {
+    const actual: string = get().tableConfig ?? "table/history";
+
+    if (id === null || id === undefined || id === actual) {
+      set({ tableConfig: "" });
+    } else {
+      set({ tableConfig: id });
     }
   },
 
