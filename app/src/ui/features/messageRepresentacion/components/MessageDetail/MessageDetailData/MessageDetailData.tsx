@@ -50,12 +50,13 @@ export default function MessageDetailData ({
             variant="outlined"
             sx={{
               p: 2,
-              backgroundColor: "#2bbdfb",
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'dark' ? '#0d1117' : '#f6f8fa',
               borderRadius: 1,
               overflowX: "auto",
             }}
           >
-            <pre style={{ margin: 0, fontFamily: "monospace", fontSize: "0.875rem" }}>
+            <pre style={{ margin: 0, fontFamily: "inherit", fontSize: "0.875rem" }}>
               {DecoderService(messageSelected.data, messageFormat)}
             </pre>
           </Paper>

@@ -16,7 +16,7 @@ function TopicList() {
   const filteredTopicList = filterBySubscriptions(topicList, selectedSubscription);
 
   return (
-    <List sx={{ width: '100%' }}>
+    <List sx={{ width: '100%', overflowX: 'hidden' }}>
       {filteredTopicList.map((topic: Topic) => (
         <TopicListItem
           key={topic}

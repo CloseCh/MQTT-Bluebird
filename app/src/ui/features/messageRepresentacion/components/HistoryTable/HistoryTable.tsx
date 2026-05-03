@@ -13,8 +13,7 @@ function HistoryTable({
   const { selectedTopic, columns, rows } = useHistoryTable();
 
   return (
-    <Paper sx={{ width: '100%', height: '100%' }}>
-      {/* key fuerza remount al cambiar de topic para resetear el estado del DataGrid */}
+    <Paper sx={{ width: '100%', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
       <DataGrid
         key={selectedTopic}
         rows={rows}
@@ -23,7 +22,8 @@ function HistoryTable({
         disableColumnMenu
         hideFooter
         sx={{
-          height: '100%',
+          flex: 1,
+          minHeight: 0,
           '& .MuiDataGrid-cell': {
             overflow: 'hidden',
             textOverflow: 'ellipsis',

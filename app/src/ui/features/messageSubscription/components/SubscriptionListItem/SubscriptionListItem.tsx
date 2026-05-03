@@ -22,7 +22,10 @@ export function SubscriptionListItem({
     <ListItem
       key={value}
       sx={{
-        width: "100%"
+        width: "100%",
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        '&:last-child': { borderBottom: 'none' },
       }}
     >
       <Checkbox

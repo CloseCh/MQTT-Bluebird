@@ -38,8 +38,8 @@ export function ResizeHandle({ onResize, initialSize, min = 100, max = 500, dire
       onMouseDown={handleMouseDown}
       sx={{
         position: 'relative',
-        width: isHorizontal ? '10px' : '100%',
-        height: isHorizontal ? '100%' : '10px',
+        width: isHorizontal ? '0px' : '100%',
+        height: isHorizontal ? '100%' : '0px',
         flexShrink: 0,
         cursor: isHorizontal ? 'ew-resize' : 'ns-resize',
         display: 'flex',
@@ -48,9 +48,11 @@ export function ResizeHandle({ onResize, initialSize, min = 100, max = 500, dire
         '&::before': {
           content: '""',
           position: 'absolute',
+          left: isHorizontal ? 0 : undefined,
+          top: isHorizontal ? undefined : 0,
           backgroundColor: 'divider',
-          width: isHorizontal ? '2px' : '100%',
-          height: isHorizontal ? '100%' : '2px',
+          width: isHorizontal ? '1px' : '100%',
+          height: isHorizontal ? '100%' : '1px',
         },
         '&:hover::before': {
           backgroundColor: 'primary.main',
