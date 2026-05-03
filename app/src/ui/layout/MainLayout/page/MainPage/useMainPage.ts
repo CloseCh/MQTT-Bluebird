@@ -5,7 +5,7 @@ import { useSubscriptionContext } from "@/features/messageSubscription";
 import { useNavigationStore, OVERLAY_IDS } from "@/features/navigation";
 import { filterBySubscriptions } from "@/shared/service/topicFilter";
 
-import { EmptySidebar, PublishSidebar, SubscriptionSidebar } from "./SideBars";
+import { EmptySidebar, PublishSidebar, SubscriptionSidebar } from "../SideBars";
 
 export function useMainPage() {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);

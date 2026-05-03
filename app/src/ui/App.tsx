@@ -4,11 +4,11 @@ import '@fontsource/source-code-pro/400.css';
 import '@fontsource/source-code-pro/500.css';
 import '@fontsource/source-code-pro/700.css';
 
-import MainPage from './layout/MainLayout/page/MainPage';
+import MainPage from './layout/MainLayout/page/MainPage/MainPage';
 import MainLayout from './layout/MainLayout/MainLayout';
 import LoginLayout from './layout/LoginLayout/LoginLayout';
 import LoginPage from './layout/LoginLayout/page/LoginPage';
-import SettingsPage from './features/settings/page/SettingsPage';
+import SettingsPage from './layout/MainLayout/page/SettingsPage/SettingsPage';
 import './index.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppProviders } from './utils/composeProviders';

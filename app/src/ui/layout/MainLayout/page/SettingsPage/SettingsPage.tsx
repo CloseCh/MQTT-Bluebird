@@ -1,6 +1,6 @@
 import { Box, IconButton, Stack, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import SettingsForm from '../components/settingsForm';
+import SettingsForm from '../../../../features/settings/components/settingsForm';
 import { useNavigationStore } from '@/features/navigation/stores/navigationStore';
 import { useNavigate } from 'react-router';
 
