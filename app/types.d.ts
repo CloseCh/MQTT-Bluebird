@@ -22,7 +22,10 @@ interface MqttConnectionOptions {
 }
 
 interface EventPayloadMapping {
+  // Message 
   message: MQTTmessage;
+  'mqtt:systemMessage': MQTTMessage;
+
   mqttPublish: PublishPayload;
 
   // subscriptions
@@ -41,6 +44,8 @@ type UnsubscribeFunction = () => void;
 interface Window {
   electron: {
     subscribeMQTT: (callback: (message: MQTTmessage) => void) => void;
+    systemMessage: (callback: (message: MQTTmessage) => void) => void;
+
     publishMQTT: (message: PublishPayload) => void;
 
     mqttSubscribe: (topics: string[]) => Promise<string[]>;

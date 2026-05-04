@@ -1,4 +1,5 @@
 import { ConnectionProvider } from "@/features/brockerConnection";
+import { BrockerMonitorProvider } from "@/features/brockerMonitor";
 import { MQTTProvider } from "@/features/messageRepresentacion";
 import { SubscriptionProvider } from "@/features/messageSubscription";
 import { useSettingsStore } from "@/features/settings/stores/settingsStore";
@@ -49,4 +50,5 @@ export const AppProviders = composeProviders(
   MQTTProviderWithSettings,
   ConnectionProvider,
   SubscriptionProvider,
+  BrockerMonitorProvider,
 );

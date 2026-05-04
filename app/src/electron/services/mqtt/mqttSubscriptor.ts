@@ -3,7 +3,7 @@ import { type IPublishPacket } from 'mqtt';
 import { getClient } from './mqttConnection.js';
 import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/until.js';
 
-let activeSubscriptions: Set<string> = new Set();
+let activeSubscriptions: Set<string> = new Set(["$SYS/#"]);
 
 let handlersRegistered: boolean = false;
 
@@ -53,13 +53,11 @@ export function setupClientListeners(mainWindow: BrowserWindow): void {
   const client = getClient();
   if (!client) return;
 
-  client.on('connect', () => {
-    if (activeSubscriptions.size > 0) {
-      client.subscribe([...activeSubscriptions], (err) => {
-        if (err) console.error('Error re-subscribing on reconnect:', err);
-      });
-    }
-  });
+  if (activeSubscriptions.size > 0) {
+    client.subscribe([...activeSubscriptions], (err) => {
+      if (err) console.error('Error re-subscribing on reconnect:', err);
+    });
+  }
 
   client.on('message', (topic: string, data: Buffer, packet: IPublishPacket) => {
     const date = new Date();
@@ -72,6 +70,11 @@ export function setupClientListeners(mainWindow: BrowserWindow): void {
       packet
     };
 
-    ipcWebContentsSend('message', mainWindow.webContents, messageReceived);
+    const isSysTopic: boolean = topic.startsWith('$SYS/');
+    if (isSysTopic) {
+      ipcWebContentsSend('mqtt:systemMessage', mainWindow.webContents, messageReceived);
+    } else {
+      ipcWebContentsSend('message', mainWindow.webContents, messageReceived);
+    }
   });
 }

@@ -25,6 +25,11 @@ contextBridge.exposeInMainWorld('electron', {
     ipcOn('message', (temp) => {
       callback(temp);
     }),
+  systemMessage: (callback) =>
+    ipcOn('mqtt:systemMessage', (temp) => {
+      callback(temp);
+    }),
+  
   publishMQTT: (message) =>
     ipcInvoke('mqttPublish', message),
   

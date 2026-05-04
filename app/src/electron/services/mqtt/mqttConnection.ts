@@ -15,7 +15,7 @@ export function connectClient({endpoint, username, password}: MqttConnectionOpti
   }
   console.log('Connecting with:', { endpoint, username, password: password ? '***' : undefined });
   client = mqtt.connect(endpoint, {
-    clientId: 'mqtt_client_' + Math.random().toString(16).substring(2, 8),
+    clientId: 'mqtt_bluebird_' + Math.random().toString(16).substring(2, 8),
     clean: true,
     connectTimeout: 4000,
     reconnectPeriod: 0,
