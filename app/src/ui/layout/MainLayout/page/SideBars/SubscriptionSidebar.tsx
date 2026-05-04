@@ -6,11 +6,9 @@ import { Box, Divider, Stack } from "@mui/material";
 export function SubscriptionSidebar() {
   const tableConfig = useNavigationStore(s => s.tableConfig);
 
-  let sidebarComponents = <></>;
+  let sidebarComponents = DefaultSubscriptionSidebar();
 
-  if (tableConfig === OVERLAY_IDS.TABLE_HISTORY) {
-    sidebarComponents = DefaultSubscriptionSidebar();
-  } else if (tableConfig === OVERLAY_IDS.TABLE_TOPIC) {
+  if (tableConfig === OVERLAY_IDS.TABLE_TOPIC || tableConfig === OVERLAY_IDS.TABLE_LAST) {
     sidebarComponents = SubscriptionSidebarWithOutList();
   }
 
