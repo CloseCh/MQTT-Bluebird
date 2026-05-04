@@ -22,7 +22,7 @@ export default function MainPage() {
             flex: 1, minHeight: 0, minWidth: 0,
             overflow: 'hidden', display: 'flex',
             flexDirection: 'column',
-            pr: '10px', pl: '10px',
+            pr: '10px', pl: '10px', pt: '10px',
             width: '100%'
           }}>
             {tableOpened}
