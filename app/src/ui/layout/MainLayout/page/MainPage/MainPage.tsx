@@ -1,4 +1,4 @@
-import { RepresentationDataTypeSelector, MessageDetail } from "@/features/messageRepresentacion";
+import { MessageDetail } from "@/features/messageRepresentacion";
 
 import {
   Box,
@@ -9,7 +9,6 @@ import { useMainPage } from "./useMainPage";
 export default function MainPage() {
   const {
     sideBarOpened,
-    selectedTopic,
     messageSelected,
     tableOpened,
     handleCloseDetailedClick
@@ -20,11 +19,6 @@ export default function MainPage() {
       <Stack direction="row" sx={{ flex: 1, minHeight: 0, width: '100%' }}>
         {sideBarOpened}
         <Stack sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden' }}>
-          <Stack direction="row" sx={{ minHeight: 0, minWidth: 0, padding: '10px 10px 10px 10px' }}>
-            <Box>
-              <RepresentationDataTypeSelector selectedTopic={selectedTopic} />
-            </Box>
-          </Stack>
           <Box sx={{
             flex: 1, minHeight: 0, minWidth: 0,
             overflow: 'hidden', display: 'flex',
@@ -37,7 +31,7 @@ export default function MainPage() {
         </Stack>
       </Stack>
       {messageSelected
-        ? <MessageDetail messageSelected={messageSelected} selectedTopic={selectedTopic} handleClick={handleCloseDetailedClick} />
+        ? <MessageDetail messageSelected={messageSelected} handleClick={handleCloseDetailedClick} />
         : <></>
       }
     </>

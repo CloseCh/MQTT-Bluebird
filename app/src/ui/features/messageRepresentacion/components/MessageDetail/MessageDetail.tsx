@@ -1,22 +1,20 @@
 import {Drawer, Grid} from "@mui/material";
 import MessageDetailData from "./MessageDetailData/MessageDetailData";
 import ResizeHandle from "./ResizeHandle/ResizeHandle";
-import type { Topic } from "../../types/mqtt.types";
 import { useMessageDetail } from "./useMessageDetail";
 import { HEADER_HEIGHT } from "../../../../constants/layout";
 
-interface Prop {
+interface MessageDetailProp {
   handleClick: () => void;
   messageSelected: MQTTMessage;
-  selectedTopic: Topic;
 }
 
-export function MessageDetail ({ messageSelected, selectedTopic, handleClick }: Prop) {
+export function MessageDetail ({ messageSelected, handleClick }: MessageDetailProp) {
   const {
     drawerWidth,
     handleMouseDown,
     messageFormat
-  } = useMessageDetail({selectedTopic});
+  } = useMessageDetail();
   
   return (
     <Drawer

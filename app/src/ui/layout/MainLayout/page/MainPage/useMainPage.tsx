@@ -34,7 +34,6 @@ export function useMainPage() {
 
   return {
     sideBarOpened,
-    selectedTopic,
     showTable,
     tableOpened,
     messageSelected,
