@@ -13,6 +13,7 @@ import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTMessag
  */
 function MQTTService(dataPointCount: number): MQTTContextValue {
   const [topicList, setTopicList] = useState<TopicList>([]);
+  const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
   const [selectedTopic, setSelectedTopic] = useState<Topic>("");
 
@@ -78,7 +79,9 @@ function MQTTService(dataPointCount: number): MQTTContextValue {
     setSelectedTopic: handleSelectedTopic,
     getTypedMessageList: topic => messageListByTopic[topic] ?? emptyMessage,
     setMessageFormat: handleMessageFormat,
-    getMessageFormat: topic => messageListByTopic[topic]?.format ?? emptyMessage.format
+    getMessageFormat: topic => messageListByTopic[topic]?.format ?? emptyMessage.format,
+    getMessageSelected: () => messageSelected,
+    setMessageSelected: message => setMessageSelected(message)
   };
 }
 

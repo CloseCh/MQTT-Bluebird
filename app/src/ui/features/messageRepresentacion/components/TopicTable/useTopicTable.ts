@@ -1,10 +1,16 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 import DecoderService from '../../service/DecorderService';
 import type { GridColDef } from '@mui/x-data-grid';
 
 export function useTopicTable() {
-  const { topicList, getSelectedTopic, getTypedMessageList } = useMQTTContext();
+  const { 
+    topicList, 
+    getSelectedTopic, 
+    getTypedMessageList, 
+    setSelectedTopic, 
+    setMessageSelected 
+  } = useMQTTContext();
   const selectedTopic = getSelectedTopic();
 
   const columns: GridColDef[] = useMemo(() => [
@@ -33,6 +39,11 @@ export function useTopicTable() {
     [topicList, getTypedMessageList]
   );
 
+    const handleClick = useCallback((message: MQTTMessage) => {
+      setMessageSelected(message);
+      setSelectedTopic(message.topic);
+    }, [setSelectedTopic]);
+
   function tsToMs(timeStamp: string): number {
     const [hms, ms] = timeStamp.split('.') as [string, string];
     const [h, m, s] = hms.split(':').map(Number) as [number, number, number];
@@ -48,6 +59,7 @@ export function useTopicTable() {
     selectedTopic, 
     columns, 
     rows, 
+    handleClick,
     tsToMs, 
     nowMs 
   };

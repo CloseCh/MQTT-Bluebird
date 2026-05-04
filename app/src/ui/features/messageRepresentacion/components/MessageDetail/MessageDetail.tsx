@@ -4,26 +4,33 @@ import MessageDetailData from "./MessageDetailData/MessageDetailData";
 import ResizeHandle from "./ResizeHandle/ResizeHandle";
 import { useMessageDetail } from "./useMessageDetail";
 import { HEADER_HEIGHT } from "../../../../constants/layout";
+import { useMQTTContext } from "../../hooks/useMQTTContext";
 
-interface MessageDetailProp {
-  handleClick: () => void;
-  messageSelected: MQTTMessage;
-}
-
-export function MessageDetail ({ messageSelected, handleClick }: MessageDetailProp) {
+export function MessageDetail () {
   const {
     drawerWidth,
     handleMouseDown,
     messageFormat
   } = useMessageDetail();
 
+  const {getMessageSelected, setMessageSelected} = useMQTTContext();
+
+  let messageSelected: MQTTMessage | null = getMessageSelected();
+  if (messageSelected === null) {
+    messageSelected = {} as MQTTMessage;
+  }
+
+  const handleCloseDetailedClick = () => {
+    setMessageSelected(null);
+  };
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && messageSelected != null) handleClick();
+      if (e.key === 'Escape' && messageSelected != null) handleCloseDetailedClick();
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [messageSelected, handleClick]);
+  }, [messageSelected, handleCloseDetailedClick]);
 
   return (
     <Drawer
@@ -54,7 +61,7 @@ export function MessageDetail ({ messageSelected, handleClick }: MessageDetailPr
           <MessageDetailData
             messageSelected={messageSelected}
             messageFormat={messageFormat}
-            onClose={handleClick}
+            onClose={handleCloseDetailedClick}
           />
         </Grid>
       </Grid>

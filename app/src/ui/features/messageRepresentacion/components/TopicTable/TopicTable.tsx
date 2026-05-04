@@ -3,17 +3,12 @@ import { DataGrid, type GridRowParams } from '@mui/x-data-grid';
 import { useTopicTable } from './useTopicTable';
 import { FLASH_DURATION } from '../../constants/TypeSelector.constants';
 
-interface TopicTableProps {
-  handleClick: (message: MQTTMessage) => void;
-}
-
-export function TopicTable({
-  handleClick
-}: TopicTableProps) {
+export function TopicTable( ) {
   const {
     selectedTopic,
     columns,
     rows,
+    handleClick,
     tsToMs,
     nowMs
   } = useTopicTable();

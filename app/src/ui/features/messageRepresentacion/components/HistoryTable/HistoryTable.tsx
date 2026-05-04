@@ -3,14 +3,8 @@ import Paper from '@mui/material/Paper';
 import { DataGrid, type GridRowParams } from '@mui/x-data-grid';
 import { useHistoryTable } from './useHistoryTable';
 
-interface Props {
-  handleClick: (message: MQTTMessage) => void;
-}
-
-function HistoryTable({ 
-  handleClick 
-}: Props) {
-  const { selectedTopic, columns, rows } = useHistoryTable();
+function HistoryTable() {
+  const { selectedTopic, columns, rows, handleClick} = useHistoryTable();
 
   return (
     <Paper sx={{ width: '100%', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>

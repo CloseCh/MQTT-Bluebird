@@ -1,12 +1,22 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 import DecoderService from '../../service/DecorderService';
 import type { MQTTMessageList } from '../../types/mqtt.types';
 import type { GridColDef } from '@mui/x-data-grid';
 
 export function useHistoryTable() {
-  const { getSelectedTopic, getTypedMessageList } = useMQTTContext();
+  const { 
+    getSelectedTopic, 
+    getTypedMessageList, 
+    setSelectedTopic, 
+    setMessageSelected 
+  } = useMQTTContext();
 
+  const handleClick = useCallback((message: MQTTMessage) => {
+    setMessageSelected(message);
+    setSelectedTopic(message.topic);
+  }, [setSelectedTopic]);
+  
   const selectedTopic = getSelectedTopic();
   const message: MQTTMessageList = getTypedMessageList(selectedTopic);
 
@@ -30,6 +40,7 @@ export function useHistoryTable() {
 
   return { 
     selectedTopic, 
+    handleClick,
     columns, 
     rows 
   };

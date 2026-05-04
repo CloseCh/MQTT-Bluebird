@@ -9,9 +9,8 @@ import { useMainPage } from "./useMainPage";
 export default function MainPage() {
   const {
     sideBarOpened,
-    messageSelected,
     tableOpened,
-    handleCloseDetailedClick
+    messageSelected
   } = useMainPage();
 
   return (
@@ -31,7 +30,7 @@ export default function MainPage() {
         </Stack>
       </Stack>
       {messageSelected
-        ? <MessageDetail messageSelected={messageSelected} handleClick={handleCloseDetailedClick} />
+        ? <MessageDetail />
         : <></>
       }
     </>

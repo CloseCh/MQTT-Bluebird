@@ -62,7 +62,7 @@ export default function MessageDetailData ({
               {DecoderService(messageSelected.data, messageFormat)}
             </pre>
           </Paper>
-          
+
           <Box sx={{ pt: '10px', pb: '10px'}}>
             <RepresentationDataTypeSelector />
           </Box>
