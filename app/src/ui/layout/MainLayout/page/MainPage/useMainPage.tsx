@@ -1,6 +1,6 @@
 import { type ReactElement } from "react";
 
-import { HistoryTable, TopicTable, useMQTTContext } from "@/features/messageRepresentacion";
+import { HistoryTable, TopicTable, LastTable, useMQTTContext } from "@/features/messageRepresentacion";
 import { useSubscriptionContext } from "@/features/messageSubscription";
 import { useNavigationStore, OVERLAY_IDS } from "@/features/navigation";
 import { filterBySubscriptions } from "@/shared/service/topicFilter";
@@ -45,6 +45,8 @@ function tableToShow({ showTable, tableConfig }: TableToShowProps) {
     return <HistoryTable />
   } else if (tableConfig === OVERLAY_IDS.TABLE_TOPIC) {
     return <TopicTable />;
+  } else if (tableConfig === OVERLAY_IDS.TABLE_LAST) {
+    return <LastTable />
   }
   return <></>;
 }

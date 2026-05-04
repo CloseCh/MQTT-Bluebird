@@ -2,6 +2,8 @@ export { HistoryTable } from './components/HistoryTable/HistoryTable.jsx';
 
 export { TopicTable } from './components/TopicTable/TopicTable.js';
 
+export { LastTable } from './components/LastTable/LastTable.js';
+
 export { RepresentationDataTypeSelector } from './components/RepresentationDataTypeSelector/RepresentationDataTypeSelector.jsx';
 
 export { MessageDetail } from './components/MessageDetail/MessageDetail.jsx';
