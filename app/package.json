@@ -1,5 +1,5 @@
 {
-  "name": "mqtt_client",
+  "name": "mqtt_bluebird",
   "version": "0.1.0",
   "description": "MQTT communication client",
   "type": "module",

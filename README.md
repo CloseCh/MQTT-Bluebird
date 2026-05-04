@@ -67,3 +67,5 @@ export default tseslint.config([
   },
 ])
 ```
+
+Icono obtenido de [Muhammad Adnan en vecteezy.com](https://www.vecteezy.com/vector-art/49246407-modern-stylized-bluebird-logo-design-perfect-for-a-brand-seeking-a-unique-and-fresh-identity)

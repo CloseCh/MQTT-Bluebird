@@ -1,6 +1,6 @@
 {
-  "productName": "MQTT Client",
-  "appId": "com.close.mqttclient",
+  "productName": "MQTT Bluebird",
+  "appId": "com.close.mqttbluebird",
   "icon": "./public/icon.png",
   "asar": true,
   "compression": "normal",
