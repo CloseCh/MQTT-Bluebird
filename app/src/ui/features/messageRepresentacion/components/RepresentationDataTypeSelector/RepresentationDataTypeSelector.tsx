@@ -9,17 +9,11 @@ import {
 
 import { useRepresentationDataTypeSelector } from './useRepresentationDataTypeSelector';
 
-import type { MessageFormatEnum, Topic } from '@/features/messageRepresentacion';
+import type { MessageFormatEnum } from '@/features/messageRepresentacion';
 
 import { NUM_FORMATS, TEXT_FORMATS } from '../../constants/TypeSelector.constants';
 
-interface Prop {
-  selectedTopic: Topic;
-}
-
-export function RepresentationDataTypeSelector({ 
-  selectedTopic 
-}: Prop) {
+export function RepresentationDataTypeSelector( ) {
   const {
     selectRef,
     messageFormat,
@@ -28,7 +22,7 @@ export function RepresentationDataTypeSelector({
     handleOpen,
     handleClose,
     handleSelect
-  } = useRepresentationDataTypeSelector({ selectedTopic });
+  } = useRepresentationDataTypeSelector();
 
   return (
     <>

@@ -1,20 +1,15 @@
 import { useCallback, useRef, useState } from "react";
 import { useMQTTContext } from "../../hooks/useMQTTContext";
-import type { Topic } from "../../types/mqtt.types";
 
-interface Prop {
-  selectedTopic: Topic;
-}
-
-export function useRepresentationDataTypeSelector({ 
-  selectedTopic
-}: Prop){
+export function useRepresentationDataTypeSelector(){
   const selectRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { setMessageFormat, getMessageFormat } = useMQTTContext();
+  const { setMessageFormat, getSelectedTopic ,getMessageFormat } = useMQTTContext();
+
+  const selectedTopic = getSelectedTopic();
   const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleOpen = useCallback((e: React.MouseEvent) => {
