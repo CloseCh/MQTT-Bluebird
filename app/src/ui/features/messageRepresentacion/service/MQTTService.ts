@@ -51,10 +51,23 @@ function MQTTService(dataPointCount: number): MQTTContextValue {
     });
   }, [dataPointCount]);
 
+  const clearMessages = useCallback(() => {
+    setTopicList([]);
+    setMessageSelected(null);
+    setMessageListByTopic({});
+    setSelectedTopic("");
+  }, []);
+
+
   useEffect(() => {
     const unsub = window.electron.subscribeMQTT(onMessage);
     return unsub;
   }, [onMessage]);
+
+  useEffect(() => {
+    const unsub = window.electron.onBrokerDisconnected(clearMessages);
+    return unsub;
+  }, [clearMessages]);
 
   const handleMessageFormat = useCallback((topic: Topic, format: MessageFormatEnum) => {
     

@@ -53,6 +53,13 @@ export function subscriptionService(): SubscriptionContextValue {
     if (!isConnected) return;
   }, [isConnected]);
 
+  useEffect(() => {
+    const unsub = window.electron.onBrokerDisconnected(() => {
+      setSubscriptionList({});
+    });
+    return unsub;
+  }, []);
+
   return {
     subscriptionList,
     updateSubscriptionState,

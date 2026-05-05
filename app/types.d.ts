@@ -34,6 +34,9 @@ interface EventPayloadMapping {
   'mqtt:getSubscriptions': void;
   'mqtt:subscriptionsUpdated': string[];
 
+  // broker lifecycle
+  'mqtt:brokerDisconnected': void;
+
   // connection
   'mqtt:connection': MqttConnectionOptions
   'mqtt:disconnect': void;
@@ -46,6 +49,7 @@ interface Window {
     subscribeMQTT: (callback: (message: MQTTMessage) => void) => UnsubscribeFunction;
     systemMessage: (callback: (message: MQTTMessage) => void) => UnsubscribeFunction;
     onSubscriptionsUpdated: (callback: (subscriptions: string[]) => void) => UnsubscribeFunction;
+    onBrokerDisconnected: (callback: () => void) => UnsubscribeFunction;
 
     publishMQTT: (message: PublishPayload) => Promise<void>;
 
