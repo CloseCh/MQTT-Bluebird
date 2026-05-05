@@ -1,71 +1,88 @@
-# React + TypeScript + Vite
+# MQTT Bluebird
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Cliente de escritorio MQTT construido con Electron, React y TypeScript. Permite conectarse a brokers MQTT, suscribirse a tópicos, publicar mensajes en múltiples formatos y monitorear el estado del broker en tiempo real.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Conexión** — soporta los protocolos `mqtt`, `mqtts`, `ws` y `wss`, con autenticación opcional (usuario y contraseña).
+- **Suscripción** — gestión de suscripciones a tópicos con soporte de wildcards (`+`, `#`).
+- **Publicación** — envío de mensajes con selección de formato de datos, nivel de QoS (0, 1, 2) y flag retain.
+- **Visualización de mensajes** — tres vistas para explorar los mensajes recibidos:
+  - **History** — historial completo de mensajes por tópico.
+  - **Topic** — último mensaje recibido por tópico.
+  - **Last** — vista de los mensajes más recientes.
+- **Broker Monitor** — panel de métricas en tiempo real vía tópicos `$SYS/broker/`: clientes, mensajes, bytes, suscripciones, heap, carga (1 min / 5 min / 15 min) y gráficos de series temporales.
+- **Ajustes** — modo oscuro y límite configurable de mensajes por tópico.
 
-## Expanding the ESLint configuration
+## Formatos de datos soportados
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Al publicar y al visualizar mensajes se pueden usar los siguientes formatos:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Formato | Descripción |
+|---|---|
+| UTF-8 / JSON | Texto plano o JSON con pretty-print automático |
+| HEX | Cadena hexadecimal |
+| ASCII codes | Lista de códigos decimales separados por espacios o comas |
+| int8 / uint8 | Entero de 8 bits con/sin signo |
+| int16 / uint16 | Entero de 16 bits big-endian |
+| int32 / uint32 | Entero de 32 bits big-endian |
+| int64 / uint64 | Entero de 64 bits big-endian |
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Stack tecnológico
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Electron 41** — runtime de escritorio
+- **React 19** + **TypeScript** — interfaz de usuario
+- **electron-vite / Vite** — bundler y dev server
+- **Material UI 7** — componentes visuales
+- **Zustand** — gestión de estado global
+- **react-hook-form** — manejo de formularios
+- **recharts** — gráficos de series temporales
+- **mqtt 5** — cliente MQTT para Node.js
+
+## Requisitos
+
+- Node.js ≥ 20
+- pnpm ≥ 10
+
+## Instalación y desarrollo
+
+```bash
+cd app
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Comando | Descripción |
+|---|---|
+| `pnpm dev` | Inicia la app en modo desarrollo con hot-reload |
+| `pnpm build` | Compila TypeScript y genera el bundle de producción |
+| `pnpm type:validate` | Valida los tipos sin emitir archivos |
+| `pnpm lint` | Ejecuta ESLint sobre el proyecto |
+| `pnpm dist:win` | Genera el instalador para Windows (x64) |
+| `pnpm dist:mac` | Genera el instalador para macOS (arm64) |
+| `pnpm dist:linux` | Genera el instalador para Linux (x64) |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Infraestructura de pruebas
+
+El directorio `testInfra/` contiene un entorno Docker para desarrollo y pruebas locales:
+
+```bash
+cd testInfra
+docker compose up
 ```
 
-Icono obtenido de [Muhammad Adnan en vecteezy.com](https://www.vecteezy.com/vector-art/49246407-modern-stylized-bluebird-logo-design-perfect-for-a-brand-seeking-a-unique-and-fresh-identity)
+Levanta tres servicios:
+
+| Servicio | Puerto | Descripción |
+|---|---|---|
+| Mosquitto | `1883` (TCP) · `9001` (WebSocket) | Broker MQTT con acceso anónimo |
+| MQTT Explorer | `4000` | UI web para inspeccionar el broker (admin/admin) |
+| nodePublisher | — | Contenedor Node.js que publica mensajes de prueba |
+
+Para conectarse desde la app usar `localhost:1883` (protocolo `mqtt`) o `localhost:9001` (protocolo `ws`).
+
+## Créditos
+
+Icono de la aplicación por [Muhammad Adnan en vecteezy.com](https://www.vecteezy.com/vector-art/49246407-modern-stylized-bluebird-logo-design-perfect-for-a-brand-seeking-a-unique-and-fresh-identity).
