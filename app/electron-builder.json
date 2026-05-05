@@ -13,16 +13,24 @@
     "!**/*.d.ts"  
   ],
   "mac": {
-    "target": "dmg"
+    "target": "dmg",
+    "category": "public.app-category.utilities"
   },
   "linux": {
-    "target": "AppImage",
-    "category": "Utility"
+    "executableName": "mqtt-bluebird",
+    "target": ["AppImage", "deb"],
+    "category": "Network;Utility"
   },
   "win": {
+    "artifactName": "${productName}-${version}-Setup.${ext}",
     "target": {
       "target": "nsis",
       "arch": ["x64"]
     }
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
   }
 }

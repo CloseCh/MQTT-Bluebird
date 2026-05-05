@@ -13,7 +13,7 @@
     "build": "tsc -b && electron-vite build",
     "lint": "eslint .",
     "dist:win": "tsc -b && electron-vite build && electron-builder --win --x64",
-    "dist:mac": "tsc -b && electron-vite build && electron-builder --mac --arm64",
+    "dist:mac": "tsc -b && electron-vite build && electron-builder --mac --universal",
     "dist:linux": "tsc -b && electron-vite build && electron-builder --linux --x64"
   },
   "keywords": [],

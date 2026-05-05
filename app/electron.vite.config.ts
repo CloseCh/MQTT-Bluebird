@@ -74,11 +74,20 @@ export default defineConfig({
               if (id.includes('@mui/icons-material')) {
                 return 'vendor-mui-icons';
               }
+              if (id.includes('@mui/x-data-grid')) {
+                return 'vendor-mui-datagrid';
+              }
               if (id.includes('@mui/material') || id.includes('@emotion')) {
                 return 'vendor-mui';
               }
               if (id.includes('recharts')) {
                 return 'vendor-charts';
+              }
+              if (id.includes('mqtt')) {
+                return 'vendor-mqtt';
+              }
+              if (id.includes('react-hook-form')) {
+                return 'vendor-forms';
               }
               return 'vendor-misc';
             }
