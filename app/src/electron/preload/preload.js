@@ -29,7 +29,11 @@ contextBridge.exposeInMainWorld('electron', {
     ipcOn('mqtt:systemMessage', (temp) => {
       callback(temp);
     }),
-  
+  onSubscriptionsUpdated: (callback) =>
+    ipcOn('mqtt:subscriptionsUpdated', (subscriptions) => {
+      callback(subscriptions);
+    }),
+
   publishMQTT: (message) =>
     ipcInvoke('mqttPublish', message),
   

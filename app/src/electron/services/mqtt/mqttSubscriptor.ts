@@ -1,13 +1,21 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, type WebContents } from 'electron';
 import { type IPublishPacket } from 'mqtt';
 import { getClient } from './mqttConnection.js';
-import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/until.js';
+import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/util.js';
 
 let activeSubscriptions: Set<string> = new Set(["$SYS/#"]);
-
 let handlersRegistered: boolean = false;
+let activeWebContents: WebContents | null = null;
+
+function broadcastSubscriptions(): void {
+  if (activeWebContents && !activeWebContents.isDestroyed()) {
+    ipcWebContentsSend('mqtt:subscriptionsUpdated', activeWebContents, [...activeSubscriptions]);
+  }
+}
 
 export function setupSubscriptor(mainWindow: BrowserWindow): void {
+  activeWebContents = mainWindow.webContents;
+
   if (!handlersRegistered) {
     handlersRegistered = true;
 
@@ -19,6 +27,7 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
         client.subscribe(topics, (err) => {
           if (err) return reject(err);
           topics.forEach(t => activeSubscriptions.add(t));
+          broadcastSubscriptions();
           resolve([...activeSubscriptions]);
         });
       });
@@ -32,6 +41,7 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
         client.unsubscribe(topics, (err) => {
           if (err) return reject(err);
           topics.forEach(t => activeSubscriptions.delete(t));
+          broadcastSubscriptions();
           resolve([...activeSubscriptions]);
         });
       });
@@ -45,7 +55,8 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
   mainWindow.on('closed', () => {
     const client = getClient();
     if (client) client.end();
-    activeSubscriptions.clear();
+    activeWebContents = null;
+    resetSubscriptions();
   });
 }
 
@@ -77,4 +88,8 @@ export function setupClientListeners(mainWindow: BrowserWindow): void {
       ipcWebContentsSend('message', mainWindow.webContents, messageReceived);
     }
   });
+}
+
+export function resetSubscriptions(): void {
+  activeSubscriptions = new Set(["$SYS/#"]);
 }

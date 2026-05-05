@@ -1,14 +1,14 @@
 import { app, BrowserWindow } from 'electron';
 import { destroyClient, connectClient } from './services/mqtt/mqttConnection.js';
 import createMainWindow from './window/mainWindow.js';
-import { ipcMainHandle, ipcMainHandleWithReturn } from './util/until.js';
+import { ipcMainHandleWithReturn } from './util/util.js';
 import { setupClientListeners } from './services/mqtt/mqttSubscriptor.js';
 import { publishMessage } from './services/mqtt/mqttPublisher.js';
 
 app.on('ready', () => {
   const mainWindow = createMainWindow();
 
-  ipcMainHandle('mqttPublish', (payload) => {
+  ipcMainHandleWithReturn('mqttPublish', (payload) => {
     publishMessage(payload);
   });
 
@@ -33,7 +33,7 @@ app.on('ready', () => {
     });
   });
 
-  ipcMainHandle('mqtt:disconnect', () => {
+  ipcMainHandleWithReturn('mqtt:disconnect', () => {
     destroyClient();
   });
 
