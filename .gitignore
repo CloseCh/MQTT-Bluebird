@@ -24,3 +24,6 @@ dist-preload
 *.njsproj
 *.sln
 *.sw?
+
+
+.env

@@ -3,7 +3,7 @@ import { getUIPath } from './pathResolver.js';
 import { pathToFileURL } from 'url';
 
 export function isDev(): boolean {
-  return !app.isPackaged;
+  return process.env.NODE_ENV === 'development' || !app.isPackaged;
 }
 
 export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
