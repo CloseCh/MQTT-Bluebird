@@ -7,6 +7,7 @@ import type { MessageFormatEnum } from '../../../types/mqtt.types.js';
 import DecoderService from '../../../service/DecorderService.js';
 import RepresentationDataTypeSelector from '../../RepresentationDataTypeSelector/RepresentationDataTypeSelector.js';
 import { Box } from '@mui/material';
+import { DeleteRetainButton } from '@/features/messagePublish';
 
 type Packet = import('mqtt').IPublishPacket;
 
@@ -22,7 +23,7 @@ export default function MessageDetailData ({
   onClose,
 }: Prop) {
   const messagePacket: Packet = messageSelected.packet;
-
+  
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
@@ -66,6 +67,11 @@ export default function MessageDetailData ({
           <Box sx={{ pt: '10px', pb: '10px'}}>
             <RepresentationDataTypeSelector />
           </Box>
+
+          <Box sx={{ pt: '10px', pb: '10px'}}>
+            <DeleteRetainButton disabled={!messagePacket.retain}/>
+          </Box>
+
           {/* Properties opcionales */}
           {messagePacket.properties && (
             <Accordion sx={{ mt: 2 }}>
