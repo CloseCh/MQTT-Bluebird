@@ -10,7 +10,7 @@ export default function SettingsPage() {
 
   const handleBack = () => {
     closeSettings();
-    navigate('/');
+    void navigate('/');
   };
 
   return (

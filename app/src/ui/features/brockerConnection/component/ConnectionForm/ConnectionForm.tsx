@@ -26,7 +26,7 @@ export function ConnectionForm() {
   return (
     <Stack spacing={2}>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)} noValidate>
         <Stack spacing={2}>
 
           {/* Protocol + Host */}

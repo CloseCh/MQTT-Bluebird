@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { tsToMs } from '../utils/tsToMs'
+import { tsToMs } from '../utils/date.util'
 
 describe('tsToMs', () => {
   it('converts midnight to 0 ms', () => {

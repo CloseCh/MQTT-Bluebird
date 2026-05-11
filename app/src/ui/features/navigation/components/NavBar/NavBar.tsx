@@ -15,12 +15,12 @@ export function NavBar() {
 
   const handleSettings = () => {
     toggleSettings();
-    navigate(settingsOpen ? '/' : '/settings');
+    void navigate(settingsOpen ? '/' : '/settings');
   };
 
   const handleMonitor = () => {
     toggleMonitor();
-    navigate(monitorOpen ? '/' : '/monitor');
+    void navigate(monitorOpen ? '/' : '/monitor');
   };
 
   const barStyle = {

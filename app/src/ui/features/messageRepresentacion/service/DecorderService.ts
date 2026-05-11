@@ -39,7 +39,7 @@ function decodeHex(hexData: string) {
 function decodeText(bytes: Uint8Array) {
   try {
     const str = new TextDecoder('utf-8').decode(bytes);
-    const parsed = JSON.parse(str);
+    const parsed: unknown = JSON.parse(str);
     return JSON.stringify(parsed, null, 2);
   } catch {
     return new TextDecoder('UTF-8').decode(bytes);

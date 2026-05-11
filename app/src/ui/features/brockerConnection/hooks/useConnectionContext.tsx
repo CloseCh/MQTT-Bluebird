@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
-import { connectionService } from '../service/connectionService';
+import { useConnectionService } from './useConnectionService';
 import type { ConnectionContextValue } from '../types/connection.types';
 
 const ConnectionContext = createContext<ConnectionContextValue | null>(null);
@@ -11,10 +11,10 @@ interface ConnectionProvider {
 
 export function ConnectionProvider({ children }: ConnectionProvider) {
 
-  const mqtt = connectionService();
+  const connection = useConnectionService();
 
   return (
-    <ConnectionContext.Provider value={mqtt}>
+    <ConnectionContext.Provider value={connection}>
       {children}
     </ConnectionContext.Provider>
   );
@@ -23,7 +23,7 @@ export function ConnectionProvider({ children }: ConnectionProvider) {
 export function useConnectionContext(): ConnectionContextValue {
   const ctx = useContext(ConnectionContext);
   if (!ctx) {
-    throw new Error('useConnectionContext debe usarse dentro de <MQTTProvider>');
+    throw new Error('useConnectionContext debe usarse dentro de <ConnectionProvider>');
   }
   return ctx;
 }

@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import type { ConnectionContextValue } from '../types/connection.types';
 
-export function connectionService(): ConnectionContextValue {
+export function useConnectionService(): ConnectionContextValue {
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [connectedEndpoint, setConnectedEndpoint] = useState<string | null>(null);
 

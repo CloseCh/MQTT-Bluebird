@@ -14,7 +14,7 @@ export function StatusButton() {
     <Tooltip title={tooltipTitle} arrow>
       <Box display='inline-flex' position='relative'>
         <IconButton
-          onClick={onDisconnect}
+          onClick={() => void onDisconnect()}
           disabled={!isConnected || isDisconnecting}
           size='small'
           aria-label={isConnected ? 'Desconectar MQTT' : 'MQTT desconectado'}

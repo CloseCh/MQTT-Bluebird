@@ -1,47 +1,7 @@
 import { useEffect, useCallback, useState, useRef } from 'react';
 import type { BrockerMonitorContextValue, BrokerStats, TimeSeriesPoint } from '../types/brockerMonitor.types';
-import { MAX_SERIES_POINTS } from '../constants/brockerMonitor.constants';
-
-
-function hexToString(hex: string): string {
-  const bytes = new Uint8Array(
-    (hex.match(/.{1,2}/g) ?? []).map(b => parseInt(b, 16))
-  );
-  return new TextDecoder().decode(bytes);
-}
-
-function formatTime(ts: number): string {
-  const d = new Date(ts);
-  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
-}
-
-const emptyLoad = { '1min': 0, '5min': 0, '15min': 0 };
-
-const initialStats: BrokerStats = {
-  version: '',
-  uptime: '',
-  clients: { total: 0, connected: 0, disconnected: 0, inactive: 0, active: 0, expired: 0, maximum: 0 },
-  messages: { stored: 0, received: 0, sent: 0 },
-  store: { messages: { count: 0, bytes: 0 } },
-  subscriptions: { count: 0 },
-  sharedSubscriptions: { count: 0 },
-  retainedMessages: { count: 0 },
-  heap: { current: 0, maximum: 0 },
-  bytes: { received: 0, sent: 0 },
-  publish: {
-    bytes: { received: 0, sent: 0 },
-    messages: { dropped: 0, received: 0, sent: 0 },
-  },
-  packet: { out: { count: 0, bytes: 0 } },
-  connections: { socket: { count: 0 } },
-  load: {
-    messages: { received: { ...emptyLoad }, sent: { ...emptyLoad } },
-    publish: { dropped: { ...emptyLoad }, received: { ...emptyLoad }, sent: { ...emptyLoad } },
-    bytes: { received: { ...emptyLoad }, sent: { ...emptyLoad } },
-    sockets: { ...emptyLoad },
-    connections: { ...emptyLoad },
-  },
-};
+import { INITIAL_STATS, MAX_SERIES_POINTS } from '../constants/brockerMonitor.constants';
+import { formatTime, hexToString } from '../utils/format.util';
 
 function applyTopicToStats(stats: BrokerStats, topic: string, value: string): BrokerStats {
   const path = topic.replace('$SYS/broker/', '');
@@ -127,8 +87,8 @@ function applyTopicToStats(stats: BrokerStats, topic: string, value: string): Br
   }
 }
 
-function brockerMonitorService(): BrockerMonitorContextValue {
-  const [stats, setStats] = useState<BrokerStats>(initialStats);
+export function useBrockerMonitorService(): BrockerMonitorContextValue {
+  const [stats, setStats] = useState<BrokerStats>(INITIAL_STATS);
   const [timeSeries, setTimeSeries] = useState<TimeSeriesPoint[]>([]);
 
   const pendingLoad = useRef({ msgReceived: 0, msgSent: 0, bytesReceived: 0, bytesSent: 0 });
@@ -174,4 +134,4 @@ function brockerMonitorService(): BrockerMonitorContextValue {
   return { stats, timeSeries };
 }
 
-export default brockerMonitorService;
+export default useBrockerMonitorService;

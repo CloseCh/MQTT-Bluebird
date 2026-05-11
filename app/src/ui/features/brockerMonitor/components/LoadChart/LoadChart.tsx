@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useBrockerMonitorContext } from '../../hooks/useBrockerMonitorContext';
-import { formatBytes } from '../../util/format';
+import { formatBytes } from '../../utils/format.util';
 import ChartPanel from './ChartPanel/ChartPanel';
 
 export function LoadChart() {

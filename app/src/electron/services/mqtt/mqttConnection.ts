@@ -1,4 +1,4 @@
-import mqtt, { MqttClient } from 'mqtt';
+import mqtt, { type MqttClient } from 'mqtt';
 import { resetSubscriptions } from './mqttSubscriptor';
 
 let client: MqttClient | null = null;

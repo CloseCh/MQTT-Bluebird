@@ -1,20 +1,21 @@
 import { useCallback, useMemo } from 'react';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 import DecoderService from '../../service/DecorderService';
-import { tsToMs } from '../../utils/tsToMs';
-import type { GridColDef } from '@mui/x-data-grid';
+import { nowMs, tsToMs } from '../../utils/date.util';
+import type { GridColDef, GridRowClassNameParams } from '@mui/x-data-grid';
+import { FLASH_DURATION } from '../../constants/TypeSelector.constants';
 
 export function useTopicTable() {
-  const { 
-    topicList, 
-    getSelectedTopic, 
-    getTypedMessageList, 
-    setSelectedTopic, 
-    setMessageSelected 
+  const {
+    topicList,
+    getSelectedTopic,
+    getTypedMessageList,
+    setSelectedTopic,
+    setMessageSelected
   } = useMQTTContext();
   const selectedTopic = getSelectedTopic();
 
-  const columns: GridColDef[] = useMemo(() => [
+  const columns: GridColDef<MQTTMessage>[] = useMemo(() => [
     { field: 'timeStamp', headerName: 'TimeStamp', width: 125 },
     { field: 'topic', headerName: 'Topic', flex: 1 },
     {
@@ -29,33 +30,27 @@ export function useTopicTable() {
   ], [getTypedMessageList]);
 
   const rows = useMemo(() =>
-    topicList
-      .map((topic) => {
-        const { messageList } = getTypedMessageList(topic);
-        const last = messageList[0];
-        if (!last) return null;
-        return { id: topic, ...last };
-      })
-      .filter(Boolean),
+    topicList.flatMap((topic) => {
+      const { messageList } = getTypedMessageList(topic);
+      const last = messageList[0];
+      return last ? [{ id: topic, ...last }] : [];
+    }),
     [topicList, getTypedMessageList]
   );
 
-    const handleClick = useCallback((message: MQTTMessage) => {
-      setMessageSelected(message);
-      setSelectedTopic(message.topic);
-    }, [setSelectedTopic]);
+  const handleClick = useCallback((message: MQTTMessage) => {
+    setMessageSelected(message);
+    setSelectedTopic(message.topic);
+  }, [setMessageSelected, setSelectedTopic]);
 
-  function nowMs(): number {
-    const now = new Date();
-    return (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
-  }
+  const rowClassName = (params: GridRowClassNameParams<MQTTMessage>) =>
+    nowMs() - tsToMs(params.row.timeStamp) < FLASH_DURATION ? 'row-flash' : '';
 
-  return { 
-    selectedTopic, 
-    columns, 
-    rows, 
+  return {
+    selectedTopic,
+    columns,
+    rows,
     handleClick,
-    tsToMs, 
-    nowMs 
+    rowClassName,
   };
 }

@@ -4,25 +4,15 @@ import MessageDetailData from './MessageDetailData/MessageDetailData';
 import ResizeHandle from './ResizeHandle/ResizeHandle';
 import { useMessageDetail } from './useMessageDetail';
 import { HEADER_HEIGHT } from '../../../../constants/layout';
-import { useMQTTContext } from '../../hooks/useMQTTContext';
 
 export function MessageDetail () {
   const {
     drawerWidth,
     handleMouseDown,
-    messageFormat
+    messageFormat,
+    handleCloseDetailedClick,
+    messageSelected,
   } = useMessageDetail();
-
-  const {getMessageSelected, setMessageSelected} = useMQTTContext();
-
-  let messageSelected: MQTTMessage | null = getMessageSelected();
-  if (messageSelected === null) {
-    messageSelected = {} as MQTTMessage;
-  }
-
-  const handleCloseDetailedClick = () => {
-    setMessageSelected(null);
-  };
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -59,7 +49,7 @@ export function MessageDetail () {
       <Grid container>
         <Grid size={12}>
           <MessageDetailData
-            messageSelected={messageSelected}
+            messageSelected={messageSelected ?? {} as MQTTMessage}
             messageFormat={messageFormat}
             onClose={handleCloseDetailedClick}
           />

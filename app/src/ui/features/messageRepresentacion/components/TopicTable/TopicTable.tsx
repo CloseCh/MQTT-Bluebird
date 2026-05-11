@@ -9,8 +9,7 @@ export function TopicTable( ) {
     columns,
     rows,
     handleClick,
-    tsToMs,
-    nowMs
+    rowClassName
   } = useTopicTable();
 
   return (
@@ -22,9 +21,7 @@ export function TopicTable( ) {
         onRowClick={(params: GridRowParams) => handleClick(params.row as MQTTMessage)}
         disableColumnMenu
         hideFooter
-        getRowClassName={(params) =>
-          nowMs() - tsToMs(params.row.timeStamp) < FLASH_DURATION ? 'row-flash' : ''
-        }
+        getRowClassName={rowClassName}
         sx={(theme) => ({
           flex: 1,
           minHeight: 0,

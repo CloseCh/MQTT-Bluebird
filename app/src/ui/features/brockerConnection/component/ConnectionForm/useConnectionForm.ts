@@ -42,7 +42,7 @@ export function useConnectionForm() {
     try {
       const success = await handleConnection(buildEndpoint(data), data.username, data.password);
       if (success) {
-        navigate('/');
+        void navigate('/');
       } else {
         setStatus('error');
         setErrorMessage('No se pudo establecer la conexión...');

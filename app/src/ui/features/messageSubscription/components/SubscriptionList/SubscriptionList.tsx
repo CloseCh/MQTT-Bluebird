@@ -1,12 +1,9 @@
 import List from '@mui/material/List';
 import type { SubscriptionList } from '../../types/subscription.types';
 import { useSubscriptionContext } from '../../hooks/useSubscriptionContext';
-import { SubscriptionListItem } from '../SubscriptionListItem/SubscriptionListItem';
+import { SubscriptionListItem } from './SubscriptionListItem/SubscriptionListItem';
 
-interface Prop {
-}
-
-export function SubscriptionList({ }: Prop) {
+export function SubscriptionList() {
   const { subscriptionList, updateSubscriptionState } = useSubscriptionContext();
 
   return (

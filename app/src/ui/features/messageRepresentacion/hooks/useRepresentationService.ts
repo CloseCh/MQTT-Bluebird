@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
-import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTMessageList, MQTTContextValue } from '../types/mqtt.types';
+import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTContextValue } from '../types/mqtt.types';
+import { EMPTY_MESSAGE } from '../constants/TypeSelector.constants';
 
 /**
  * Es un metodo que gestiona los mensajes que llega del main process en electrón,
@@ -17,8 +18,6 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
   const [selectedTopic, setSelectedTopic] = useState<Topic>('');
 
-  const emptyMessage: MQTTMessageList = { messageList: [], format: 'UTF-8' };
-
   const onMessage = useCallback((message: MQTTMessage) => {
     
 
@@ -34,7 +33,7 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
     });
 
     setMessageListByTopic(prev => {
-      const current = prev[message.topic] ?? emptyMessage;
+      const current = prev[message.topic] ?? EMPTY_MESSAGE;
       const MessageList = current.messageList;
 
       const newMessageList = MessageList.length >= dataPointCount
@@ -72,7 +71,7 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
   const handleMessageFormat = useCallback((topic: Topic, format: MessageFormatEnum) => {
     
     setMessageListByTopic(prev => {
-      const current = prev[topic] ?? emptyMessage;
+      const current = prev[topic] ?? EMPTY_MESSAGE;
 
       return {
         ...prev,
@@ -90,9 +89,9 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
     topicList,
     getSelectedTopic: () => selectedTopic,
     setSelectedTopic: handleSelectedTopic,
-    getTypedMessageList: topic => messageListByTopic[topic] ?? emptyMessage,
+    getTypedMessageList: topic => messageListByTopic[topic] ?? EMPTY_MESSAGE,
     setMessageFormat: handleMessageFormat,
-    getMessageFormat: topic => messageListByTopic[topic]?.format ?? emptyMessage.format,
+    getMessageFormat: topic => messageListByTopic[topic]?.format ?? EMPTY_MESSAGE.format,
     getMessageSelected: () => messageSelected,
     setMessageSelected: message => setMessageSelected(message)
   };

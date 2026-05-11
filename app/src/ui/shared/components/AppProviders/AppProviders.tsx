@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { ConnectionProvider } from '@/features/brockerConnection';
 import { BrockerMonitorProvider } from '@/features/brockerMonitor';
 import { MQTTProvider } from '@/features/messageRepresentacion';

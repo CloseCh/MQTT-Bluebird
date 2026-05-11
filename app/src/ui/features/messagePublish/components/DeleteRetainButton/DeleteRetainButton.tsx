@@ -13,7 +13,7 @@ export function DeleteRetainButton({disabled}: DeleteRetainButtonProp) {
 
     if (message === null) return;
 
-    window.electron.publishMQTT({
+    void window.electron.publishMQTT({
       topic: message.topic,
       message: '',
       retain: true,

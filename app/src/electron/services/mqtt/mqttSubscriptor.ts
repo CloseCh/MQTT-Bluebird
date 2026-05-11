@@ -1,4 +1,4 @@
-import { BrowserWindow, type WebContents } from 'electron';
+import type { BrowserWindow, WebContents } from 'electron';
 import { type IPublishPacket } from 'mqtt';
 import { getClient } from './mqttConnection';
 import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/util';

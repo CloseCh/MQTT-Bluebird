@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 
-export function useMessageDetail () {
+export function useMessageDetail() {
   const [drawerWidth, setDrawerWidth] = useState(400);
 
-  const { getSelectedTopic, getMessageFormat } = useMQTTContext();
+  const { setMessageSelected, getSelectedTopic, getMessageFormat, getMessageSelected } = useMQTTContext();
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -31,9 +31,17 @@ export function useMessageDetail () {
 
   const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);
 
+  const handleCloseDetailedClick = () => {
+    setMessageSelected(null);
+  };
+
+  const messageSelected: MQTTMessage | null = getMessageSelected();
+
   return {
     drawerWidth,
     handleMouseDown,
-    messageFormat
+    messageFormat,
+    handleCloseDetailedClick,
+    messageSelected
   }
 }

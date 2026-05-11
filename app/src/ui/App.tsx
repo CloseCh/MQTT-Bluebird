@@ -12,7 +12,7 @@ import SettingsPage from './layout/MainLayout/page/SettingsPage/SettingsPage';
 import { BrokerMonitorPage } from '@/features/brockerMonitor';
 import './index.css';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppProviders } from './utils/composeProviders';
+import { AppProviders } from './shared/components/AppProviders/AppProviders';
 
 export default function App() {
   return (

@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 import DecoderService from '../../service/DecorderService';
-import { tsToMs } from '../../utils/tsToMs';
-import type { GridColDef } from '@mui/x-data-grid';
+import { nowMs, tsToMs } from '../../utils/date.util';
+import type { GridColDef, GridRowClassNameParams } from '@mui/x-data-grid';
+import { FLASH_DURATION } from '../../constants/TypeSelector.constants';
 
 export function useLastTable() {
   const {
@@ -12,12 +13,7 @@ export function useLastTable() {
     setMessageSelected
   } = useMQTTContext();
 
-  function nowMs(): number {
-    const now = new Date();
-    return (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
-  }
-
-  const columns: GridColDef[] = useMemo(() => [
+  const columns: GridColDef<MQTTMessage>[] = useMemo(() => [
     { field: 'timeStamp', headerName: 'TimeStamp', width: 125 },
     { field: 'topic', headerName: 'Topic', flex: 1 },
     {
@@ -46,11 +42,13 @@ export function useLastTable() {
     setSelectedTopic(message.topic);
   }, [setSelectedTopic, setMessageSelected]);
 
+  const rowClassName = (params: GridRowClassNameParams<MQTTMessage>) =>
+    nowMs() - tsToMs(params.row.timeStamp) < FLASH_DURATION ? 'row-flash' : '';
+
   return {
     columns,
     rows,
     handleClick,
-    tsToMs,
-    nowMs
+    rowClassName,
   };
 }

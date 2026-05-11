@@ -15,12 +15,12 @@ export function useHistoryTable() {
   const handleClick = useCallback((message: MQTTMessage) => {
     setMessageSelected(message);
     setSelectedTopic(message.topic);
-  }, [setSelectedTopic]);
+  }, [setMessageSelected, setSelectedTopic]);
   
   const selectedTopic = getSelectedTopic();
   const message: MQTTMessageList = getTypedMessageList(selectedTopic);
 
-  const columns: GridColDef[] = useMemo(() => [
+  const columns: GridColDef<MQTTMessage>[] = useMemo(() => [
     { field: 'timeStamp', headerName: 'TimeStamp', width: 125 },
     {
       field: 'content',

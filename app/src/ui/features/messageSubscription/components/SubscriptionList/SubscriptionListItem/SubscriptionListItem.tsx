@@ -1,5 +1,5 @@
 import { Checkbox, IconButton, ListItem, ListItemText } from '@mui/material';
-import { useSubscriptionContext } from '../../hooks/useSubscriptionContext';
+import { useSubscriptionContext } from '../../../hooks/useSubscriptionContext';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
@@ -36,7 +36,7 @@ export function SubscriptionListItem({
         slotProps={{ input: { 'aria-labelledby': labelId } }}
       />
       <ListItemText id={labelId} primary={`${value}`} />
-      <IconButton type='button' aria-label='Add' onClick={() => unsubscribe(value)} edge='end'>
+      <IconButton type='button' aria-label='Add' onClick={() => void unsubscribe(value)} edge='end'>
         <DeleteOutlineIcon />
       </IconButton>
     </ListItem>

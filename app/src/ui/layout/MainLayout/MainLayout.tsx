@@ -14,7 +14,7 @@ export default function MainLayout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isConnected) navigate('/login');
+    if (!isConnected) void navigate('/login');
   }, [isConnected, navigate]);
   
   return (

@@ -33,7 +33,7 @@ export function PublishForm() {
 
     const encoded = EncoderService(data.message, data.dataType);
 
-    window.electron.publishMQTT({
+    void window.electron.publishMQTT({
       topic: data.topic,
       message: Array.from(encoded),
       qos: data.qos,
@@ -43,7 +43,7 @@ export function PublishForm() {
 
   return (
     <Card sx={{ p: '10px' }}>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} noValidate>
         <Stack spacing={1}>
           <TextField
             label='Topic'

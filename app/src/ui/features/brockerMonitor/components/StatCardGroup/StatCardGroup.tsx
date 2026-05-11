@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material';
 import { useBrockerMonitorContext } from '../../hooks/useBrockerMonitorContext';
 import StatCard from './StatCard/StatCard';
-import { formatBytes, formatUptime } from '../../util/format';
+import { formatBytes, formatUptime } from '../../utils/format.util';
 
 export function StatCardGroup() {
   const { stats } = useBrockerMonitorContext();

@@ -1,5 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary, Card, CardContent, CardHeader, Chip, IconButton, List, ListItem, ListItemText, Paper, Stack, Typography } from '@mui/material';
-
+import type { IPublishPacket } from 'mqtt';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -8,8 +8,6 @@ import DecoderService from '../../../service/DecorderService';
 import RepresentationDataTypeSelector from '../../RepresentationDataTypeSelector/RepresentationDataTypeSelector';
 import { Box } from '@mui/material';
 import { DeleteRetainButton } from '@/features/messagePublish';
-
-type Packet = import('mqtt').IPublishPacket;
 
 interface Prop {
   messageSelected: MQTTMessage;
@@ -22,7 +20,7 @@ export default function MessageDetailData ({
   messageFormat,
   onClose,
 }: Prop) {
-  const messagePacket: Packet = messageSelected.packet;
+  const messagePacket: IPublishPacket = messageSelected.packet;
   
   return (
     <>
@@ -82,7 +80,7 @@ export default function MessageDetailData ({
                 <List dense>
                   {Object.entries(messagePacket.properties).map(([key, value]) => (
                     <ListItem key={key}>
-                      <ListItemText primary={key} secondary={String(value)} />
+                      <ListItemText primary={key} secondary={typeof value === 'object' ? JSON.stringify(value) : String(value)} />
                     </ListItem>
                   ))}
                 </List>

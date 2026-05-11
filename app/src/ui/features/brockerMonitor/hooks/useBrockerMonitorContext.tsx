@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
-import brockerMonitorService from '../service/brockerMonitorService';
+import { useBrockerMonitorService } from './useBrockerMonitorService';
 import type { BrockerMonitorContextValue } from '../types/brockerMonitor.types';
 
 const BrockerMonitorContext = createContext<BrockerMonitorContextValue | null>(null);
@@ -10,7 +10,7 @@ interface BrockerMonitorProviderProps {
 }
 
 export function BrockerMonitorProvider({ children }: BrockerMonitorProviderProps) {
-  const value = brockerMonitorService();
+  const value = useBrockerMonitorService();
   return (
     <BrockerMonitorContext.Provider value={value}>
       {children}

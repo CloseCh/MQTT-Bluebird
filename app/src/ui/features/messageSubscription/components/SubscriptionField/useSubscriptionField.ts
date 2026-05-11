@@ -14,7 +14,7 @@ export function useSubscriptionField() {
       setPendingTopic(topic);
       setCoveringTopics(covering);
     } else {
-      subscribe([topic]);
+      void subscribe([topic]);
     }
   }
 
@@ -28,7 +28,7 @@ export function useSubscriptionField() {
   }
 
   function handleConfirm() {
-    if (pendingTopic) subscribe([pendingTopic]);
+    if (pendingTopic) void subscribe([pendingTopic]);
     setPendingTopic(null);
     setCoveringTopics([]);
   }
