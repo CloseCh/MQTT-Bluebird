@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 import DecoderService from '../../service/DecorderService';
+import { tsToMs } from '../../utils/tsToMs';
 import type { GridColDef } from '@mui/x-data-grid';
 
 export function useLastTable() {
@@ -10,12 +11,6 @@ export function useLastTable() {
     setSelectedTopic,
     setMessageSelected
   } = useMQTTContext();
-
-  function tsToMs(timeStamp: string): number {
-    const [hms, ms] = timeStamp.split('.') as [string, string];
-    const [h, m, s] = hms.split(':').map(Number) as [number, number, number];
-    return (h * 3600 + m * 60 + s) * 1000 + Number(ms);
-  }
 
   function nowMs(): number {
     const now = new Date();
