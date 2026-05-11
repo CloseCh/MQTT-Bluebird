@@ -3,9 +3,9 @@ import { Accordion, AccordionDetails, AccordionSummary, Card, CardContent, CardH
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import CloseIcon from '@mui/icons-material/Close';
 
-import type { MessageFormatEnum } from '../../../types/mqtt.types.js';
-import DecoderService from '../../../service/DecorderService.js';
-import RepresentationDataTypeSelector from '../../RepresentationDataTypeSelector/RepresentationDataTypeSelector.js';
+import type { MessageFormatEnum } from '../../../types/mqtt.types';
+import DecoderService from '../../../service/DecorderService';
+import RepresentationDataTypeSelector from '../../RepresentationDataTypeSelector/RepresentationDataTypeSelector';
 import { Box } from '@mui/material';
 import { DeleteRetainButton } from '@/features/messagePublish';
 

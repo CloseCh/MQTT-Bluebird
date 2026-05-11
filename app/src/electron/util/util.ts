@@ -1,5 +1,5 @@
 import { app, ipcMain, type WebContents, type WebFrameMain } from 'electron';
-import { getUIPath } from './pathResolver.js';
+import { getUIPath } from './pathResolver';
 import { pathToFileURL } from 'url';
 
 export function isDev(): boolean {

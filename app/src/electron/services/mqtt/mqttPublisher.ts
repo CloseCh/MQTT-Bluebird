@@ -1,4 +1,4 @@
-import { getClient } from './mqttConnection.js';
+import { getClient } from './mqttConnection';
 
 export function publishMessage({ topic, message, qos = 0, retain = false }: PublishPayload): Promise<void> {
   const client = getClient();

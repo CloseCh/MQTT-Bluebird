@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron';
-import { getPreloadPath, getUIPath } from '../util/pathResolver.js';
-import { isDev } from '../util/util.js';
-import { setupSubscriptor } from '../services/mqtt/mqttSubscriptor.js';
+import { getPreloadPath, getUIPath } from '../util/pathResolver';
+import { isDev } from '../util/util';
+import { setupSubscriptor } from '../services/mqtt/mqttSubscriptor';
 
 function createMainWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({

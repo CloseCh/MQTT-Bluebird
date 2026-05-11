@@ -1,3 +1,3 @@
-export { PublishForm } from './components/PublishForm/PublishForm.jsx';
+export { PublishForm } from './components/PublishForm/PublishForm';
 
-export { DeleteRetainButton } from './components/DeleteRetainButton/DeleteRetainButton.jsx'
+export { DeleteRetainButton } from './components/DeleteRetainButton/DeleteRetainButton'

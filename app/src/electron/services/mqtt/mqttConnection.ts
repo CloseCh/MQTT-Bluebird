@@ -1,5 +1,5 @@
 import mqtt, { MqttClient } from 'mqtt';
-import { resetSubscriptions } from './mqttSubscriptor.js';
+import { resetSubscriptions } from './mqttSubscriptor';
 
 let client: MqttClient | null = null;
 

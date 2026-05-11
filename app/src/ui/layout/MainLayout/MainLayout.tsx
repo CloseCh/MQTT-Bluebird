@@ -4,8 +4,8 @@ import {
   Stack
 } from '@mui/material';
 
-import Header from '../../shared/components/Header/Header.js';
-import { NavBar } from '@/features/navigation/index.js';
+import Header from '../../shared/components/Header/Header';
+import { NavBar } from '@/features/navigation/index';
 import { useConnectionContext } from '@/features/brockerConnection/';
 import { useEffect } from 'react';
 

@@ -2,11 +2,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { app, BrowserWindow, Menu } from 'electron';
-import { destroyClient, connectClient } from './services/mqtt/mqttConnection.js';
-import createMainWindow from './window/mainWindow.js';
-import { ipcMainHandleWithReturn, isDev } from './util/util.js';
-import { setupClientListeners } from './services/mqtt/mqttSubscriptor.js';
-import { publishMessage } from './services/mqtt/mqttPublisher.js';
+import { destroyClient, connectClient } from './services/mqtt/mqttConnection';
+import createMainWindow from './window/mainWindow';
+import { ipcMainHandleWithReturn, isDev } from './util/util';
+import { setupClientListeners } from './services/mqtt/mqttSubscriptor';
+import { publishMessage } from './services/mqtt/mqttPublisher';
 
 app.on('ready', () => {
   if (!isDev()) {

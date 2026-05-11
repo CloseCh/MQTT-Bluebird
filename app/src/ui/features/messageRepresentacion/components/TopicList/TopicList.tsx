@@ -1,11 +1,11 @@
 import React from 'react';
-import TopicListItem from './TopicListItem/TopicListItem.js';
+import TopicListItem from './TopicListItem/TopicListItem';
 import List from '@mui/material/List';
-import { useMQTTContext } from '../../hooks/useMQTTContext.js';
+import { useMQTTContext } from '../../hooks/useMQTTContext';
 
-import type { Topic, TopicList } from '../../types/mqtt.types.js';
-import { useSubscriptionContext } from '@/features/messageSubscription/index.js';
-import { filterBySubscriptions } from '@/shared/service/topicFilter.js';
+import type { Topic, TopicList } from '../../types/mqtt.types';
+import { useSubscriptionContext } from '@/features/messageSubscription/index';
+import { filterBySubscriptions } from '@/shared/service/topicFilter';
 
 function TopicList() {
   const { topicList } = useMQTTContext();

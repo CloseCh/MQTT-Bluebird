@@ -1,15 +1,15 @@
-export { HistoryTable } from './components/HistoryTable/HistoryTable.jsx';
+export { HistoryTable } from './components/HistoryTable/HistoryTable';
 
-export { TopicTable } from './components/TopicTable/TopicTable.js';
+export { TopicTable } from './components/TopicTable/TopicTable';
 
-export { LastTable } from './components/LastTable/LastTable.js';
+export { LastTable } from './components/LastTable/LastTable';
 
-export { RepresentationDataTypeSelector } from './components/RepresentationDataTypeSelector/RepresentationDataTypeSelector.jsx';
+export { RepresentationDataTypeSelector } from './components/RepresentationDataTypeSelector/RepresentationDataTypeSelector';
 
-export { MessageDetail } from './components/MessageDetail/MessageDetail.jsx';
+export { MessageDetail } from './components/MessageDetail/MessageDetail';
 
-export { TopicList } from './components/TopicList/TopicList.jsx';
+export { TopicList } from './components/TopicList/TopicList';
 
-export { MQTTProvider, useMQTTContext } from './hooks/useMQTTContext.js'
+export { MQTTProvider, useMQTTContext } from './hooks/useMQTTContext'
 
-export type * from './types/mqtt.types.js'
+export type * from './types/mqtt.types'

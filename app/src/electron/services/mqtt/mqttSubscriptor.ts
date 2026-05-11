@@ -1,7 +1,7 @@
 import { BrowserWindow, type WebContents } from 'electron';
 import { type IPublishPacket } from 'mqtt';
-import { getClient } from './mqttConnection.js';
-import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/util.js';
+import { getClient } from './mqttConnection';
+import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/util';
 
 let activeSubscriptions: Set<string> = new Set(['$SYS/#']);
 let handlersRegistered: boolean = false;

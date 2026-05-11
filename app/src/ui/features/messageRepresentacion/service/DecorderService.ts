@@ -1,4 +1,4 @@
-import type { MessageFormatEnum } from '../types/mqtt.types.js';
+import type { MessageFormatEnum } from '../types/mqtt.types';
 
 export default function DecoderService(hexData: string, format: MessageFormatEnum) {
   if (hexData.match(/.{1,2}/g) === null) {
