@@ -1,5 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
-import MQTTService from '../service/MQTTService';
+import MQTTService from './useRepresentationService';
 import type { MQTTContextValue } from '../types/mqtt.types';
 
 const MQTTContext = createContext<MQTTContextValue | null>(null);

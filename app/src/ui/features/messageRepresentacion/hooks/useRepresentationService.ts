@@ -11,7 +11,7 @@ import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTMessag
  * @param dataPointCount Cantidad de mensajes en la lista
  * @returns lista de topics, metodos para obtener datos del mensaje
  */
-function MQTTService(dataPointCount: number): MQTTContextValue {
+function useRepresentationService(dataPointCount: number): MQTTContextValue {
   const [topicList, setTopicList] = useState<TopicList>([]);
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
@@ -98,4 +98,4 @@ function MQTTService(dataPointCount: number): MQTTContextValue {
   };
 }
 
-export default MQTTService;
+export default useRepresentationService;

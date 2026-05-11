@@ -1,5 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
-import { subscriptionService } from '../service/subscriptionService';
+import { useSubscriptionService } from './useSubscriptionService';
 import type { SubscriptionContextValue } from '../types/subscription.types';
 
 const subscriptionContext = createContext<SubscriptionContextValue | null>(null);
@@ -9,7 +10,7 @@ interface SubscriptionProviderProp {
 }
 
 export function SubscriptionProvider({ children }: SubscriptionProviderProp) {
-  const subscription = subscriptionService();
+  const subscription = useSubscriptionService();
 
   return (
     <subscriptionContext.Provider value={subscription}>

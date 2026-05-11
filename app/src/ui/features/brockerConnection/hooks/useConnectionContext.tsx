@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
 import { connectionService } from '../service/connectionService';
 import type { ConnectionContextValue } from '../types/connection.types';

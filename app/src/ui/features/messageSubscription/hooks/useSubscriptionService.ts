@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import type { SubscriptionContextValue, SubscriptionList } from '../types/subscription.types';
 import { useConnectionContext } from '@/features/brockerConnection'; 
 
-export function subscriptionService(): SubscriptionContextValue {
+export function useSubscriptionService(): SubscriptionContextValue {
   const { isConnected } = useConnectionContext();
   const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>({});
 
@@ -69,4 +69,4 @@ export function subscriptionService(): SubscriptionContextValue {
   };
 }
 
-export default subscriptionService;
+export default useSubscriptionService;
