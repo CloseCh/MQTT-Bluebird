@@ -1,10 +1,10 @@
-import StatusButton from "@/features/brockerConnection/component/StatusButton/StatusButton";
+import StatusButton from '@/features/brockerConnection/component/StatusButton/StatusButton';
 import {
   Box,
   Typography,
   AppBar,
   Toolbar
-} from "@mui/material";
+} from '@mui/material';
 
 interface Prop {
   title: string;
@@ -12,12 +12,12 @@ interface Prop {
 
 export default function Header({title}: Prop) {
   return (
-    <AppBar position="sticky" elevation={0}>
-      <Toolbar variant="dense">
-        <Typography variant="h6" color="inherit" component="div">
+    <AppBar position='sticky' elevation={0}>
+      <Toolbar variant='dense'>
+        <Typography variant='h6' color='inherit' component='div'>
           {title}
         </Typography>
-        <Box sx={{ ml: "auto" }}>
+        <Box sx={{ ml: 'auto' }}>
           <StatusButton/>
         </Box>
       </Toolbar>

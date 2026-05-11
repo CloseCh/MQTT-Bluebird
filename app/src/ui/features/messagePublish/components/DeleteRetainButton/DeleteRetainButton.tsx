@@ -1,5 +1,5 @@
-import { useMQTTContext } from "@/features/messageRepresentacion";
-import { Box, Button } from "@mui/material";
+import { useMQTTContext } from '@/features/messageRepresentacion';
+import { Box, Button } from '@mui/material';
 
 interface DeleteRetainButtonProp {
   disabled: boolean;
@@ -23,7 +23,7 @@ export function DeleteRetainButton({disabled}: DeleteRetainButtonProp) {
   return (
     <Box sx={{ width: '100%'}}>
       <Button
-        variant="contained"
+        variant='contained'
         onClick={handleClick}
         disabled={disabled}
       >

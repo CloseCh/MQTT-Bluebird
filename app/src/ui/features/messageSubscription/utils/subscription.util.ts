@@ -1,11 +1,11 @@
-import type { SubscriptionList } from "../types/subscription.types";
+import type { SubscriptionList } from '../types/subscription.types';
 
 function mqttTopicToRegex(subscription: string): RegExp {
   const pattern = subscription
-    .replace(/[.^${}()|[\]\\]/g, "\\$&")
-    .replace(/\/#$/g, "(/.*)?")
-    .replace(/^#$/g, ".*")
-    .replace(/\+/g, "[^/]+");
+    .replace(/[.^${}()|[\]\\]/g, '\\$&')
+    .replace(/\/#$/g, '(/.*)?')
+    .replace(/^#$/g, '.*')
+    .replace(/\+/g, '[^/]+');
 
   return new RegExp(`^${pattern}$`);
 }

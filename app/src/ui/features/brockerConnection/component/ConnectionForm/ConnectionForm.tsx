@@ -6,9 +6,9 @@ import {
   MenuItem,
   Stack,
   TextField,
-} from "@mui/material";
-import { useConnectionForm } from "./useConnectionForm";
-import { PROTOCOLS } from "../../constants/connection.constants";
+} from '@mui/material';
+import { useConnectionForm } from './useConnectionForm';
+import { PROTOCOLS } from '../../constants/connection.constants';
 
 export function ConnectionForm() {
   const {
@@ -30,12 +30,12 @@ export function ConnectionForm() {
         <Stack spacing={2}>
 
           {/* Protocol + Host */}
-          <Stack direction="row" spacing={1}>
+          <Stack direction='row' spacing={1}>
             <TextField
               select
-              label="Protocolo"
+              label='Protocolo'
               sx={{ minWidth: 110 }}
-              value={form.watch("protocol")}
+              value={form.watch('protocol')}
               onChange={handleProtocolChange}
             >
               {PROTOCOLS.map(({ value, label }) => (
@@ -46,10 +46,10 @@ export function ConnectionForm() {
             </TextField>
 
             <TextField
-              label="Host"
+              label='Host'
               fullWidth
-              placeholder="localhost"
-              {...form.register("host", { validate: validateHost })}
+              placeholder='localhost'
+              {...form.register('host', { validate: validateHost })}
               error={!!form.formState.errors.host}
               helperText={form.formState.errors.host?.message}
             />
@@ -57,57 +57,57 @@ export function ConnectionForm() {
 
           {/* Port */}
           <TextField
-            label="Puerto"
-            placeholder="1883"
+            label='Puerto'
+            placeholder='1883'
             slotProps={{
               input: {
                 startAdornment: (
-                  <InputAdornment position="start">:</InputAdornment>
+                  <InputAdornment position='start'>:</InputAdornment>
                 ),
               },
             }}
-            {...form.register("port", { validate: validatePort })}
+            {...form.register('port', { validate: validatePort })}
             error={!!form.formState.errors.port}
             helperText={form.formState.errors.port?.message}
           />
 
           {/* Credentials */}
-          <Stack direction="row" spacing={1}>
+          <Stack direction='row' spacing={1}>
             <TextField
-              label="Usuario"
+              label='Usuario'
               fullWidth
-              placeholder="(opcional)"
-              {...form.register("username")}
+              placeholder='(opcional)'
+              {...form.register('username')}
             />
 
             <TextField
-              label="Contraseña"
+              label='Contraseña'
               fullWidth
-              placeholder="(opcional)"
-              type="password"
-              {...form.register("password")}
+              placeholder='(opcional)'
+              type='password'
+              {...form.register('password')}
             />
           </Stack>
 
           {/* Error alert */}
-          {status === "error" && errorMessage && (
-            <Alert severity="error" onClose={dismissError}>
+          {status === 'error' && errorMessage && (
+            <Alert severity='error' onClose={dismissError}>
               {errorMessage}
             </Alert>
           )}
 
           {/* Submit */}
           <Button
-            type="submit"
-            variant="contained"
+            type='submit'
+            variant='contained'
             disabled={isConnecting}
             startIcon={
               isConnecting ? (
-                <CircularProgress size={16} color="inherit" />
+                <CircularProgress size={16} color='inherit' />
               ) : null
             }
           >
-            {isConnecting ? "Conectando…" : "Conectar"}
+            {isConnecting ? 'Conectando…' : 'Conectar'}
           </Button>
 
         </Stack>

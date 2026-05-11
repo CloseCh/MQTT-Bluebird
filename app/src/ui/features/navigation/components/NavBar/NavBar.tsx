@@ -1,12 +1,12 @@
 import {
   Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon
-} from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import { DRAWER_WIDTH } from "../../constants/navbarConstants";
-import { useNavItems } from "./useNavItems";
-import { useNavigationStore } from "../../stores/navigationStore";
-import { useNavigate } from "react-router";
+} from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import { DRAWER_WIDTH } from '../../constants/navbarConstants';
+import { useNavItems } from './useNavItems';
+import { useNavigationStore } from '../../stores/navigationStore';
+import { useNavigate } from 'react-router';
 
 export function NavBar() {
   const navItems = useNavItems();
@@ -25,19 +25,19 @@ export function NavBar() {
 
   const barStyle = {
     width: DRAWER_WIDTH,
-    height: "100%",
+    height: '100%',
     flexShrink: 0,
-    "& .MuiDrawer-paper": {
+    '& .MuiDrawer-paper': {
       width: DRAWER_WIDTH,
-      boxSizing: "border-box",
-      position: "relative",
+      boxSizing: 'border-box',
+      position: 'relative',
     },
   };
 
   return (
     <Box>
-      <Drawer variant="permanent" sx={barStyle}>
-        <Box sx={{ flex: 1, overflowY: "auto", p: 1 }}>
+      <Drawer variant='permanent' sx={barStyle}>
+        <Box sx={{ flex: 1, overflowY: 'auto', p: 1 }}>
           <List disablePadding>
             {navItems.map((item) => (
               <Box key={item.id}>
@@ -45,7 +45,7 @@ export function NavBar() {
                   <ListItemButton
                     onClick={item.onClick}
                     selected={item.selected}
-                    sx={{ borderRadius: 2, mb: 0.5, justifyContent: "center" }}
+                    sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'center' }}
                   >
                     <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
                       {item.icon}
@@ -63,7 +63,7 @@ export function NavBar() {
           <ListItemButton
             onClick={handleMonitor}
             selected={monitorOpen}
-            sx={{ borderRadius: 2, mb: 0.5, justifyContent: "center" }}
+            sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'center' }}
           >
             <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
               <QueryStatsIcon sx={{ fontSize: 30 }} />
@@ -72,7 +72,7 @@ export function NavBar() {
           <ListItemButton
             onClick={handleSettings}
             selected={settingsOpen}
-            sx={{ borderRadius: 2, justifyContent: "center" }}
+            sx={{ borderRadius: 2, justifyContent: 'center' }}
           >
             <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
               <SettingsIcon sx={{ fontSize: 30 }} />

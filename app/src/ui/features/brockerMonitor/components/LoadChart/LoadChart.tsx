@@ -9,7 +9,7 @@ export function LoadChart() {
   return (
     <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
       <ChartPanel
-        title="Message Rate (1min avg, msg/s)"
+        title='Message Rate (1min avg, msg/s)'
         data={timeSeries}
         lines={[
           { key: 'msgReceived', color: '#2196f3', label: 'Received' },
@@ -17,7 +17,7 @@ export function LoadChart() {
         ]}
       />
       <ChartPanel
-        title="Bytes Rate (1min avg)"
+        title='Bytes Rate (1min avg)'
         data={timeSeries}
         lines={[
           { key: 'bytesReceived', color: '#4caf50', label: 'Received' },

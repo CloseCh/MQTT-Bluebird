@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import {Drawer, Grid} from "@mui/material";
-import MessageDetailData from "./MessageDetailData/MessageDetailData";
-import ResizeHandle from "./ResizeHandle/ResizeHandle";
-import { useMessageDetail } from "./useMessageDetail";
-import { HEADER_HEIGHT } from "../../../../constants/layout";
-import { useMQTTContext } from "../../hooks/useMQTTContext";
+import { useEffect } from 'react';
+import {Drawer, Grid} from '@mui/material';
+import MessageDetailData from './MessageDetailData/MessageDetailData';
+import ResizeHandle from './ResizeHandle/ResizeHandle';
+import { useMessageDetail } from './useMessageDetail';
+import { HEADER_HEIGHT } from '../../../../constants/layout';
+import { useMQTTContext } from '../../hooks/useMQTTContext';
 
 export function MessageDetail () {
   const {
@@ -34,7 +34,7 @@ export function MessageDetail () {
 
   return (
     <Drawer
-      anchor="right"
+      anchor='right'
       open={messageSelected != null}
       hideBackdrop
       disableScrollLock

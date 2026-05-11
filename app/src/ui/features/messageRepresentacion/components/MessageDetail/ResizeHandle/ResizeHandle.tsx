@@ -1,5 +1,5 @@
-import Box from "@mui/material/Box";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import Box from '@mui/material/Box';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 interface Props {
   onMouseDown: (e: React.MouseEvent) => void;

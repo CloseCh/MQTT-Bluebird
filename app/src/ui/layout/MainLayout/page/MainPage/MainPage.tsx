@@ -1,10 +1,10 @@
-import { MessageDetail } from "@/features/messageRepresentacion";
+import { MessageDetail } from '@/features/messageRepresentacion';
 
 import {
   Box,
   Stack
-} from "@mui/material";
-import { useMainPage } from "./useMainPage";
+} from '@mui/material';
+import { useMainPage } from './useMainPage';
 
 export default function MainPage() {
   const {
@@ -15,7 +15,7 @@ export default function MainPage() {
 
   return (
     <>
-      <Stack direction="row" sx={{ flex: 1, minHeight: 0, width: '100%' }}>
+      <Stack direction='row' sx={{ flex: 1, minHeight: 0, width: '100%' }}>
         {sideBarOpened}
         <Stack sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden' }}>
           <Box sx={{

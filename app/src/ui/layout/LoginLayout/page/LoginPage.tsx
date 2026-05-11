@@ -1,4 +1,4 @@
-import { ConnectionForm } from "@/features/brockerConnection";
+import { ConnectionForm } from '@/features/brockerConnection';
 
 function LoginPage() {
   return (

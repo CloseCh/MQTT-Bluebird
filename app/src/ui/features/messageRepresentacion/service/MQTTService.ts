@@ -15,7 +15,7 @@ function MQTTService(dataPointCount: number): MQTTContextValue {
   const [topicList, setTopicList] = useState<TopicList>([]);
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
-  const [selectedTopic, setSelectedTopic] = useState<Topic>("");
+  const [selectedTopic, setSelectedTopic] = useState<Topic>('');
 
   const emptyMessage: MQTTMessageList = { messageList: [], format: 'UTF-8' };
 
@@ -55,7 +55,7 @@ function MQTTService(dataPointCount: number): MQTTContextValue {
     setTopicList([]);
     setMessageSelected(null);
     setMessageListByTopic({});
-    setSelectedTopic("");
+    setSelectedTopic('');
   }, []);
 
 

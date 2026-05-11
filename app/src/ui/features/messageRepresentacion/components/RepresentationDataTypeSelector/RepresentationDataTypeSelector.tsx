@@ -27,10 +27,10 @@ export function RepresentationDataTypeSelector( ) {
   return (
     <>
       <FormControl fullWidth sx={{ minWidth: '200px' }} ref={selectRef}>
-        <InputLabel id="label">Message Format</InputLabel>
+        <InputLabel id='label'>Message Format</InputLabel>
         <Select
-          labelId="label"
-          label="Message Format"
+          labelId='label'
+          label='Message Format'
           value={messageFormat}
           open={false}
           onClick={handleOpen}
@@ -47,13 +47,13 @@ export function RepresentationDataTypeSelector( ) {
         sx={{ minWidth: '200px' }} disableRestoreFocus={false}
       >
 
-        <NestedMenuItem label="Texto" parentMenuOpen={open} sx={{ minWidth: '200px' }}>
+        <NestedMenuItem label='Texto' parentMenuOpen={open} sx={{ minWidth: '200px' }}>
           {TEXT_FORMATS.map((f: MessageFormatEnum) => (
             <MenuItem key={f} sx={{ minWidth: '200px' }} onClick={() => handleSelect(f)}>{f}</MenuItem>
           ))}
         </NestedMenuItem>
 
-        <NestedMenuItem label="Numérico" parentMenuOpen={open} sx={{ minWidth: '200px' }}>
+        <NestedMenuItem label='Numérico' parentMenuOpen={open} sx={{ minWidth: '200px' }}>
           {NUM_FORMATS.map((f: MessageFormatEnum) => (
             <MenuItem key={f} sx={{ minWidth: '200px' }} onClick={() => handleSelect(f)}>{f}</MenuItem>
           ))}

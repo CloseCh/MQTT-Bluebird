@@ -8,7 +8,7 @@ import {
   List,
   ListItem,
   ListItemText
-} from "@mui/material";
+} from '@mui/material';
 
 interface DuplicateSubscriptionModalProps {
   open: boolean;
@@ -30,7 +30,7 @@ export function DuplicateSubscriptionModal({
   return (
     <Dialog open={open} onClose={onCancel}>
       <DialogTitle>
-        {isExact ? "Suscripción duplicada" : "Topic ya cubierto"}
+        {isExact ? 'Suscripción duplicada' : 'Topic ya cubierto'}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -53,8 +53,8 @@ export function DuplicateSubscriptionModal({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel} color="inherit">Cancelar</Button>
-        <Button onClick={onConfirm} color="primary" variant="contained">Agregar</Button>
+        <Button onClick={onCancel} color='inherit'>Cancelar</Button>
+        <Button onClick={onConfirm} color='primary' variant='contained'>Agregar</Button>
       </DialogActions>
     </Dialog>
   );

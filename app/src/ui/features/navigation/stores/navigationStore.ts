@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface NavigationStore {
   openedSidebar: string;
@@ -13,26 +13,26 @@ interface NavigationStore {
 }
 
 export const useNavigationStore = create<NavigationStore>((set, get) => ({
-  openedSidebar: "nav/subscription",
-  tableConfig: "table/history",
+  openedSidebar: 'nav/subscription',
+  tableConfig: 'table/history',
   settingsOpen: false,
   monitorOpen: false,
 
   openSidebar: (id) => {
-    const actual: string = get().openedSidebar ?? "";
+    const actual: string = get().openedSidebar ?? '';
 
     if (id === null || id === undefined || id === actual) {
-      set({ openedSidebar: "" });
+      set({ openedSidebar: '' });
     } else {
       set({ openedSidebar: id });
     }
   },
 
   handleChangeTable: (id) => {
-    const actual: string = get().tableConfig ?? "table/history";
+    const actual: string = get().tableConfig ?? 'table/history';
 
     if (id === null || id === undefined || id === actual) {
-      set({ tableConfig: "" });
+      set({ tableConfig: '' });
     } else {
       set({ tableConfig: id });
     }

@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from "react";
-import { useMQTTContext } from "../../hooks/useMQTTContext";
+import { useCallback, useRef, useState } from 'react';
+import { useMQTTContext } from '../../hooks/useMQTTContext';
 
 export function useRepresentationDataTypeSelector(){
   const selectRef = useRef<HTMLDivElement>(null);

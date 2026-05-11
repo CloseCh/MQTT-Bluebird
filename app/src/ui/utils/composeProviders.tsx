@@ -1,10 +1,10 @@
-import { ConnectionProvider } from "@/features/brockerConnection";
-import { BrockerMonitorProvider } from "@/features/brockerMonitor";
-import { MQTTProvider } from "@/features/messageRepresentacion";
-import { SubscriptionProvider } from "@/features/messageSubscription";
-import { useSettingsStore } from "@/features/settings/stores/settingsStore";
-import { createAppTheme } from "@/theme";
-import { GlobalStyles, ThemeProvider } from "@mui/material";
+import { ConnectionProvider } from '@/features/brockerConnection';
+import { BrockerMonitorProvider } from '@/features/brockerMonitor';
+import { MQTTProvider } from '@/features/messageRepresentacion';
+import { SubscriptionProvider } from '@/features/messageSubscription';
+import { useSettingsStore } from '@/features/settings/stores/settingsStore';
+import { createAppTheme } from '@/theme';
+import { GlobalStyles, ThemeProvider } from '@mui/material';
 
 export function composeProviders(...providers: React.ComponentType<{ children: React.ReactNode }>[]) {
   return ({ children }: { children: React.ReactNode }) =>

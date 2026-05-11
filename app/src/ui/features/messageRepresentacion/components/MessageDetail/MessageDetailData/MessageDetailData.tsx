@@ -29,37 +29,37 @@ export default function MessageDetailData ({
       <Card sx={{ minWidth: 275 }}>
         <CardHeader
           title={messagePacket.topic}
-          subheader="MQTT Publish"
+          subheader='MQTT Publish'
           action={
-            <IconButton onClick={onClose} size="small" aria-label="cerrar">
-              <CloseIcon fontSize="small" />
+            <IconButton onClick={onClose} size='small' aria-label='cerrar'>
+              <CloseIcon fontSize='small' />
             </IconButton>
           }
         />
         <CardContent>
 
           {/* Flags */}
-          <Stack direction="row" spacing={1} mb={2}>
-            <Chip label={`QoS ${messagePacket.qos}`} color="primary" size="small" />
-            {messagePacket.dup && <Chip label="DUP" size="small" />}
-            {messagePacket.retain && <Chip label="RETAIN" color="warning" size="small" />}
+          <Stack direction='row' spacing={1} mb={2}>
+            <Chip label={`QoS ${messagePacket.qos}`} color='primary' size='small' />
+            {messagePacket.dup && <Chip label='DUP' size='small' />}
+            {messagePacket.retain && <Chip label='RETAIN' color='warning' size='small' />}
           </Stack>
 
           {/* Message decodificado */}
-          <Typography variant="subtitle2" color="text.secondary" mt={2} mb={0.5}>
+          <Typography variant='subtitle2' color='text.secondary' mt={2} mb={0.5}>
             Message
           </Typography>
           <Paper
-            variant="outlined"
+            variant='outlined'
             sx={{
               p: 2,
               backgroundColor: (theme) =>
                 theme.palette.mode === 'dark' ? '#0d1117' : '#f6f8fa',
               borderRadius: 1,
-              overflowX: "auto",
+              overflowX: 'auto',
             }}
           >
-            <pre style={{ margin: 0, fontFamily: "inherit", fontSize: "0.875rem" }}>
+            <pre style={{ margin: 0, fontFamily: 'inherit', fontSize: '0.875rem' }}>
               {DecoderService(messageSelected.data, messageFormat)}
             </pre>
           </Paper>

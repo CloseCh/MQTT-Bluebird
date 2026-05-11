@@ -1,6 +1,6 @@
 // components/ui/ResizeHandle/ResizeHandle.tsx
-import { useCallback } from "react";
-import Box from "@mui/material/Box";
+import { useCallback } from 'react';
+import Box from '@mui/material/Box';
 
 interface Props {
   onResize: (newSize: number) => void;

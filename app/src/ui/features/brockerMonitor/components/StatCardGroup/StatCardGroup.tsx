@@ -15,31 +15,31 @@ export function StatCardGroup() {
     <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
       <Stack direction={'column'} spacing={2} sx={{flexShrink: 0}}>
         <Stack direction={'row'} spacing={2}>
-          <StatCard label="Version" value={version || '—'} />
-          <StatCard label="Uptime" value={uptime ? formatUptime(uptime) : '—'} />
+          <StatCard label='Version' value={version || '—'} />
+          <StatCard label='Uptime' value={uptime ? formatUptime(uptime) : '—'} />
         </Stack>
         <Stack direction={'row'} spacing={2}>
           <StatCard
-            label="Clients"
+            label='Clients'
             value={clients.connected}
             sub={`${clients.total} total / ${clients.maximum} max`}
           />
           <StatCard
-            label="My subscriptions"
+            label='My subscriptions'
             value={subscriptions.count.toLocaleString()}
           />
           <StatCard
-            label="Messages Recv"
+            label='Messages Recv'
             value={messages.received.toLocaleString()}
             sub={`${messages.sent.toLocaleString()} sent`}
           />
           <StatCard
-            label="Bytes Recv"
+            label='Bytes Recv'
             value={formatBytes(bytes.received)}
             sub={`${formatBytes(bytes.sent)} sent`}
           />
           <StatCard
-            label="Heap"
+            label='Heap'
             value={formatBytes(heap.current)}
             sub={heapPct}
           />

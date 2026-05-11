@@ -15,11 +15,11 @@ export default function SettingsPage() {
 
   return (
     <Box sx={{ flex: 1, p: 4, overflowY: 'auto' }}>
-      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 4 }}>
-        <IconButton onClick={handleBack} size="small">
+      <Stack direction='row' alignItems='center' spacing={1} sx={{ mb: 4 }}>
+        <IconButton onClick={handleBack} size='small'>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h5">Configuración</Typography>
+        <Typography variant='h5'>Configuración</Typography>
       </Stack>
       <SettingsForm />
     </Box>

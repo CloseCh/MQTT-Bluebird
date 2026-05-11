@@ -3,7 +3,7 @@ import { type IPublishPacket } from 'mqtt';
 import { getClient } from './mqttConnection.js';
 import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/util.js';
 
-let activeSubscriptions: Set<string> = new Set(["$SYS/#"]);
+let activeSubscriptions: Set<string> = new Set(['$SYS/#']);
 let handlersRegistered: boolean = false;
 let activeWebContents: WebContents | null = null;
 
@@ -91,5 +91,5 @@ export function setupClientListeners(mainWindow: BrowserWindow): void {
 }
 
 export function resetSubscriptions(): void {
-  activeSubscriptions = new Set(["$SYS/#"]);
+  activeSubscriptions = new Set(['$SYS/#']);
 }

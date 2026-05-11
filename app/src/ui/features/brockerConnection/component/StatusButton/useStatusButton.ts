@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { useConnectionContext } from "../../hooks/useConnectionContext";
+import { useCallback, useState } from 'react';
+import { useConnectionContext } from '../../hooks/useConnectionContext';
 
 export function useStatusButton() {
   const { isConnected, connectedEndpoint, handleDisconnection } =
@@ -18,10 +18,10 @@ export function useStatusButton() {
   }, [isConnected, isDisconnecting, handleDisconnection]);
 
   const tooltipTitle = isDisconnecting
-    ? "Desconectando…"
+    ? 'Desconectando…'
     : isConnected
       ? `Conectado a ${connectedEndpoint} — clic para desconectar`
-      : "Sin conexión MQTT";
+      : 'Sin conexión MQTT';
 
   return {
     isConnected,

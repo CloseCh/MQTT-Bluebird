@@ -22,7 +22,7 @@ export default function SettingsForm() {
   return (
     <Stack spacing={4} sx={{ maxWidth: 480 }}>
       <Box>
-        <Typography variant="overline" color="text.secondary">
+        <Typography variant='overline' color='text.secondary'>
           Apariencia
         </Typography>
         <Divider sx={{ mb: 2 }} />
@@ -33,23 +33,23 @@ export default function SettingsForm() {
               onChange={(e) => setDarkMode(e.target.checked)}
             />
           }
-          label="Modo oscuro"
+          label='Modo oscuro'
         />
       </Box>
 
       <Box>
-        <Typography variant="overline" color="text.secondary">
+        <Typography variant='overline' color='text.secondary'>
           Mensajes
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <TextField
-          label="Máximo de mensajes por tópico"
-          type="number"
+          label='Máximo de mensajes por tópico'
+          type='number'
           value={maxMessages}
           onChange={handleMaxMessagesChange}
           slotProps={{ htmlInput: { min: 1, max: 10000 } }}
-          helperText="Cantidad de mensajes guardados en el historial de cada tópico."
-          size="small"
+          helperText='Cantidad de mensajes guardados en el historial de cada tópico.'
+          size='small'
           sx={{ width: 320 }}
         />
       </Box>

@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import type { ConnectionContextValue } from "../types/connection.types";
+import { useState, useCallback } from 'react';
+import type { ConnectionContextValue } from '../types/connection.types';
 
 export function connectionService(): ConnectionContextValue {
   const [isConnected, setIsConnected] = useState<boolean>(false);

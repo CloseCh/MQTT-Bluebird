@@ -1,7 +1,7 @@
-import { TopicList } from "@/features/messageRepresentacion";
-import { SubscriptionField, SubscriptionList } from "@/features/messageSubscription";
-import { OVERLAY_IDS, SideBar, useNavigationStore } from "@/features/navigation";
-import { Box, Divider, Stack } from "@mui/material";
+import { TopicList } from '@/features/messageRepresentacion';
+import { SubscriptionField, SubscriptionList } from '@/features/messageSubscription';
+import { OVERLAY_IDS, SideBar, useNavigationStore } from '@/features/navigation';
+import { Box, Divider, Stack } from '@mui/material';
 
 export function SubscriptionSidebar() {
   const tableConfig = useNavigationStore(s => s.tableConfig);

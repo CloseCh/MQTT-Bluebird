@@ -26,7 +26,7 @@ export function ipcMainHandleWithReturn<Key extends keyof EventPayloadMapping>(
 
 export function validateEventFrame(frame: WebFrameMain | null) {
   if (!frame) {
-    throw new Error("El frame es null");
+    throw new Error('El frame es null');
   }
   if (isDev() && new URL(frame.url).host === 'localhost:5123') {
     return;

@@ -1,6 +1,6 @@
-import { PublishForm } from "@/features/messagePublish";
-import { SideBar } from "@/features/navigation";
-import { Box, Stack } from "@mui/material";
+import { PublishForm } from '@/features/messagePublish';
+import { SideBar } from '@/features/navigation';
+import { Box, Stack } from '@mui/material';
 
 export function PublishSidebar() {
   return (

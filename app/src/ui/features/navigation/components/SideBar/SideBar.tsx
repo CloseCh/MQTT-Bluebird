@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
-import type { ReactElement } from "react";
-import { ResizeHandle } from "./ResizeHandle/ResizeHandle";
-import { useNavigationStore } from "@/features/navigation";
+import { useState } from 'react';
+import { Box } from '@mui/material';
+import type { ReactElement } from 'react';
+import { ResizeHandle } from './ResizeHandle/ResizeHandle';
+import { useNavigationStore } from '@/features/navigation';
 
 interface Prop {
   children: ReactElement;
@@ -11,7 +11,7 @@ interface Prop {
 export function SideBar({ children }: Prop) {
   const [sidebarWidth, setSidebarWidth] = useState(200);
   const openedSidebar = useNavigationStore(s => s.openedSidebar);
-  const showSidebar = openedSidebar !== "" || null || undefined;
+  const showSidebar = openedSidebar !== '' || null || undefined;
 
   return (
     <>

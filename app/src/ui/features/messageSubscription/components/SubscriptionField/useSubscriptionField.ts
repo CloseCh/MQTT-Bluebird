@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
-import { findCoveringSubscriptions } from "../../utils/subscription.util";
-import { useSubscriptionContext } from "../../hooks/useSubscriptionContext";
+import { useRef, useState } from 'react';
+import { findCoveringSubscriptions } from '../../utils/subscription.util';
+import { useSubscriptionContext } from '../../hooks/useSubscriptionContext';
 
 export function useSubscriptionField() {
   const { subscribe, subscriptionList } = useSubscriptionContext();
@@ -23,7 +23,7 @@ export function useSubscriptionField() {
     const value = inputRef.current.value;
     if (value.length > 0) {
       trySubscribe(value);
-      inputRef.current.value = "";
+      inputRef.current.value = '';
     }
   }
 

@@ -11,7 +11,7 @@ interface Props {
   onChange?: (value: string) => void;
 }
 
-function PublishDataTypeSelector({ value = "", onChange }: Props) {
+function PublishDataTypeSelector({ value = '', onChange }: Props) {
   const selectRef = useRef<HTMLDivElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -33,17 +33,17 @@ function PublishDataTypeSelector({ value = "", onChange }: Props) {
   return (
     <Box sx={{ width: '100%' }}>
       <FormControl fullWidth  ref={selectRef}>
-        <InputLabel id="label" size='small'>Message Format</InputLabel>
+        <InputLabel id='label' size='small'>Message Format</InputLabel>
         <Select
-          labelId="label"
-          label="Message Format"
+          labelId='label'
+          label='Message Format'
           value={value}
           open={false}
           onClick={handleOpen}
           readOnly
           size='small'
         >
-          <MenuItem value="" >{''}</MenuItem>
+          <MenuItem value='' >{''}</MenuItem>
           {value && <MenuItem value={value}>{value}</MenuItem>}
         </Select>
       </FormControl>
@@ -61,14 +61,14 @@ function PublishDataTypeSelector({ value = "", onChange }: Props) {
 
         disableRestoreFocus={false}
       >
-        <NestedMenuItem label="Texto" parentMenuOpen={open} sx={{ width: '100%' }}>
+        <NestedMenuItem label='Texto' parentMenuOpen={open} sx={{ width: '100%' }}>
           {TEXT_FORMATS.map((f: MessageFormatEnum) => (
             <MenuItem key={f} sx={{ minWidth: '200px' }} onClick={() => handleSelect(f)}>
               {f}
             </MenuItem>
           ))}
         </NestedMenuItem>
-        <NestedMenuItem label="Numérico" parentMenuOpen={open} sx={{ width: '100%' }}>
+        <NestedMenuItem label='Numérico' parentMenuOpen={open} sx={{ width: '100%' }}>
           {NUM_FORMATS.map((f: MessageFormatEnum) => (
             <MenuItem key={f} sx={{ minWidth: '200px' }} onClick={() => handleSelect(f)}>
               {f}

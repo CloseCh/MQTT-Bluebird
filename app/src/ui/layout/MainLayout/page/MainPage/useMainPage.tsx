@@ -1,11 +1,11 @@
-import { type ReactElement } from "react";
+import { type ReactElement } from 'react';
 
-import { HistoryTable, TopicTable, LastTable, useMQTTContext } from "@/features/messageRepresentacion";
-import { useSubscriptionContext } from "@/features/messageSubscription";
-import { useNavigationStore, OVERLAY_IDS } from "@/features/navigation";
-import { filterBySubscriptions } from "@/shared/service/topicFilter";
-import { SubscriptionSidebar } from "../SideBars/SubscriptionSidebar";
-import { PublishSidebar } from "../SideBars/PublishSidebar";
+import { HistoryTable, TopicTable, LastTable, useMQTTContext } from '@/features/messageRepresentacion';
+import { useSubscriptionContext } from '@/features/messageSubscription';
+import { useNavigationStore, OVERLAY_IDS } from '@/features/navigation';
+import { filterBySubscriptions } from '@/shared/service/topicFilter';
+import { SubscriptionSidebar } from '../SideBars/SubscriptionSidebar';
+import { PublishSidebar } from '../SideBars/PublishSidebar';
 
 export function useMainPage() {
 
@@ -18,7 +18,7 @@ export function useMainPage() {
   const selectedTopic = getSelectedTopic();
   const selectedSubscription = getSelectedSubscriptions();
   const filteredTopicList = filterBySubscriptions(topicList, selectedSubscription);
-  const showTable = selectedTopic !== "" && filteredTopicList.includes(selectedTopic);
+  const showTable = selectedTopic !== '' && filteredTopicList.includes(selectedTopic);
 
   const messageSelected = getMessageSelected();
 

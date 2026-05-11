@@ -9,7 +9,7 @@ export interface ConnectionFormValues {
   endpoint: string;
 };
 
-export type MqttProtocol = "mqtt" | "mqtts" | "ws" | "wss";
+export type MqttProtocol = 'mqtt' | 'mqtts' | 'ws' | 'wss';
 
 export interface ConnectionFormValues {
   protocol: MqttProtocol;
@@ -19,4 +19,4 @@ export interface ConnectionFormValues {
   password?: string;
 }
 
-export type ConnectionStatus = "disconnected" | "connecting" | "connected" | "error";
+export type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';

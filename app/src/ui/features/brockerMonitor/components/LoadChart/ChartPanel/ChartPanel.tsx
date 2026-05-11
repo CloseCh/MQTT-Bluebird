@@ -1,6 +1,6 @@
-import type { TimeSeriesPoint } from "@/features/brockerMonitor";
-import { Box, Paper, Typography, useTheme } from "@mui/material";
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import type { TimeSeriesPoint } from '@/features/brockerMonitor';
+import { Box, Paper, Typography, useTheme } from '@mui/material';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 interface ChartPanelProps {
   title: string;
@@ -25,20 +25,20 @@ export default function ChartPanel({ title, data, lines, yFormatter }: ChartPane
 
   return (
     <Paper sx={{ p: 2, flex: 1, minWidth: 0 }}>
-      <Typography variant="subtitle2" color="text.secondary" mb={1}>
+      <Typography variant='subtitle2' color='text.secondary' mb={1}>
         {title}
       </Typography>
       {data.length === 0 ? (
         <Box sx={{ height: 180, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Typography variant="caption" color="text.disabled">
+          <Typography variant='caption' color='text.disabled'>
             Waiting for data...
           </Typography>
         </Box>
       ) : (
-        <ResponsiveContainer width="100%" height={180}>
+        <ResponsiveContainer width='100%' height={180}>
           <LineChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} />
-            <XAxis dataKey="time" tick={tickStyle} interval="preserveStartEnd" />
+            <CartesianGrid strokeDasharray='3 3' stroke={theme.palette.divider} />
+            <XAxis dataKey='time' tick={tickStyle} interval='preserveStartEnd' />
             <YAxis
               tick={tickStyle}
               tickFormatter={yFormatter}
@@ -55,7 +55,7 @@ export default function ChartPanel({ title, data, lines, yFormatter }: ChartPane
             {lines.map(l => (
               <Line
                 key={l.key as string}
-                type="monotone"
+                type='monotone'
                 dataKey={l.key as string}
                 stroke={l.color}
                 name={l.label}

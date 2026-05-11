@@ -20,7 +20,7 @@ export default function MainLayout() {
   return (
     <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
       <Header title='MQTT Bluebird' />
-      <Stack direction="row" sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+      <Stack direction='row' sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
         <NavBar />
         <Outlet />
       </Stack>

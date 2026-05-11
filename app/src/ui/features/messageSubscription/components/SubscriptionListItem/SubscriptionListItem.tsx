@@ -1,5 +1,5 @@
-import { Checkbox, IconButton, ListItem, ListItemText } from "@mui/material";
-import { useSubscriptionContext } from "../../hooks/useSubscriptionContext";
+import { Checkbox, IconButton, ListItem, ListItemText } from '@mui/material';
+import { useSubscriptionContext } from '../../hooks/useSubscriptionContext';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
@@ -22,21 +22,21 @@ export function SubscriptionListItem({
     <ListItem
       key={value}
       sx={{
-        width: "100%",
+        width: '100%',
         borderBottom: '1px solid',
         borderColor: 'divider',
         '&:last-child': { borderBottom: 'none' },
       }}
     >
       <Checkbox
-        edge="start"
+        edge='start'
         checked={checked}
         onClick={() => handleToggle(value)}
         tabIndex={-1}
         slotProps={{ input: { 'aria-labelledby': labelId } }}
       />
       <ListItemText id={labelId} primary={`${value}`} />
-      <IconButton type="button" aria-label="Add" onClick={() => unsubscribe(value)} edge="end">
+      <IconButton type='button' aria-label='Add' onClick={() => unsubscribe(value)} edge='end'>
         <DeleteOutlineIcon />
       </IconButton>
     </ListItem>
