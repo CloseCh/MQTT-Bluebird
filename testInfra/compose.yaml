@@ -12,10 +12,10 @@ services:
   mqtt-bluebird:
     container_name: mqtt-bluebird
     build:
-      context: ../
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
     ports:
-      - 8080:80
+      - 8080:8080
     networks:
       - internal_net
   
