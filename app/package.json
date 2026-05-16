@@ -16,12 +16,16 @@
     "dist:mac": "tsc -b && electron-vite build && electron-builder --mac --universal",
     "dist:linux": "tsc -b && electron-vite build && electron-builder --linux --x64",
     "test": "vitest run",
+    "build:web": "vite build --config vite.web.config.ts",
     "test:watch": "vitest"
   },
   "keywords": [],
   "author": "Weiyu",
   "license": "ISC",
   "packageManager": "pnpm@11.0.9+sha512.34ce82e6780233cf9cad8685029a8f81d2e06196c5a9bad98879f7424940c6817c4e4524fb7d38b8553ceed48b9758b8ebaf1abd3600c232c4c8cf7366086f38",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
   "devDependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",

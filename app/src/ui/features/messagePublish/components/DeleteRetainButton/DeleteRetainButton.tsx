@@ -1,4 +1,5 @@
 import { useMQTTContext } from '@/features/messageRepresentacion';
+import { useTransportContext } from '@/transport';
 import { Box, Button } from '@mui/material';
 
 interface DeleteRetainButtonProp {
@@ -6,6 +7,7 @@ interface DeleteRetainButtonProp {
 }
 
 export function DeleteRetainButton({disabled}: DeleteRetainButtonProp) {
+  const transport = useTransportContext();
   const { getMessageSelected } = useMQTTContext();
 
   const handleClick = () => {
@@ -13,7 +15,7 @@ export function DeleteRetainButton({disabled}: DeleteRetainButtonProp) {
 
     if (message === null) return;
 
-    void window.electron.publishMQTT({
+    void transport.publishMQTT({
       topic: message.topic,
       message: '',
       retain: true,

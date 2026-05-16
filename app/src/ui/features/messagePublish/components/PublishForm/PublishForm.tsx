@@ -15,8 +15,10 @@ import { PublishDataTypeSelector } from './PublishDataTypeSelector/PublishDataTy
 import type { PublishFormValues } from '../../types/publish.types';
 import EncoderService from '../../service/EncoderService';
 import { usePublishFormStore } from '../../stores/publishFormStore';
+import { useTransportContext } from '@/transport';
 
 export function PublishForm() {
+  const transport = useTransportContext();
   const { lastValues, saveValues } = usePublishFormStore();
 
   const {
@@ -33,7 +35,7 @@ export function PublishForm() {
 
     const encoded = EncoderService(data.message, data.dataType);
 
-    void window.electron.publishMQTT({
+    void transport.publishMQTT({
       topic: data.topic,
       message: Array.from(encoded),
       qos: data.qos,

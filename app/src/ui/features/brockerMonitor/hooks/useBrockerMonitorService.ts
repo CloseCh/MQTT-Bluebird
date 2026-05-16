@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useState, useRef } from 'react';
+import { useTransportContext } from '@/transport';
 import type { BrockerMonitorContextValue, BrokerStats, TimeSeriesPoint } from '../types/brockerMonitor.types';
 import { INITIAL_STATS, MAX_SERIES_POINTS } from '../constants/brockerMonitor.constants';
 import { formatTime, hexToString } from '../utils/format.util';
@@ -88,6 +89,7 @@ function applyTopicToStats(stats: BrokerStats, topic: string, value: string): Br
 }
 
 export function useBrockerMonitorService(): BrockerMonitorContextValue {
+  const transport = useTransportContext();
   const [stats, setStats] = useState<BrokerStats>(INITIAL_STATS);
   const [timeSeries, setTimeSeries] = useState<TimeSeriesPoint[]>([]);
 
@@ -127,9 +129,9 @@ export function useBrockerMonitorService(): BrockerMonitorContextValue {
   }, []);
 
   useEffect(() => {
-    const unsub = window.electron.systemMessage(onMessage);
+    const unsub = transport.systemMessage(onMessage);
     return unsub;
-  }, [onMessage]);
+  }, [transport, onMessage]);
 
   return { stats, timeSeries };
 }

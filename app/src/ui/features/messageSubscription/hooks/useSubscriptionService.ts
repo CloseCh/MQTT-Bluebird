@@ -1,8 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useTransportContext } from '@/transport';
 import type { SubscriptionContextValue, SubscriptionList } from '../types/subscription.types';
-import { useConnectionContext } from '@/features/brockerConnection'; 
+import { useConnectionContext } from '@/features/brockerConnection';
 
 export function useSubscriptionService(): SubscriptionContextValue {
+  const transport = useTransportContext();
   const { isConnected } = useConnectionContext();
   const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>({});
 
@@ -11,10 +13,10 @@ export function useSubscriptionService(): SubscriptionContextValue {
       const notSubscribed = topics.filter(
         (key) => !subscriptionList[key]
       );
-      
+
       if (notSubscribed.length === 0) return;
 
-      await window.electron.mqttSubscribe(notSubscribed);
+      await transport.mqttSubscribe(notSubscribed);
 
       setSubscriptionList((prev) => {
         const newSubscriptionList = {...prev};
@@ -26,11 +28,11 @@ export function useSubscriptionService(): SubscriptionContextValue {
     } catch (err) {
       console.error('Error al suscribirse:', err);
     }
-  }, [subscriptionList]);
+  }, [transport, subscriptionList]);
 
   const unsubscribe = useCallback(async (topic: string) => {
     try {
-      await window.electron.mqttUnsubscribe([topic]);
+      await transport.mqttUnsubscribe([topic]);
 
       setSubscriptionList(prev => {
         const newSubscriptionList = {...prev};
@@ -40,7 +42,7 @@ export function useSubscriptionService(): SubscriptionContextValue {
     } catch (err) {
       console.error('Error al desuscribirse:', err);
     }
-  }, []);
+  }, [transport]);
 
   function updateSubscriptionState (topic: string) {
     setSubscriptionList(prev => ({
@@ -54,11 +56,11 @@ export function useSubscriptionService(): SubscriptionContextValue {
   }, [isConnected]);
 
   useEffect(() => {
-    const unsub = window.electron.onBrokerDisconnected(() => {
+    const unsub = transport.onBrokerDisconnected(() => {
       setSubscriptionList({});
     });
     return unsub;
-  }, []);
+  }, [transport]);
 
   return {
     subscriptionList,

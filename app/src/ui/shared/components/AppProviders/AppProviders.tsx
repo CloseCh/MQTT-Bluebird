@@ -4,6 +4,7 @@ import { BrockerMonitorProvider } from '@/features/brockerMonitor';
 import { MQTTProvider } from '@/features/messageRepresentacion';
 import { SubscriptionProvider } from '@/features/messageSubscription';
 import { useSettingsStore } from '@/features/settings/stores/settingsStore';
+import { TransportProvider } from '@/transport';
 import { createAppTheme } from '@/theme';
 import { GlobalStyles, ThemeProvider } from '@mui/material';
 
@@ -47,6 +48,7 @@ function ThemeProviderWithSettings({ children }: { children: React.ReactNode }) 
 }
 
 export const AppProviders = composeProviders(
+  TransportProvider,
   ThemeProviderWithSettings,
   MQTTProviderWithSettings,
   ConnectionProvider,

@@ -1,10 +1,7 @@
 import type { MessageFormatEnum } from '../types/mqtt.types';
 
 export default function DecoderService(hexData: string, format: MessageFormatEnum) {
-  if (hexData.match(/.{1,2}/g) === null) {
-    console.error('HexData is null in decoder service');
-    return;
-  }
+  if (hexData === '') return '';
 
   const bytes = new Uint8Array(
     hexData.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16))

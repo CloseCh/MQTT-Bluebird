@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useTransportContext } from '@/transport';
 import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTContextValue } from '../types/mqtt.types';
 import { EMPTY_MESSAGE } from '../constants/TypeSelector.constants';
 
@@ -13,6 +14,7 @@ import { EMPTY_MESSAGE } from '../constants/TypeSelector.constants';
  * @returns lista de topics, metodos para obtener datos del mensaje
  */
 function useRepresentationService(dataPointCount: number): MQTTContextValue {
+  const transport = useTransportContext();
   const [topicList, setTopicList] = useState<TopicList>([]);
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
@@ -59,14 +61,14 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
 
 
   useEffect(() => {
-    const unsub = window.electron.subscribeMQTT(onMessage);
+    const unsub = transport.subscribeMQTT(onMessage);
     return unsub;
-  }, [onMessage]);
+  }, [transport, onMessage]);
 
   useEffect(() => {
-    const unsub = window.electron.onBrokerDisconnected(clearMessages);
+    const unsub = transport.onBrokerDisconnected(clearMessages);
     return unsub;
-  }, [clearMessages]);
+  }, [transport, clearMessages]);
 
   const handleMessageFormat = useCallback((topic: Topic, format: MessageFormatEnum) => {
     

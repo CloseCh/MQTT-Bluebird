@@ -129,8 +129,8 @@ describe('DecoderService', () => {
   })
 
   describe('empty input', () => {
-    it('returns undefined for empty hex string', () => {
-      expect(DecoderService('', 'UTF-8')).toBeUndefined()
+    it('returns empty string for empty payload', () => {
+      expect(DecoderService('', 'UTF-8')).toBe('')
     })
   })
 })
