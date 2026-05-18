@@ -1,5 +1,7 @@
 export type UnsubscribeFn = () => void;
 
+export type Listener<T> = (payload: T) => void;
+
 export interface MQTTTransport {
   mqttConnection(options: MqttConnectionOptions): Promise<boolean>;
   mqttDisconnect(): Promise<void>;

@@ -17,11 +17,14 @@ export function useConnectionForm() {
 
   const { handleConnection } = useConnectionContext();
 
+  const protocol: MqttProtocol = typeof window.electron === 'undefined' ? 'ws' : 'mqtt';
+  const port = DEFAULT_PORTS[protocol];
+
   const form = useForm<ConnectionFormValues>({
     defaultValues: {
-      protocol: 'mqtt',
+      protocol,
       host: 'localhost',
-      port: DEFAULT_PORTS['mqtt'],
+      port,
       username: '',
       password: '',
     },

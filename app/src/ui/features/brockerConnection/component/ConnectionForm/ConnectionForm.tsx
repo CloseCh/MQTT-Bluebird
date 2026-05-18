@@ -38,11 +38,15 @@ export function ConnectionForm() {
               value={form.watch('protocol')}
               onChange={handleProtocolChange}
             >
-              {PROTOCOLS.map(({ value, label }) => (
-                <MenuItem key={value} value={value}>
-                  {label}
-                </MenuItem>
-              ))}
+              {PROTOCOLS.map(({ value, label }) => {
+                if (typeof window.electron === 'undefined' && value.includes('mqtt')) return <></>;
+
+                return (
+                  <MenuItem key={value} value={value}>
+                    {label}
+                  </MenuItem>
+                );
+              })}
             </TextField>
 
             <TextField

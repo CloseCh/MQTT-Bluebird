@@ -5,11 +5,15 @@ export interface ConnectionContextValue {
   handleDisconnection: () => Promise<void>;
 }
 
+type MQTT = 'mqtt' | 'mqtts';
+
+type WEBSOCKETS = | 'ws' | 'wss';
+
+export type MqttProtocol =  MQTT | WEBSOCKETS;
+
 export interface ConnectionFormValues {
   endpoint: string;
 };
-
-export type MqttProtocol = 'mqtt' | 'mqtts' | 'ws' | 'wss';
 
 export interface ConnectionFormValues {
   protocol: MqttProtocol;
