@@ -13,12 +13,14 @@ import { BrokerMonitorPage } from '@/features/brockerMonitor';
 import './index.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppProviders } from './shared/components/AppProviders/AppProviders';
+import Header from './shared/components/Header/Header';
 
 export default function App() {
   return (
     <HashRouter>
       <AppProviders>
         <CssBaseline />
+        <Header title='MQTT Bluebird' />
         <Routes>
           <Route element={<LoginLayout />}>
             <Route path='/login' element={<LoginPage />} />
