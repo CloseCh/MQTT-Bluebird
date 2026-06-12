@@ -3,6 +3,7 @@ import {
   IconButton,
   Stack,
   Tooltip,
+  Typography,
 } from '@mui/material';
 
 import { useNavItems } from './useNavItems';
@@ -37,9 +38,9 @@ export function NavBar() {
               }}
             >
               {item.icon}
-              <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: item.selected ? 600 : 400 }}>
+              <Typography variant='caption' sx={{ fontWeight: item.selected ? 600 : 400 }}>
                 {item.label}
-              </Box>
+              </Typography>
             </IconButton>
           </Tooltip>
         ))}

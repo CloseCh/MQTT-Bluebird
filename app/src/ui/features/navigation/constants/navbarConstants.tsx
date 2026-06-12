@@ -13,8 +13,8 @@ export const OVERLAY_IDS = {
 };
 
 export const NAV_ITEMS_CONFIG: NavItemConfig[] = [
-  { id: 1, label: 'subcription',      icon: <Mail sx={style} />,      overlayId: OVERLAY_IDS.NAV_SUBSCRIPTION },
-  { id: 2, label: 'publish',          icon: <Send sx={style} />,      overlayId: OVERLAY_IDS.NAV_PUBLISH},
+  { id: 1, label: 'Subcription',      icon: <Mail sx={style} />,      overlayId: OVERLAY_IDS.NAV_SUBSCRIPTION },
+  { id: 2, label: 'Publish',          icon: <Send sx={style} />,      overlayId: OVERLAY_IDS.NAV_PUBLISH},
   { id: 3, label: 'Broker',           icon: <Hub sx={style} />,       overlayId: OVERLAY_IDS.NAV_BROKER},
   { id: 4, label: 'Configuration',    icon: <Settings sx={style} />,  overlayId: OVERLAY_IDS.NAV_CONFIG}
 ];
