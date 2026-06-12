@@ -1,85 +1,49 @@
 import {
-  Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon
+  Box,
+  IconButton,
+  Stack,
+  Tooltip,
 } from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import { DRAWER_WIDTH } from '../../constants/navbarConstants';
+
 import { useNavItems } from './useNavItems';
-import { useNavigationStore } from '../../stores/navigationStore';
-import { useNavigate } from 'react-router';
 
 export function NavBar() {
   const navItems = useNavItems();
-  const { settingsOpen, toggleSettings, monitorOpen, toggleMonitor } = useNavigationStore();
-  const navigate = useNavigate();
-
-  const handleSettings = () => {
-    toggleSettings();
-    void navigate(settingsOpen ? '/' : '/settings');
-  };
-
-  const handleMonitor = () => {
-    toggleMonitor();
-    void navigate(monitorOpen ? '/' : '/monitor');
-  };
-
-  const barStyle = {
-    width: DRAWER_WIDTH,
-    height: '100%',
-    flexShrink: 0,
-    '& .MuiDrawer-paper': {
-      width: DRAWER_WIDTH,
-      boxSizing: 'border-box',
-      position: 'relative',
-    },
-  };
 
   return (
-    <Box>
-      <Drawer variant='permanent' sx={barStyle}>
-        <Box sx={{ flex: 1, overflowY: 'auto', p: 1 }}>
-          <List disablePadding>
-            {navItems.map((item) => (
-              <Box key={item.id}>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={item.onClick}
-                    selected={item.selected}
-                    sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'center' }}
-                  >
-                    <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
-                      {item.icon}
-                    </ListItemIcon>
-                  </ListItemButton>
-                </ListItem>
-                {item.dividerAfter && <Divider sx={{ my: 0.5 }} />}
+    <Box
+      sx={{
+        width: '100%',
+        borderBottom: 1,
+        borderColor: 'divider',
+        bgcolor: 'background.paper',
+        flexShrink: 0,
+      }}
+    >
+      <Stack direction='row' alignItems='center' spacing={2} sx={{ px: 1, py: 0.5 }}>
+        {navItems.map((item) => (
+          <Tooltip key={item.id} title={item.label}>
+            <IconButton
+              onClick={item.onClick}
+              color={item.selected ? 'primary' : 'default'}
+              size='small'
+              sx={{
+                borderRadius: 1,
+                px: 1.5,
+                py: 0.75,
+                gap: 0.75,
+                bgcolor: item.selected ? 'action.selected' : 'transparent',
+                '&:hover': { bgcolor: 'action.hover' },
+              }}
+            >
+              {item.icon}
+              <Box component='span' sx={{ fontSize: '0.75rem', fontWeight: item.selected ? 600 : 400 }}>
+                {item.label}
               </Box>
-            ))}
-          </List>
-        </Box>
-
-        <Box sx={{ p: 1 }}>
-          <Divider sx={{ mb: 0.5 }} />
-          <ListItemButton
-            onClick={handleMonitor}
-            selected={monitorOpen}
-            sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'center' }}
-          >
-            <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
-              <QueryStatsIcon sx={{ fontSize: 30 }} />
-            </ListItemIcon>
-          </ListItemButton>
-          <ListItemButton
-            onClick={handleSettings}
-            selected={settingsOpen}
-            sx={{ borderRadius: 2, justifyContent: 'center' }}
-          >
-            <ListItemIcon sx={{ minWidth: 0, minHeight: 0 }}>
-              <SettingsIcon sx={{ fontSize: 30 }} />
-            </ListItemIcon>
-          </ListItemButton>
-        </Box>
-      </Drawer>
+            </IconButton>
+          </Tooltip>
+        ))}
+      </Stack>
     </Box>
   );
 }
