@@ -14,7 +14,7 @@ export default function MainPage() {
   } = useMainPage();
 
   return (
-    <>
+    <Stack sx={{ height: '100%', overflow: 'hidden' }}>
       <Stack direction='row' sx={{ flex: 1, minHeight: 0, width: '100%' }}>
         {sideBarOpened}
         <Stack sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden' }}>
@@ -29,10 +29,7 @@ export default function MainPage() {
           </Box>
         </Stack>
       </Stack>
-      {messageSelected
-        ? <MessageDetail />
-        : <></>
-      }
-    </>
+      {messageSelected && <MessageDetail />}
+    </Stack>
   );
 }

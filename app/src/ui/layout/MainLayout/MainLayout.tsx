@@ -17,7 +17,7 @@ export default function MainLayout() {
   }, [isConnected, navigate]);
   
   return (
-    <Stack sx={{ height: '100vh', overflow: 'hidden' }}>
+    <Stack sx={{ height: '100%', overflow: 'hidden' }}>
       <NavBar />
       <Stack sx={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
         <Outlet />
