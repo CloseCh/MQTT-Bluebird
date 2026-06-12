@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useTransportContext } from '@/transport';
-import type { Topic, TopicList , PacketFormatList, MessageFormatEnum, MQTTContextValue } from '../types/mqtt.types';
+import type { Topic, TopicList, PacketFormatList, MessageFormatEnum, MQTTContextValue, TableType } from '../types/mqtt.types';
 import { EMPTY_MESSAGE } from '../constants/TypeSelector.constants';
 
 /**
@@ -19,6 +19,7 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
   const [messageListByTopic, setMessageListByTopic] = useState<PacketFormatList>({});
   const [selectedTopic, setSelectedTopic] = useState<Topic>('');
+  const [tableType, setTableType] = useState<TableType>('history');
 
   const onMessage = useCallback((message: MQTTMessage) => {
     
@@ -95,7 +96,9 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
     setMessageFormat: handleMessageFormat,
     getMessageFormat: topic => messageListByTopic[topic]?.format ?? EMPTY_MESSAGE.format,
     getMessageSelected: () => messageSelected,
-    setMessageSelected: message => setMessageSelected(message)
+    setMessageSelected: message => setMessageSelected(message),
+    tableType,
+    setTableType,
   };
 }
 

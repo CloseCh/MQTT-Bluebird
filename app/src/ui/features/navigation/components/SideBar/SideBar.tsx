@@ -9,7 +9,7 @@ interface Prop {
 }
 
 export function SideBar({ children }: Prop) {
-  const [sidebarWidth, setSidebarWidth] = useState(200);
+  const [sidebarWidth, setSidebarWidth] = useState(250);
   const openedSidebar = useNavigationStore(s => s.openedSidebar);
   const showSidebar = openedSidebar !== '' || null || undefined;
 

@@ -12,4 +12,6 @@ export { TopicList } from './components/TopicList/TopicList';
 
 export { MQTTProvider, useMQTTContext } from './hooks/useMQTTContext'
 
+export { TableSelectionSelector } from './components/TableSelectionSelector/TableSelectionSelector'
+
 export type * from './types/mqtt.types'
