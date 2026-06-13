@@ -3,12 +3,7 @@ import { Box, FormControl, InputLabel, Select, MenuItem, Menu } from '@mui/mater
 import type { SxProps, Theme } from '@mui/material';
 import { useMQTTContext } from '../../hooks/useMQTTContext';
 import type { TableType } from '../../types/mqtt.types';
-
-const TABLE_OPTIONS: { type: TableType; label: string }[] = [
-  { type: 'history', label: 'Histórico de mensaje'    },
-  { type: 'topic',   label: 'Topic por suscripción'   },
-  { type: 'last',    label: 'Orden de llegada'         },
-];
+import { TABLE_OPTIONS } from '../../constants/TypeSelector.constants';
 
 interface TableSelectionSelectorProp {
   styleProp: SxProps<Theme>
