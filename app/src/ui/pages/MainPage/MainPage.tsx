@@ -1,4 +1,4 @@
-import { MessageDetail } from '@/features/messageRepresentacion';
+import { MessageDetail, TableHeader } from '@/features/messageRepresentacion';
 
 import {
   Box,
@@ -10,7 +10,8 @@ export function MainPage() {
   const {
     sideBarOpened,
     tableOpened,
-    messageSelected
+    messageSelected,
+    showTable
   } = useMainPage();
 
   return (
@@ -25,7 +26,12 @@ export function MainPage() {
             pr: '10px', pl: '10px', pt: '10px',
             width: '100%'
           }}>
-            {tableOpened}
+            {showTable ? 
+              <>
+                <TableHeader styleProp={{pb: '10px'}}/>
+                {tableOpened}
+              </>
+              : <></>}
           </Box>
         </Stack>
       </Stack>

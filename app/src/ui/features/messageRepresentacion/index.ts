@@ -10,7 +10,9 @@ export { MessageDetail } from './components/MessageDetail/MessageDetail';
 
 export { TopicList } from './components/TopicList/TopicList';
 
-export { RepresentationProvider, useMQTTContext } from './context/RepresentationProvider'
+export { TableHeader } from './components/TableHeader/TableHeader';
+
+export { RepresentationProvider, useRepresentationContext } from './context/RepresentationProvider'
 
 export { TableSelectionSelector } from './components/TableSelectionSelector/TableSelectionSelector'
 

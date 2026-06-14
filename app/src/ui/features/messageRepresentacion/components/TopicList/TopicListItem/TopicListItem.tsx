@@ -2,7 +2,7 @@ import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 
 import type { Topic } from '../../../types/mqtt.types';
-import { useMQTTContext } from '../../../context/RepresentationProvider';
+import { useRepresentationContext } from '../../../context/RepresentationProvider';
 
 interface MQTTListItemProps {
   topic: Topic;
@@ -11,7 +11,7 @@ interface MQTTListItemProps {
 function TopicListItem({ 
   topic
 }: MQTTListItemProps) {
-  const { getSelectedTopic, setSelectedTopic } = useMQTTContext();
+  const { getSelectedTopic, setSelectedTopic } = useRepresentationContext();
 
   return (
     <ListItemButton

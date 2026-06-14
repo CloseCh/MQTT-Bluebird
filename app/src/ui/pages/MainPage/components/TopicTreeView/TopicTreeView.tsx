@@ -1,4 +1,4 @@
-import { useMQTTContext } from '@/features/messageRepresentacion';
+import { useRepresentationContext } from '@/features/messageRepresentacion';
 import { useSubscriptionContext } from '@/features/messageSubscription';
 import Box from '@mui/material/Box';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
@@ -32,7 +32,7 @@ function renderTopicNode(
 
 export default function TopicTreeView() {
   const { subscriptionList } = useSubscriptionContext();
-  const { topicList, setSelectedTopic } = useMQTTContext();
+  const { topicList, setSelectedTopic } = useRepresentationContext();
 
   const tree = useMemo(
     () => buildTree(subscriptionList, topicList),

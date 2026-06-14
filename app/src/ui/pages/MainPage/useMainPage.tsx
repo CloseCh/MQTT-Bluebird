@@ -1,6 +1,6 @@
 import { type ReactElement } from 'react';
 
-import { HistoryTable, TopicTable, LastTable, useMQTTContext, type TableType } from '@/features/messageRepresentacion';
+import { HistoryTable, TopicTable, LastTable, useRepresentationContext, type TableType } from '@/features/messageRepresentacion';
 import { useSubscriptionContext } from '@/features/messageSubscription';
 import { useNavigationStore, OVERLAY_IDS } from '@/features/navigation';
 import { filterBySubscriptions } from '@/shared/service/topicFilter';
@@ -8,7 +8,7 @@ import { SubscriptionSidebar } from './components/SubscriptionSidebar/Subscripti
 import { PublishSidebar } from './components/PublishSidebar/PublishSidebar';
 
 export function useMainPage() {
-  const { topicList, getSelectedTopic, getMessageSelected, tableType } = useMQTTContext();
+  const { topicList, getSelectedTopic, getMessageSelected, tableType } = useRepresentationContext();
   const { getSelectedSubscriptions } = useSubscriptionContext();
   
   const openedSidebar = useNavigationStore(s => s.openedSidebar);
@@ -21,7 +21,7 @@ export function useMainPage() {
   const messageSelected = getMessageSelected();
 
   const sideBarOpened: ReactElement = sidebarToShow({openedSidebar});
-  const tableOpened: ReactElement = tableToShow({ showTable, tableType });
+  const tableOpened: ReactElement = tableToShow({ tableType });
 
   return {
     sideBarOpened,
@@ -33,14 +33,10 @@ export function useMainPage() {
 }
 
 interface TableToShowProps {
-  showTable: boolean;
   tableType: TableType;
 }
 
-function tableToShow({ showTable, tableType }: TableToShowProps) {
-  if (!showTable) {
-    return <></>;
-  }
+function tableToShow({ tableType }: TableToShowProps) {
   if (tableType === 'history') {
     return <HistoryTable />
   } else if (tableType === 'topic') {

@@ -20,10 +20,10 @@ export function RepresentationProvider({ dataPointCount, children }: Representat
   );
 }
 
-export function useMQTTContext(): MQTTContextValue {
+export function useRepresentationContext(): MQTTContextValue {
   const ctx = useContext(MQTTContext);
   if (!ctx) {
-    throw new Error('useMQTTContext debe usarse dentro de <RepresentationProvider>');
+    throw new Error('useRepresentationContext debe usarse dentro de <RepresentationProvider>');
   }
   return ctx;
 }

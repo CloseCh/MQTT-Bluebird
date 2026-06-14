@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useMQTTContext } from '../../context/RepresentationProvider';
+import { useRepresentationContext } from '../../context/RepresentationProvider';
 import DecoderService from '../../service/DecorderService';
 import type { MQTTMessageList } from '../../types/mqtt.types';
 import type { GridColDef } from '@mui/x-data-grid';
@@ -10,7 +10,7 @@ export function useHistoryTable() {
     getTypedMessageList, 
     setSelectedTopic, 
     setMessageSelected 
-  } = useMQTTContext();
+  } = useRepresentationContext();
 
   const handleClick = useCallback((message: MQTTMessage) => {
     setMessageSelected(message);

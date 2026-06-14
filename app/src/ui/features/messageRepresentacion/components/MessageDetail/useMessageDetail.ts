@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
-import { useMQTTContext } from '../../context/RepresentationProvider';
+import { useRepresentationContext } from '../../context/RepresentationProvider';
 
 export function useMessageDetail() {
   const [drawerWidth, setDrawerWidth] = useState(400);
 
-  const { setMessageSelected, getSelectedTopic, getMessageFormat, getMessageSelected } = useMQTTContext();
+  const { setMessageSelected, getSelectedTopic, getMessageFormat, getMessageSelected } = useRepresentationContext();
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();

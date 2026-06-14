@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useMQTTContext } from '../../context/RepresentationProvider';
+import { useRepresentationContext } from '../../context/RepresentationProvider';
 import DecoderService from '../../service/DecorderService';
 import { nowMs, tsToMs } from '../../utils/date.util';
 import type { GridColDef, GridRowClassNameParams } from '@mui/x-data-grid';
@@ -11,7 +11,7 @@ export function useLastTable() {
     getTypedMessageList,
     setSelectedTopic,
     setMessageSelected
-  } = useMQTTContext();
+  } = useRepresentationContext();
 
   const columns: GridColDef<MQTTMessage>[] = useMemo(() => [
     { field: 'timeStamp', headerName: 'TimeStamp', width: 125 },
