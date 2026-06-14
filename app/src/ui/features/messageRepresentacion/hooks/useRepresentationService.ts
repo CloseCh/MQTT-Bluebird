@@ -22,8 +22,6 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
   const [tableType, setTableType] = useState<TableType>('history');
 
   const onMessage = useCallback((message: MQTTMessage) => {
-    
-
     const topic: Topic = message.topic;
     
     setTopicList(prev => {

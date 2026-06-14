@@ -7,17 +7,33 @@ export function subscriptionReducer(
 ): SubscriptionList {
   switch (action.type) {
     case 'subscribed': {
-      const next = { ...state };
-      action.topics.forEach((t) => { next[t] = true; });
-      return next;
+      const { subscription } = action;
+      return {
+        ...state,
+        [subscription.topic]: { ...subscription, selected: true },
+      };
     }
     case 'unsubscribed': {
       const next = { ...state };
       delete next[action.topic];
       return next;
     }
-    case 'toggled':
-      return { ...state, [action.topic]: !state[action.topic] };
+    case 'changed': {
+      const { previousTopic, subscription } = action;
+      const wasSelected = state[previousTopic]?.selected ?? true;
+      const next = { ...state };
+      delete next[previousTopic];
+      next[subscription.topic] = { ...subscription, selected: wasSelected };
+      return next;
+    }
+    case 'toggled': {
+      const current = state[action.topic];
+      if (!current) return state;
+      return {
+        ...state,
+        [action.topic]: { ...current, selected: !current.selected },
+      };
+    }
     case 'reset':
       return {};
     default:

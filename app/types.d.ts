@@ -21,6 +21,11 @@ interface MqttConnectionOptions {
   password?: string;
 }
 
+interface MqttSubscription {
+  topic: string;
+  qos: 0 | 1 | 2;
+}
+
 interface EventPayloadMapping {
   // Message
   message: MQTTMessage;
@@ -29,10 +34,10 @@ interface EventPayloadMapping {
   mqttPublish: PublishPayload;
 
   // subscriptions
-  'mqtt:subscribe': string[];
-  'mqtt:unsubscribe': string[];
+  'mqtt:subscribe': MqttSubscription;
+  'mqtt:unsubscribe': string;
   'mqtt:getSubscriptions': void;
-  'mqtt:subscriptionsUpdated': string[];
+  'mqtt:subscriptionsUpdated': MqttSubscription[];
 
   // broker lifecycle
   'mqtt:brokerDisconnected': void;
@@ -48,14 +53,14 @@ interface Window {
   electron: {
     subscribeMQTT: (callback: (message: MQTTMessage) => void) => UnsubscribeFunction;
     systemMessage: (callback: (message: MQTTMessage) => void) => UnsubscribeFunction;
-    onSubscriptionsUpdated: (callback: (subscriptions: string[]) => void) => UnsubscribeFunction;
+    onSubscriptionsUpdated: (callback: (subscriptions: MqttSubscription[]) => void) => UnsubscribeFunction;
     onBrokerDisconnected: (callback: () => void) => UnsubscribeFunction;
 
     publishMQTT: (message: PublishPayload) => Promise<void>;
 
-    mqttSubscribe: (topics: string[]) => Promise<string[]>;
-    mqttUnsubscribe: (topics: string[]) => Promise<string[]>;
-    mqttGetSubscriptions: () => Promise<string[]>;
+    mqttSubscribe: (subscription: MqttSubscription) => Promise<MqttSubscription[]>;
+    mqttUnsubscribe: (topic: string) => Promise<MqttSubscription[]>;
+    mqttGetSubscriptions: () => Promise<MqttSubscription[]>;
 
     mqttConnection: (options: MqttConnectionOptions) => Promise<boolean>;
     mqttDisconnect: () => Promise<void>;

@@ -28,11 +28,10 @@ export function hasCoveringSubscription(
   return findCoveringSubscriptions(newTopic, subscriptionList).length > 0;
 }
 
-export const getNotSubscribed = (list: SubscriptionList, topics: string[]) =>
-  topics.filter((t) => !list[t]);
-
 export const getSelectedTopics = (list: SubscriptionList) =>
-  Object.keys(list).filter((k) => list[k]);
+  Object.values(list)
+    .filter((entry) => entry.selected)
+    .map((entry) => entry.topic);
 
 export function matchTopicToSubscription(
   root: TreeRoot,

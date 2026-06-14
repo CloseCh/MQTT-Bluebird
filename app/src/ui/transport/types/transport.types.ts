@@ -6,12 +6,12 @@ export interface MQTTTransport {
   mqttConnection(options: MqttConnectionOptions): Promise<boolean>;
   mqttDisconnect(): Promise<void>;
   publishMQTT(payload: PublishPayload): Promise<void>;
-  mqttSubscribe(topics: string[]): Promise<string[]>;
-  mqttUnsubscribe(topics: string[]): Promise<string[]>;
-  mqttGetSubscriptions(): Promise<string[]>;
+  mqttSubscribe(subscription: MqttSubscription): Promise<MqttSubscription[]>;
+  mqttUnsubscribe(topic: string): Promise<MqttSubscription[]>;
+  mqttGetSubscriptions(): Promise<MqttSubscription[]>;
 
   subscribeMQTT(callback: (msg: MQTTMessage) => void): UnsubscribeFn;
   systemMessage(callback: (msg: MQTTMessage) => void): UnsubscribeFn;
-  onSubscriptionsUpdated(callback: (topics: string[]) => void): UnsubscribeFn;
+  onSubscriptionsUpdated(callback: (subscriptions: MqttSubscription[]) => void): UnsubscribeFn;
   onBrokerDisconnected(callback: () => void): UnsubscribeFn;
 }

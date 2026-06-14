@@ -11,11 +11,11 @@ function makeListenerSet<T>() {
 
 export function createMQTTDirectTransport(): MQTTTransport {
   let client: MqttClient | null = null;
-  const subscriptions = new Set<string>();
+  const subscriptions = new Map<string, MqttSubscription>();
 
   const msgs = makeListenerSet<MQTTMessage>();
   const sysMsgs = makeListenerSet<MQTTMessage>();
-  const subUpd = makeListenerSet<string[]>();
+  const subUpd = makeListenerSet<MqttSubscription[]>();
   const disc = makeListenerSet<undefined>();
 
   const mqttConnection = ({ endpoint, username, password }: MqttConnectionOptions) => {
@@ -41,7 +41,7 @@ export function createMQTTDirectTransport(): MQTTTransport {
 
       client.once('connect', () => {
         client!.subscribe('$SYS/#');
-        subscriptions.add('$SYS/#');
+        subscriptions.set('$SYS/#', { topic: '$SYS/#', qos: 0 });
         resolve(true);
       });
 
@@ -93,31 +93,29 @@ export function createMQTTDirectTransport(): MQTTTransport {
     });
   }
 
-  const mqttSubscribe = (topics: string[]) => {
-    const newTopics = topics.filter(topic => !subscriptions.has(topic));
-    if (!newTopics.length) return Promise.resolve([]);
-    return new Promise<string[]>((resolve, reject) => {
-      client?.subscribe(newTopics, err => {
+  const mqttSubscribe = (subscription: MqttSubscription) => {
+    return new Promise<MqttSubscription[]>((resolve, reject) => {
+      client?.subscribe(subscription.topic, { qos: subscription.qos }, err => {
         if (err) { reject(err); return; }
-        newTopics.forEach(topic => subscriptions.add(topic));
-        subUpd.emit([...subscriptions]);
-        resolve(newTopics);
+        subscriptions.set(subscription.topic, subscription);
+        subUpd.emit([...subscriptions.values()]);
+        resolve([...subscriptions.values()]);
       });
     });
   }
 
-  const mqttUnsubscribe = (topics: string[]) => {
-    return new Promise<string[]>((resolve, reject) => {
-      client?.unsubscribe(topics, err => {
+  const mqttUnsubscribe = (topic: string) => {
+    return new Promise<MqttSubscription[]>((resolve, reject) => {
+      client?.unsubscribe(topic, err => {
         if (err) { reject(err); return; }
-        topics.forEach(t => subscriptions.delete(t));
-        subUpd.emit([...subscriptions]);
-        resolve(topics);
+        subscriptions.delete(topic);
+        subUpd.emit([...subscriptions.values()]);
+        resolve([...subscriptions.values()]);
       });
     });
   }
 
-  const mqttGetSubscriptions: MQTTTransport['mqttGetSubscriptions'] = () => Promise.resolve([...subscriptions]);
+  const mqttGetSubscriptions: MQTTTransport['mqttGetSubscriptions'] = () => Promise.resolve([...subscriptions.values()]);
 
   const subscribeMQTT: MQTTTransport['subscribeMQTT'] = (callback) => msgs.on(callback);
 
