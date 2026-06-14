@@ -1,0 +1,123 @@
+name: Release
+
+# Se dispara cuando un PR hacia `main` se acepta (merge), o manualmente.
+# La versión del release se toma de app/package.json ("version").
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  # 1) Lee la versión de la configuración y decide si hay que publicar.
+  #    Si ya existe un release con esa versión, se omite (evita PRs que no
+  #    suben la versión generen releases duplicados / fallen por tag repetido).
+  check:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.cfg.outputs.version }}
+      tag: ${{ steps.cfg.outputs.tag }}
+      should_release: ${{ steps.cfg.outputs.should_release }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version from app/package.json
+        id: cfg
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(jq -r '.version' app/package.json)
+          tag="v$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::notice::El release $tag ya existe — se omite la publicación."
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Se publicará el release $tag."
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  # 2) Compila y empaqueta en cada SO (Windows, macOS, Linux).
+  build:
+    needs: check
+    if: needs.check.outputs.should_release == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            script: dist:win
+          - os: macos-latest
+            script: dist:mac
+          - os: ubuntu-latest
+            script: dist:linux
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.6.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: app/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build & package
+        env:
+          # Token disponible por si electron-builder lo necesita; NO publicamos
+          # desde aquí (lo hace el job `release`), de ahí `--publish never`.
+          GH_TOKEN: ${{ github.token }}
+          # En CI de macOS no hay certificado de firma: evita que falle por
+          # intentar firmar/notarizar. El instalador queda sin firmar.
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: pnpm run ${{ matrix.script }} -- --publish never
+
+      - name: Upload installers
+        uses: actions/upload-artifact@v4
+        with:
+          name: installers-${{ matrix.os }}
+          path: |
+            app/dist/*.exe
+            app/dist/*.dmg
+            app/dist/*.AppImage
+            app/dist/*.deb
+          if-no-files-found: error
+          retention-days: 7
+
+  # 3) Crea el release en GitHub con todos los artefactos.
+  release:
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all installers
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: installers-*
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.check.outputs.tag }}
+          name: ${{ needs.check.outputs.tag }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: artifacts/**/*
