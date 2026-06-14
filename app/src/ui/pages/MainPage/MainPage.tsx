@@ -6,10 +6,10 @@ import {
 } from '@mui/material';
 import { useMainPage } from './useMainPage';
 
-export default function MainPage() {
+export function MainPage() {
   const {
     sideBarOpened,
-    tableOpened,
+    //tableOpened,
     messageSelected
   } = useMainPage();
 
@@ -25,7 +25,7 @@ export default function MainPage() {
             pr: '10px', pl: '10px', pt: '10px',
             width: '100%'
           }}>
-            {tableOpened}
+            {"tableOpened"}
           </Box>
         </Stack>
       </Stack>

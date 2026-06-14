@@ -4,8 +4,8 @@ import { HistoryTable, TopicTable, LastTable, useMQTTContext } from '@/features/
 import { useSubscriptionContext } from '@/features/messageSubscription';
 import { useNavigationStore, OVERLAY_IDS } from '@/features/navigation';
 import { filterBySubscriptions } from '@/shared/service/topicFilter';
-import { SubscriptionSidebar } from '../SideBars/SubscriptionSidebar';
-import { PublishSidebar } from '../SideBars/PublishSidebar';
+import { SubscriptionSidebar } from './components/SubscriptionSidebar/SubscriptionSidebar';
+import { PublishSidebar } from './components/PublishSidebar/PublishSidebar';
 
 export function useMainPage() {
 
@@ -23,33 +23,33 @@ export function useMainPage() {
   const messageSelected = getMessageSelected();
 
   const sideBarOpened: ReactElement = sidebarToShow({openedSidebar});
-  const tableOpened: ReactElement = tableToShow({ showTable, tableConfig });
+  // const tableOpened: ReactElement = tableToShow({ showTable, tableConfig });
 
   return {
     sideBarOpened,
     selectedTopic,
     messageSelected,
     showTable,
-    tableOpened,
+    // tableOpened,
   };
 }
 
-interface TableToShowProps {
-  showTable: boolean;
-  tableConfig: string;
-}
+// interface TableToShowProps {
+//   showTable: boolean;
+//   tableConfig: string;
+// }
 
-function tableToShow({ showTable, tableConfig }: TableToShowProps) {
+// function tableToShow({ showTable, tableConfig }: TableToShowProps) {
 
-  if (showTable && tableConfig === OVERLAY_IDS.TABLE_HISTORY) {
-    return <HistoryTable />
-  } else if (tableConfig === OVERLAY_IDS.TABLE_TOPIC) {
-    return <TopicTable />;
-  } else if (tableConfig === OVERLAY_IDS.TABLE_LAST) {
-    return <LastTable />
-  }
-  return <></>;
-}
+//   if (showTable && tableConfig === OVERLAY_IDS.TABLE_HISTORY) {
+//     return <HistoryTable />
+//   } else if (tableConfig === OVERLAY_IDS.TABLE_TOPIC) {
+//     return <TopicTable />;
+//   } else if (tableConfig === OVERLAY_IDS.TABLE_LAST) {
+//     return <LastTable />
+//   }
+//   return <></>;
+// }
 
 interface SidebarToShowProps {
   openedSidebar: string;

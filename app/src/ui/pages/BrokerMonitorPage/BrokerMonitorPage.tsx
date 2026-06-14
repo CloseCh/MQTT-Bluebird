@@ -1,7 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { StatCardGroup } from '../StatCardGroup/StatCardGroup';
-import { LoadChart } from '../LoadChart/LoadChart';
-import { ClientsPanel } from '../ClientsPanel/ClientsPanel';
+import { StatCardGroup, LoadChart, ClientsPanel } from '@features/brockerMonitor/';
 
 export function BrokerMonitorPage() {
   return (

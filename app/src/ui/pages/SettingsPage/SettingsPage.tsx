@@ -1,10 +1,10 @@
 import { Box, IconButton, Stack, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import SettingsForm from '../../../../features/settings/components/settingsForm';
+import SettingsForm from '../../features/settings/components/settingsForm';
 import { useNavigationStore } from '@/features/navigation/stores/navigationStore';
 import { useNavigate } from 'react-router';
 
-export default function SettingsPage() {
+export function SettingsPage() {
   const { closeSettings } = useNavigationStore();
   const navigate = useNavigate();
 

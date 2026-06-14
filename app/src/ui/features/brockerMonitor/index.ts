@@ -1,5 +1,9 @@
 export { BrockerMonitorProvider, useBrockerMonitorContext } from './hooks/useBrockerMonitorContext';
 
-export { BrokerMonitorPage } from './components/BrokerMonitorPage/BrokerMonitorPage';
+export { StatCardGroup } from './components/StatCardGroup/StatCardGroup';
+
+export { ClientsPanel } from './components/ClientsPanel/ClientsPanel'
+
+export { LoadChart } from './components/LoadChart/LoadChart'
 
 export * from './types/brockerMonitor.types';

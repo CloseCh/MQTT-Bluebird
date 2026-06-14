@@ -3,7 +3,6 @@ import {Drawer, Grid} from '@mui/material';
 import MessageDetailData from './MessageDetailData/MessageDetailData';
 import ResizeHandle from './ResizeHandle/ResizeHandle';
 import { useMessageDetail } from './useMessageDetail';
-import { HEADER_HEIGHT } from '../../../../constants/layout';
 
 export function MessageDetail () {
   const {
@@ -37,8 +36,8 @@ export function MessageDetail () {
       sx={{
         '& .MuiDrawer-paper': {
           pointerEvents: 'auto',
-          top: `${HEADER_HEIGHT}px`,
-          height: `calc(100% - ${HEADER_HEIGHT}px)`,
+          top: `48px`,
+          height: `calc(100% - 48px)`,
           width: `${drawerWidth}px`,
           overflow: 'visible',
         }

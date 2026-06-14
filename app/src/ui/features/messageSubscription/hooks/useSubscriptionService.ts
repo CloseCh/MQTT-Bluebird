@@ -6,7 +6,7 @@ import { useConnectionContext } from '@/features/brockerConnection';
 export function useSubscriptionService(): SubscriptionContextValue {
   const transport = useTransportContext();
   const { isConnected } = useConnectionContext();
-  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>({});
+  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>({['#']:true});
 
   const subscribe = useCallback(async (topics: string[]) => {
     try {
