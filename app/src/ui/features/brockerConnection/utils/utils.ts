@@ -1,7 +1,10 @@
-import type { ConnectionFormValues } from '@/features/brockerConnection/types/connection.types';
+import { CONNECTION_STORAGE_KEY, type ConnectionFormValues, type StoredConnection } from '@/features/brockerConnection/types/connection.types';
 
 export function buildEndpoint(values: ConnectionFormValues): string {
-  return `${values.protocol}://${values.host}:${values.port}`;
+  const base = `${values.protocol}://${values.host}:${values.port}`;
+  const path = values.path?.trim();
+  if (!path) return base;
+  return `${base}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
 export function validateHost(value: string): true | string {
@@ -17,4 +20,29 @@ export function validatePort(value: string): true | string {
     return 'Puerto inválido (1–65535).';
   }
   return true;
+}
+
+export function loadStoredConnection(): Partial<StoredConnection> {
+  try {
+    const raw = localStorage.getItem(CONNECTION_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Partial<StoredConnection>) : {};
+  } catch {
+    // localStorage no disponible (modo privado, deshabilitado…) o JSON corrupto.
+    return {};
+  }
+}
+
+export function saveStoredConnection(values: Partial<ConnectionFormValues>): void {
+  try {
+    const toStore: Partial<StoredConnection> = {
+      protocol: values.protocol,
+      host: values.host,
+      port: values.port,
+      path: values.path,
+      username: values.username,
+    };
+    localStorage.setItem(CONNECTION_STORAGE_KEY, JSON.stringify(toStore));
+  } catch {
+    // localStorage no disponible → no persistimos, sin romper el formulario.
+  }
 }

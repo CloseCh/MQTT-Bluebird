@@ -19,8 +19,12 @@ export interface ConnectionFormValues {
   protocol: MqttProtocol;
   host: string;
   port: string;
+  path?: string;
   username?: string;
   password?: string;
 }
 
 export type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
+
+export const CONNECTION_STORAGE_KEY = 'mqtt-bluebird:connection-form';
+export type StoredConnection = Omit<ConnectionFormValues, 'password'>;

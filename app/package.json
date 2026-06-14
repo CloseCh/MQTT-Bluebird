@@ -2,6 +2,10 @@
   "name": "mqtt_bluebird",
   "version": "0.1.0",
   "description": "MQTT communication client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CloseCh/MQTT-Bluebird.git"
+  },
   "type": "module",
   "main": "dist-electron/main.js",
   "engines": {
@@ -12,15 +16,18 @@
     "type:validate": "tsc -b",
     "build": "tsc -b && electron-vite build",
     "lint": "eslint .",
-    "dist:win": "tsc -b && electron-vite build && electron-builder --win --x64",
-    "dist:mac": "tsc -b && electron-vite build && electron-builder --mac --universal",
-    "dist:linux": "tsc -b && electron-vite build && electron-builder --linux --x64",
+    "dist:win": "tsc -b && electron-vite build && electron-builder --win --x64 --publish never",
+    "dist:mac": "tsc -b && electron-vite build && electron-builder --mac --universal --publish never",
+    "dist:linux": "tsc -b && electron-vite build && electron-builder --linux --x64 --publish never",
     "test": "vitest run",
     "build:web": "vite build --config vite.web.config.ts",
     "test:watch": "vitest"
   },
   "keywords": [],
-  "author": "Weiyu",
+  "author": {
+    "name": "Weiyu",
+    "email": "CloseCh@users.noreply.github.com"
+  },
   "license": "ISC",
   "packageManager": "pnpm@11.6.0+sha512.9a36518224080c6fe5165afdcfe79bfa118c29be703f3f462b1e32efe1e98e47e8750b148e08286250aad4113cc7993ca413c4e2cd447752708c2ee5751bc95f",
   "pnpm": {

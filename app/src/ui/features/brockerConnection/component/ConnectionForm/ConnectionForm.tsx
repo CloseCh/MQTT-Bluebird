@@ -66,7 +66,7 @@ export function ConnectionForm() {
             slotProps={{
               input: {
                 startAdornment: (
-                  <InputAdornment position='start'>:</InputAdornment>
+                  <InputAdornment position='start' />
                 ),
               },
             }}
@@ -74,6 +74,23 @@ export function ConnectionForm() {
             error={!!form.formState.errors.port}
             helperText={form.formState.errors.port?.message}
           />
+
+          {/* Path (solo WebSocket: p.ej. /mqtt en brokers públicos) */}
+          {['ws', 'wss'].includes(form.watch('protocol')) && (
+            <TextField
+              label='Ruta'
+              placeholder='mqtt'
+              helperText='Opcional. Muchos brokers WebSocket la requieren (p.ej. /mqtt en HiveMQ).'
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position='start' />
+                  ),
+                },
+              }}
+              {...form.register('path')}
+            />
+          )}
 
           {/* Credentials */}
           <Stack direction='row' spacing={1}>

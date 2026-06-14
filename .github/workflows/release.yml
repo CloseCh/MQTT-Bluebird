@@ -27,7 +27,7 @@ jobs:
       tag: ${{ steps.cfg.outputs.tag }}
       should_release: ${{ steps.cfg.outputs.should_release }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Read version from app/package.json
         id: cfg
@@ -65,15 +65,16 @@ jobs:
       run:
         working-directory: app
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         with:
           version: 11.6.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          # pnpm 11.6.0 requiere Node >= 22.13 (usa node:sqlite).
+          node-version: 22
           cache: pnpm
           cache-dependency-path: app/pnpm-lock.yaml
 
@@ -82,15 +83,18 @@ jobs:
       - name: Build & package
         env:
           # Token disponible por si electron-builder lo necesita; NO publicamos
-          # desde aquí (lo hace el job `release`), de ahí `--publish never`.
+          # desde aquí (lo hace el job `release`). El `--publish never` va dentro
+          # de los scripts dist:* de package.json (pasarlo aquí como
+          # `-- --publish never` lo dejaba tras un `--` y electron-builder lo
+          # ignoraba, disparando publicación implícita en CI).
           GH_TOKEN: ${{ github.token }}
           # En CI de macOS no hay certificado de firma: evita que falle por
           # intentar firmar/notarizar. El instalador queda sin firmar.
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: pnpm run ${{ matrix.script }} -- --publish never
+        run: pnpm run ${{ matrix.script }}
 
       - name: Upload installers
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: installers-${{ matrix.os }}
           path: |
@@ -107,14 +111,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download all installers
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           path: artifacts
           pattern: installers-*
           merge-multiple: true
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.check.outputs.tag }}
           name: ${{ needs.check.outputs.tag }}
