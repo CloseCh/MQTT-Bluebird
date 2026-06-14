@@ -2,6 +2,10 @@
   "name": "mqtt_bluebird",
   "version": "0.1.0",
   "description": "MQTT communication client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CloseCh/MQTT-Bluebird.git"
+  },
   "type": "module",
   "main": "dist-electron/main.js",
   "engines": {
@@ -12,9 +16,9 @@
     "type:validate": "tsc -b",
     "build": "tsc -b && electron-vite build",
     "lint": "eslint .",
-    "dist:win": "tsc -b && electron-vite build && electron-builder --win --x64",
-    "dist:mac": "tsc -b && electron-vite build && electron-builder --mac --universal",
-    "dist:linux": "tsc -b && electron-vite build && electron-builder --linux --x64",
+    "dist:win": "tsc -b && electron-vite build && electron-builder --win --x64 --publish never",
+    "dist:mac": "tsc -b && electron-vite build && electron-builder --mac --universal --publish never",
+    "dist:linux": "tsc -b && electron-vite build && electron-builder --linux --x64 --publish never",
     "test": "vitest run",
     "build:web": "vite build --config vite.web.config.ts",
     "test:watch": "vitest"

@@ -83,12 +83,15 @@ jobs:
       - name: Build & package
         env:
           # Token disponible por si electron-builder lo necesita; NO publicamos
-          # desde aquí (lo hace el job `release`), de ahí `--publish never`.
+          # desde aquí (lo hace el job `release`). El `--publish never` va dentro
+          # de los scripts dist:* de package.json (pasarlo aquí como
+          # `-- --publish never` lo dejaba tras un `--` y electron-builder lo
+          # ignoraba, disparando publicación implícita en CI).
           GH_TOKEN: ${{ github.token }}
           # En CI de macOS no hay certificado de firma: evita que falle por
           # intentar firmar/notarizar. El instalador queda sin firmar.
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: pnpm run ${{ matrix.script }} -- --publish never
+        run: pnpm run ${{ matrix.script }}
 
       - name: Upload installers
         uses: actions/upload-artifact@v4
