@@ -1,13 +1,21 @@
-export type Subscription = string;
+export type Qos = 0 | 1 | 2;
 
-export type Selected = boolean;
+export interface Subscription {
+  topic: string;
+  qos: Qos;
+}
 
-export type SubscriptionList = Record<Subscription, Selected>;
+export interface SubscriptionEntry extends Subscription {
+  selected: boolean;
+}
+
+export type SubscriptionList = Record<string, SubscriptionEntry>;
 
 export interface SubscriptionContextValue {
   subscriptionList: SubscriptionList;
-  subscribe: (topics: string[]) => Promise<void>;
-  updateSubscriptionState:  (topic: string) => void;
+  subscribe: (subscription: Subscription) => Promise<void>;
   unsubscribe: (topic: string) => Promise<void>;
-  getSelectedSubscriptions: () => string[]
+  changeSubscription: (previousTopic: string, subscription: Subscription) => Promise<void>;
+  updateSubscriptionState: (topic: string) => void;
+  getSelectedSubscriptions: () => string[];
 }

@@ -1,5 +1,26 @@
 import { createTheme } from '@mui/material';
 
+/**
+ * Colores de serie fijos (independientes del modo) para gráficas y barras del
+ * monitor. Fuente única — no repetir estos hex en los componentes.
+ */
+export const SERIES_COLORS = {
+  blue: '#2196f3',
+  green: '#4caf50',
+  orange: '#ff9800',
+  red: '#f44336',
+  grey: '#9e9e9e',
+} as const;
+
+/** Acento "en vivo" de la conexión (punto/icono/glow de conectado). */
+export const LIVE_ACCENT = '#00e676';
+
+/** Fondo del bloque de mensaje decodificado, por modo. */
+export const CODE_SURFACE = {
+  dark: '#0d1117',
+  light: '#f6f8fa',
+} as const;
+
 export const createAppTheme = (darkMode: boolean) =>
   createTheme({
     palette: {
@@ -41,7 +62,10 @@ export const createAppTheme = (darkMode: boolean) =>
       MuiAppBar: {
         styleOverrides: {
           root: ({ theme }) => ({
-            backgroundColor: theme.palette.mode === 'dark' ? '#161b22' : '#1976d2',
+            backgroundColor:
+              theme.palette.mode === 'dark'
+                ? theme.palette.background.paper
+                : theme.palette.primary.main,
             borderBottom: `1px solid ${theme.palette.divider}`,
           }),
         },

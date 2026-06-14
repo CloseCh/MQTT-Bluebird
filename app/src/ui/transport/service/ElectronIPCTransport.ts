@@ -5,8 +5,8 @@ export function createElectronIPCTransport(): MQTTTransport {
     mqttConnection: (options) => window.electron.mqttConnection(options),
     mqttDisconnect: ()  => window.electron.mqttDisconnect(),
     publishMQTT:    (payload) => window.electron.publishMQTT(payload),
-    mqttSubscribe:  (topics) => window.electron.mqttSubscribe(topics),
-    mqttUnsubscribe:(topics) => window.electron.mqttUnsubscribe(topics),
+    mqttSubscribe:  (subscription) => window.electron.mqttSubscribe(subscription),
+    mqttUnsubscribe:(topic) => window.electron.mqttUnsubscribe(topic),
     mqttGetSubscriptions: () => window.electron.mqttGetSubscriptions(),
 
     subscribeMQTT:          (callback) => window.electron.subscribeMQTT(callback),

@@ -1,8 +1,10 @@
 import { Box, Paper, Typography, useTheme } from '@mui/material';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
+import { SERIES_COLORS } from '@/theme';
 import { useBrockerMonitorContext } from '../../hooks/useBrockerMonitorContext';
+import { CLIENT_COLORS } from '../../constants/brockerMonitor.constants';
 
 export function ClientsPanel() {
   const theme = useTheme();
@@ -22,16 +24,16 @@ export function ClientsPanel() {
   };
 
   const clientData = [
-    { name: 'Connected',    value: clients.connected,    fill: '#4caf50' },
-    { name: 'Disconnected', value: clients.disconnected, fill: '#f44336' },
-    { name: 'Inactive',     value: clients.inactive,     fill: '#ff9800' },
-    { name: 'Expired',      value: clients.expired,      fill: '#9e9e9e' },
+    { name: 'Connected',    value: clients.connected,    fill: CLIENT_COLORS.Connected },
+    { name: 'Disconnected', value: clients.disconnected, fill: CLIENT_COLORS.Disconnected },
+    { name: 'Inactive',     value: clients.inactive,     fill: CLIENT_COLORS.Inactive },
+    { name: 'Expired',      value: clients.expired,      fill: CLIENT_COLORS.Expired },
   ];
 
   const publishData = [
-    { name: 'Received', value: publish.messages.received, fill: '#2196f3' },
-    { name: 'Sent',     value: publish.messages.sent,     fill: '#4caf50' },
-    { name: 'Dropped',  value: publish.messages.dropped,  fill: '#f44336' },
+    { name: 'Received', value: publish.messages.received, fill: SERIES_COLORS.blue },
+    { name: 'Sent',     value: publish.messages.sent,     fill: SERIES_COLORS.green },
+    { name: 'Dropped',  value: publish.messages.dropped,  fill: SERIES_COLORS.red },
   ];
 
   return (
@@ -46,7 +48,11 @@ export function ClientsPanel() {
             <XAxis dataKey='name' tick={tickStyle} />
             <YAxis tick={tickStyle} width={35} />
             <Tooltip {...tooltipStyle} />
-            <Bar dataKey='value' name='Clients' radius={[3, 3, 0, 0]} fill='fill' />
+            <Bar dataKey='value' name='Clients' radius={[3, 3, 0, 0]}>
+              {clientData.map((entry) => (
+                <Cell key={entry.name} fill={entry.fill} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Paper>
@@ -61,7 +67,11 @@ export function ClientsPanel() {
             <XAxis dataKey='name' tick={tickStyle} />
             <YAxis tick={tickStyle} width={40} />
             <Tooltip {...tooltipStyle} />
-            <Bar dataKey='value' name='Messages' radius={[3, 3, 0, 0]} fill='fill' />
+            <Bar dataKey='value' name='Messages' radius={[3, 3, 0, 0]}>
+              {publishData.map((entry) => (
+                <Cell key={entry.name} fill={entry.fill} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Paper>

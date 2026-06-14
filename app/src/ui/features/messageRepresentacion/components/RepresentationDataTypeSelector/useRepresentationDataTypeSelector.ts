@@ -1,11 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
-import { useMQTTContext } from '../../hooks/useMQTTContext';
+import { useRepresentationContext } from '../../context/RepresentationProvider';
 
 export function useRepresentationDataTypeSelector(){
   const selectRef = useRef<HTMLDivElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { setMessageFormat, getSelectedTopic ,getMessageFormat } = useMQTTContext();
+  const { setMessageFormat, getSelectedTopic ,getMessageFormat } = useRepresentationContext();
 
   const selectedTopic = getSelectedTopic();
   const messageFormat: MessageFormatEnum = getMessageFormat(selectedTopic);

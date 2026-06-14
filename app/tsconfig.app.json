@@ -1,8 +1,16 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/ui/*"]
+      "@/*": ["./src/ui/*"],
+      "@features/*": ["./src/ui/features/*"],
+      "@pages/*": ["./src/ui/pages/*"],
+      "@layout/*": ["./src/ui/layout/*"],
+      "@shared/*": ["./src/ui/shared/*"],
+      "@stores/*": ["./src/ui/stores/*"],
+      "@transport/*": ["./src/ui/transport/*"],
+      "@assets/*": ["./src/ui/assets/*"]
     },
+    
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2022",
     "useDefineForClassFields": true,

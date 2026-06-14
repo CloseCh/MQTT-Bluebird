@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { SERIES_COLORS } from '@/theme';
 import { useBrockerMonitorContext } from '../../hooks/useBrockerMonitorContext';
 import { formatBytes } from '../../utils/format.util';
 import ChartPanel from './ChartPanel/ChartPanel';
@@ -12,16 +13,16 @@ export function LoadChart() {
         title='Message Rate (1min avg, msg/s)'
         data={timeSeries}
         lines={[
-          { key: 'msgReceived', color: '#2196f3', label: 'Received' },
-          { key: 'msgSent',     color: '#ff9800', label: 'Sent' },
+          { key: 'msgReceived', color: SERIES_COLORS.blue,   label: 'Received' },
+          { key: 'msgSent',     color: SERIES_COLORS.orange, label: 'Sent' },
         ]}
       />
       <ChartPanel
         title='Bytes Rate (1min avg)'
         data={timeSeries}
         lines={[
-          { key: 'bytesReceived', color: '#4caf50', label: 'Received' },
-          { key: 'bytesSent',     color: '#f44336', label: 'Sent' },
+          { key: 'bytesReceived', color: SERIES_COLORS.green, label: 'Received' },
+          { key: 'bytesSent',     color: SERIES_COLORS.red,   label: 'Sent' },
         ]}
         yFormatter={formatBytes}
       />

@@ -51,8 +51,8 @@ export function ResizeHandle({ onResize, initialSize, min = 100, max = 500, dire
           left: isHorizontal ? 0 : undefined,
           top: isHorizontal ? undefined : 0,
           backgroundColor: 'divider',
-          width: isHorizontal ? '1px' : '100%',
-          height: isHorizontal ? '100%' : '1px',
+          width: isHorizontal ? '2px' : '100%',
+          height: isHorizontal ? '100%' : '2px',
         },
         '&:hover::before': {
           backgroundColor: 'primary.main',

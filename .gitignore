@@ -23,4 +23,5 @@ dist*
 *.sw?
 
 .claude/*
+graphify-out/
 .env

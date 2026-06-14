@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useConnectionContext } from '../../hooks/useConnectionContext';
+import { useConnectionContext } from '../../context/ConnectionProvider';
 
 export function useStatusButton() {
   const { isConnected, connectedEndpoint, handleDisconnection } =

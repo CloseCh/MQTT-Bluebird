@@ -41,10 +41,10 @@ contextBridge.exposeInMainWorld('electron', {
   publishMQTT: (message) =>
     ipcInvoke('mqttPublish', message),
   
-  mqttSubscribe: (topics) =>
-    ipcInvoke('mqtt:subscribe', topics),
-  mqttUnsubscribe: (topics) =>
-    ipcInvoke('mqtt:unsubscribe', topics),
+  mqttSubscribe: (subscription) =>
+    ipcInvoke('mqtt:subscribe', subscription),
+  mqttUnsubscribe: (topic) =>
+    ipcInvoke('mqtt:unsubscribe', topic),
   mqttGetSubscriptions: () =>
     ipcInvoke('mqtt:getSubscriptions', undefined),
 

@@ -3,13 +3,19 @@ import { type IPublishPacket } from 'mqtt';
 import { getClient } from './mqttConnection';
 import { ipcMainHandleWithReturn, ipcWebContentsSend } from '../../util/util';
 
-let activeSubscriptions: Set<string> = new Set(['$SYS/#']);
+const SYS_SUBSCRIPTION: MqttSubscription = { topic: '$SYS/#', qos: 0 };
+
+function defaultSubscriptions(): Map<string, MqttSubscription> {
+  return new Map([[SYS_SUBSCRIPTION.topic, SYS_SUBSCRIPTION]]);
+}
+
+let activeSubscriptions: Map<string, MqttSubscription> = defaultSubscriptions();
 let handlersRegistered: boolean = false;
 let activeWebContents: WebContents | null = null;
 
 function broadcastSubscriptions(): void {
   if (activeWebContents && !activeWebContents.isDestroyed()) {
-    ipcWebContentsSend('mqtt:subscriptionsUpdated', activeWebContents, [...activeSubscriptions]);
+    ipcWebContentsSend('mqtt:subscriptionsUpdated', activeWebContents, [...activeSubscriptions.values()]);
   }
 }
 
@@ -19,36 +25,36 @@ export function setupSubscriptor(mainWindow: BrowserWindow): void {
   if (!handlersRegistered) {
     handlersRegistered = true;
 
-    ipcMainHandleWithReturn('mqtt:subscribe', (topics) => {
+    ipcMainHandleWithReturn('mqtt:subscribe', (subscription) => {
       return new Promise((resolve, reject) => {
         const client = getClient();
         if (!client) return reject(new Error('Cliente MQTT no conectado'));
 
-        client.subscribe(topics, (err) => {
+        client.subscribe(subscription.topic, { qos: subscription.qos }, (err) => {
           if (err) return reject(err);
-          topics.forEach(t => activeSubscriptions.add(t));
+          activeSubscriptions.set(subscription.topic, subscription);
           broadcastSubscriptions();
-          resolve([...activeSubscriptions]);
+          resolve([...activeSubscriptions.values()]);
         });
       });
     });
 
-    ipcMainHandleWithReturn('mqtt:unsubscribe', (topics) => {
+    ipcMainHandleWithReturn('mqtt:unsubscribe', (topic) => {
       return new Promise((resolve, reject) => {
         const client = getClient();
         if (!client) return reject(new Error('Cliente MQTT no conectado'));
 
-        client.unsubscribe(topics, (err) => {
+        client.unsubscribe(topic, (err) => {
           if (err) return reject(err);
-          topics.forEach(t => activeSubscriptions.delete(t));
+          activeSubscriptions.delete(topic);
           broadcastSubscriptions();
-          resolve([...activeSubscriptions]);
+          resolve([...activeSubscriptions.values()]);
         });
       });
     });
 
     ipcMainHandleWithReturn('mqtt:getSubscriptions', () => {
-      return [...activeSubscriptions];
+      return [...activeSubscriptions.values()];
     });
   }
 
@@ -65,7 +71,10 @@ export function setupClientListeners(mainWindow: BrowserWindow): void {
   if (!client) return;
 
   if (activeSubscriptions.size > 0) {
-    client.subscribe([...activeSubscriptions], (err) => {
+    const subscriptionMap = Object.fromEntries(
+      [...activeSubscriptions.values()].map(({ topic, qos }) => [topic, { qos }]),
+    );
+    client.subscribe(subscriptionMap, (err) => {
       if (err) console.error('Error re-subscribing on reconnect:', err);
     });
   }
@@ -91,5 +100,5 @@ export function setupClientListeners(mainWindow: BrowserWindow): void {
 }
 
 export function resetSubscriptions(): void {
-  activeSubscriptions = new Set(['$SYS/#']);
+  activeSubscriptions = defaultSubscriptions();
 }

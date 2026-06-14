@@ -26,3 +26,8 @@ export function hasCoveringSubscription(
 ): boolean {
   return findCoveringSubscriptions(newTopic, subscriptionList).length > 0;
 }
+
+export const getSelectedTopics = (list: SubscriptionList) =>
+  Object.values(list)
+    .filter((entry) => entry.selected)
+    .map((entry) => entry.topic);

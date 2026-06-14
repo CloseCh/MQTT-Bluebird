@@ -7,6 +7,7 @@ import type { MessageFormatEnum } from '../../../types/mqtt.types';
 import DecoderService from '../../../service/DecorderService';
 import RepresentationDataTypeSelector from '../../RepresentationDataTypeSelector/RepresentationDataTypeSelector';
 import { Box } from '@mui/material';
+import { CODE_SURFACE } from '@/theme';
 import { DeleteRetainButton } from '@/features/messagePublish';
 
 interface Prop {
@@ -52,7 +53,7 @@ export default function MessageDetailData ({
             sx={{
               p: 2,
               backgroundColor: (theme) =>
-                theme.palette.mode === 'dark' ? '#0d1117' : '#f6f8fa',
+                theme.palette.mode === 'dark' ? CODE_SURFACE.dark : CODE_SURFACE.light,
               borderRadius: 1,
               overflowX: 'auto',
             }}

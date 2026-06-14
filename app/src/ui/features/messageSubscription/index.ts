@@ -1,7 +1,9 @@
-export { SubscriptionProvider, useSubscriptionContext }  from './hooks/useSubscriptionContext';
+export { SubscriptionProvider, useSubscriptionContext }  from './context/SubscriptionProvider';
+
+export { SubscriptionButton } from './components/SubscriptionButton/SubscriptionButton'
+
+export { SubscriptionModal } from './components/SubscriptionModal/SubscriptionModal'
 
 export { SubscriptionList } from './components/SubscriptionList/SubscriptionList'
-
-export { SubscriptionField } from './components/SubscriptionField/SubscriptionField';
 
 export * from './types/subscription.types'

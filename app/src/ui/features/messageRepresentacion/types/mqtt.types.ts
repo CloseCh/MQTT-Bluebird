@@ -1,3 +1,5 @@
+export type TableType = 'history' | 'topic' | 'last';
+
 export interface MQTTContextValue {
   topicList: TopicList;
   getSelectedTopic: () => Topic;
@@ -7,6 +9,8 @@ export interface MQTTContextValue {
   getMessageFormat: (topic: Topic) => MessageFormatEnum;
   getMessageSelected: () => MQTTMessage | null;
   setMessageSelected: (message: MQTTMessage | null) => void;
+  tableType: TableType;
+  setTableType: (type: TableType) => void;
 }
 
 export type Topic = string;

@@ -1,4 +1,4 @@
-import { useMQTTContext } from '@/features/messageRepresentacion';
+import { useRepresentationContext } from '@/features/messageRepresentacion';
 import { useTransportContext } from '@/transport';
 import { Box, Button } from '@mui/material';
 
@@ -8,7 +8,7 @@ interface DeleteRetainButtonProp {
 
 export function DeleteRetainButton({disabled}: DeleteRetainButtonProp) {
   const transport = useTransportContext();
-  const { getMessageSelected } = useMQTTContext();
+  const { getMessageSelected } = useRepresentationContext();
 
   const handleClick = () => {
     const message = getMessageSelected();
