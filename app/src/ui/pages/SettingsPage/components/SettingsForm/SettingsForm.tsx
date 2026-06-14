@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useSettingsStore } from '../stores/settingsStore';
+import { useSettingsStore } from '@stores/settingsStore/settingsStore';
 
 export default function SettingsForm() {
   const { darkMode, maxMessages, setDarkMode, setMaxMessages } = useSettingsStore();

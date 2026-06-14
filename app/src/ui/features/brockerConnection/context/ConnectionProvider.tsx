@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
-import { useConnectionService } from './useConnectionService';
+import { useConnectionService } from '../hooks/useConnectionService';
 import type { ConnectionContextValue } from '../types/connection.types';
 
 const ConnectionContext = createContext<ConnectionContextValue | null>(null);

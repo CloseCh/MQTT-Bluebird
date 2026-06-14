@@ -3,7 +3,7 @@ import { ConnectionProvider } from '@/features/brockerConnection';
 import { BrockerMonitorProvider } from '@/features/brockerMonitor';
 import { RepresentationProvider } from '@/features/messageRepresentacion';
 import { SubscriptionProvider } from '@/features/messageSubscription';
-import { useSettingsStore } from '@/features/settings/stores/settingsStore';
+import { useSettingsStore } from '@/stores/settingsStore/settingsStore';
 import { TransportProvider } from '@/transport';
 import { createAppTheme } from '@/theme';
 import { GlobalStyles, ThemeProvider } from '@mui/material';

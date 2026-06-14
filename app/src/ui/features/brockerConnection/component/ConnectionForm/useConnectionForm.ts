@@ -5,7 +5,7 @@ import type {
   ConnectionStatus,
   MqttProtocol,
 } from '@/features/brockerConnection/types/connection.types';
-import { useConnectionContext } from '@/features/brockerConnection/hooks/useConnectionContext';
+import { useConnectionContext } from '@/features/brockerConnection/context/ConnectionProvider';
 import { DEFAULT_PORTS } from '@/features/brockerConnection/constants/connection.constants';
 import { useNavigate } from 'react-router';
 import { buildEndpoint, validateHost, validatePort } from '../../utils/utils';

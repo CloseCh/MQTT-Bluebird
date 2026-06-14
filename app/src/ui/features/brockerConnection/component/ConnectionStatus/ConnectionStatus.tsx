@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { useConnectionContext } from '../../hooks/useConnectionContext';
+import { useConnectionContext } from '../../context/ConnectionProvider';
 
 export function ConnectionStatus() {
   const { isConnected } = useConnectionContext();

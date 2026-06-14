@@ -2,10 +2,11 @@ import { type ReactElement } from 'react';
 
 import { HistoryTable, TopicTable, LastTable, useRepresentationContext, type TableType } from '@/features/messageRepresentacion';
 import { useSubscriptionContext } from '@/features/messageSubscription';
-import { useNavigationStore, OVERLAY_IDS } from '@/features/navigation';
+import { useNavigationStore } from '@/stores/navigationStore/navigationStore';
 import { filterBySubscriptions } from '@/shared/service/topicFilter';
 import { SubscriptionSidebar } from './components/SubscriptionSidebar/SubscriptionSidebar';
 import { PublishSidebar } from './components/PublishSidebar/PublishSidebar';
+import { OVERLAY_IDS } from '@/stores/navigationStore/navigationStore.constant';
 
 export function useMainPage() {
   const { topicList, getSelectedTopic, getMessageSelected, tableType } = useRepresentationContext();

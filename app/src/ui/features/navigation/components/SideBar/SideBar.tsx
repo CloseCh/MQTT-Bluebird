@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import type { ReactElement } from 'react';
 import { ResizeHandle } from './ResizeHandle/ResizeHandle';
-import { useNavigationStore } from '@/features/navigation';
+import { useNavigationStore } from '@/stores/navigationStore/navigationStore';
 
 interface Prop {
   children: ReactElement;

@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { useConnectionContext } from "../../hooks/useConnectionContext";
+import { useConnectionContext } from "../../context/ConnectionProvider";
 
 export function EndpointField() {
   const { connectedEndpoint } = useConnectionContext();

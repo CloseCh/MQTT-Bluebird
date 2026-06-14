@@ -14,6 +14,7 @@ export interface NavItemConfig {
   label: string;
   icon: ReactNode;
   overlayId: string;
+  route: string;
   dividerAfter?: boolean;
 }
 
