@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import { LIVE_ACCENT } from '@/theme';
 import { useConnectionContext } from '../../context/ConnectionProvider';
 
 export function ConnectionStatus() {
@@ -25,7 +26,7 @@ export function ConnectionStatus() {
           height: 8,
           borderRadius: '50%',
           bgcolor: isConnected ? 'success.light' : 'grey.500',
-          boxShadow: isConnected ? '0 0 6px #00e676' : 'none',
+          boxShadow: isConnected ? `0 0 6px ${LIVE_ACCENT}` : 'none',
         }}
       />
       <Typography variant='caption' fontWeight={600} color={isConnected ? 'success.light' : 'grey.400'}>

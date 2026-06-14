@@ -1,5 +1,6 @@
 import { IconButton, Tooltip, Box } from '@mui/material';
 import WifiIcon from '@mui/icons-material/Wifi';
+import { LIVE_ACCENT } from '@/theme';
 import { useStatusButton } from './useStatusButton';
 
 export function StatusButton() {
@@ -19,7 +20,7 @@ export function StatusButton() {
           size='small'
           aria-label={isConnected ? 'Desconectar MQTT' : 'MQTT desconectado'}
           color={isConnected ? 'success' : 'default'}
-          sx={isConnected ? { color: '#00e676', '&:hover': { color: '#00e676' } } : undefined}
+          sx={isConnected ? { color: LIVE_ACCENT, '&:hover': { color: LIVE_ACCENT } } : undefined}
         >
           <WifiIcon />
         </IconButton>
