@@ -11,6 +11,9 @@ services:
       - internal_net
   mqtt-bluebird:
     container_name: mqtt-bluebird
+    # Imagen publicada en GHCR. Para volver a construir en local, comenta la
+    # línea `image:` y descomenta el bloque `build:`.
+    # image: ghcr.io/closech/mqtt-bluebird:sha-9eea2c1
     build:
       context: ..
       dockerfile: docker/Dockerfile
@@ -19,18 +22,18 @@ services:
     networks:
       - internal_net
   
-  mqtt-explorer:
-    image: smeagolworms4/mqtt-explorer
-    container_name: mqtt-explorer
-    restart: unless-stopped
-    ports:
-      - "4000:4000"  # Puerto web para acceder a MQTT Explorer
-    networks:
-      - internal_net
-    environment:
-      - HTTP_PORT=4000
-      - HTTP_USER=admin        # Usuario para acceso web (opcional)
-      - HTTP_PASSWORD=admin    # Contraseña para acceso web (opcional)
+  # mqtt-explorer:
+  #   image: smeagolworms4/mqtt-explorer
+  #   container_name: mqtt-explorer
+  #   restart: unless-stopped
+  #   ports:
+  #     - "4000:4000"  # Puerto web para acceder a MQTT Explorer
+  #   networks:
+  #     - internal_net
+  #   environment:
+  #     - HTTP_PORT=4000
+  #     - HTTP_USER=admin        # Usuario para acceso web (opcional)
+  #     - HTTP_PASSWORD=admin    # Contraseña para acceso web (opcional)
 
   node:
     container_name: nodePublisher
