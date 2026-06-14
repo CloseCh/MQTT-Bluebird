@@ -73,7 +73,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # pnpm 11.6.0 requiere Node >= 22.13 (usa node:sqlite).
+          node-version: 22
           cache: pnpm
           cache-dependency-path: app/pnpm-lock.yaml
 
