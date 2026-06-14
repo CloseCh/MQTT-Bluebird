@@ -1,37 +1,33 @@
 import {
-  AppBar,
   Box,
   Button,
   Stack,
-  Toolbar,
-  type SxProps,
-  type Theme
 } from "@mui/material";
 import { useRepresentationContext } from '@/features/messageRepresentacion';
 
-interface TableHeaderProp {
-  styleProp: SxProps<Theme>
-}
-
-export function TableHeader({ styleProp }: TableHeaderProp) {
+export function TableHeader() {
   const { getSelectedTopic } = useRepresentationContext();
   const selectedTopic = getSelectedTopic();
 
   return (
-    <Box sx={styleProp}>
-      <AppBar position='sticky' elevation={0}>
-        <Toolbar variant='dense'>
-          <Stack direction='row' alignItems='center' spacing={3}>
-            Topic: {selectedTopic}
-          </Stack>
+    <Box
+      sx={{
+        width: '100%',
+        borderBottom: 1,
+        borderColor: 'divider',
+        bgcolor: 'background.paper',
+        flexShrink: 0,
+        p: '10px 10px 10px 10px'
+      }}
+    >
+      <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+        Topic: {selectedTopic}
 
-          <Box sx={{ ml: 'auto', }}>
-            <Stack direction='row' alignItems='center' spacing={1}>
-              <Button variant='outlined'>Limpiar</Button>
-            </Stack>
-          </Box>
-        </Toolbar>
-      </AppBar>
+        <Box sx={{ alignItems: 'center' }}>
+          <Button variant='outlined'>Limpiar</Button>
+        </Box>
+
+      </Stack>
     </Box>
   );
 }
