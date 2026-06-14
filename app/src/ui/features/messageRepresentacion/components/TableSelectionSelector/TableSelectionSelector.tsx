@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Box, FormControl, InputLabel, Select, MenuItem, Menu } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material';
-import { useMQTTContext } from '../../hooks/useMQTTContext';
+import { useMQTTContext } from '../../context/RepresentationProvider';
 import type { TableType } from '../../types/mqtt.types';
 import { TABLE_OPTIONS } from '../../constants/TypeSelector.constants';
 

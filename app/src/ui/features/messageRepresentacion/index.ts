@@ -10,7 +10,7 @@ export { MessageDetail } from './components/MessageDetail/MessageDetail';
 
 export { TopicList } from './components/TopicList/TopicList';
 
-export { MQTTProvider, useMQTTContext } from './hooks/useMQTTContext'
+export { RepresentationProvider, useMQTTContext } from './context/RepresentationProvider'
 
 export { TableSelectionSelector } from './components/TableSelectionSelector/TableSelectionSelector'
 

@@ -1,16 +1,16 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
-import MQTTService from './useRepresentationService';
+import MQTTService from '../hooks/useRepresentationService';
 import type { MQTTContextValue } from '../types/mqtt.types';
 
 const MQTTContext = createContext<MQTTContextValue | null>(null);
 
-interface MQTTProviderProps {
+interface RepresentationProviderProps {
   dataPointCount: number;
   children: ReactNode;
 }
 
-export function MQTTProvider({ dataPointCount, children }: MQTTProviderProps) {
+export function RepresentationProvider({ dataPointCount, children }: RepresentationProviderProps) {
   const mqtt = MQTTService(dataPointCount);
 
   return (
@@ -23,7 +23,7 @@ export function MQTTProvider({ dataPointCount, children }: MQTTProviderProps) {
 export function useMQTTContext(): MQTTContextValue {
   const ctx = useContext(MQTTContext);
   if (!ctx) {
-    throw new Error('useMQTTContext debe usarse dentro de <MQTTProvider>');
+    throw new Error('useMQTTContext debe usarse dentro de <RepresentationProvider>');
   }
   return ctx;
 }

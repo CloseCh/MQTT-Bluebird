@@ -1,4 +1,7 @@
+import type { SubscriptionList } from "@/features/messageSubscription/types/subscription.types";
+import type { TopicList } from "@/features/messageRepresentacion/types/mqtt.types";
 import type { SuscriptionNode, TopicNode, TreeRoot } from "../types/tree.type";
+import { getAllMatchingSubscriptions } from "./treeSearch.util";
 
 export function initTree(): TreeRoot {
   const root: TreeRoot = {
@@ -46,4 +49,27 @@ export function insertTopic(root: TreeRoot, subscription: string, topic: string)
 
     current = current.get(segment)!.children!;
   });
+}
+
+/**
+ * Construye el árbol completo: cada suscripción es una rama raíz separada y,
+ * debajo de ella, se insertan jerárquicamente los topics recibidos que la matchean.
+ */
+export function buildTree(
+  subscriptionList: SubscriptionList,
+  topicList: TopicList
+): TreeRoot {
+  const root = initTree();
+
+  Object.keys(subscriptionList).forEach((subscription) => {
+    addSuscription(root, subscription);
+  });
+
+  topicList.forEach((topic) => {
+    getAllMatchingSubscriptions(root, topic).forEach((subscription) => {
+      insertTopic(root, subscription, topic);
+    });
+  });
+
+  return root;
 }

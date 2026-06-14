@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useMQTTContext } from '../../hooks/useMQTTContext';
+import { useMQTTContext } from '../../context/RepresentationProvider';
 
 export function useMessageDetail() {
   const [drawerWidth, setDrawerWidth] = useState(400);

@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useMQTTContext } from '../../hooks/useMQTTContext';
+import { useMQTTContext } from '../../context/RepresentationProvider';
 import DecoderService from '../../service/DecorderService';
 import type { MQTTMessageList } from '../../types/mqtt.types';
 import type { GridColDef } from '@mui/x-data-grid';

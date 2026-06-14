@@ -1,7 +1,8 @@
-import { SubscriptionButton, SubscriptionList } from '@/features/messageSubscription';
+import { SubscriptionButton } from '@/features/messageSubscription';
 import { TableSelectionSelector } from '@/features/messageRepresentacion';
 import { SideBar } from '@/features/navigation';
 import { Box } from '@mui/material';
+import TopicTreeView from '../TopicTreeView/TopicTreeView';
 
 export function SubscriptionSidebar() {
   return (
@@ -20,7 +21,7 @@ export function SubscriptionSidebar() {
         </Box>
 
         <Box sx={{ flex: '1 1 0', minHeight: 0, overflow: 'auto' }}>
-          <SubscriptionList />
+          <TopicTreeView />
         </Box>
 
         <Box

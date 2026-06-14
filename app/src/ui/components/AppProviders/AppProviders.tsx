@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ConnectionProvider } from '@/features/brockerConnection';
 import { BrockerMonitorProvider } from '@/features/brockerMonitor';
-import { MQTTProvider } from '@/features/messageRepresentacion';
+import { RepresentationProvider } from '@/features/messageRepresentacion';
 import { SubscriptionProvider } from '@/features/messageSubscription';
 import { useSettingsStore } from '@/features/settings/stores/settingsStore';
 import { TransportProvider } from '@/transport';
@@ -16,9 +16,9 @@ export function composeProviders(...providers: React.ComponentType<{ children: R
     );
 }
 
-function MQTTProviderWithSettings({ children }: { children: React.ReactNode }) {
+function RepresentationProviderWithSettings({ children }: { children: React.ReactNode }) {
   const { maxMessages } = useSettingsStore();
-  return <MQTTProvider dataPointCount={maxMessages}>{children}</MQTTProvider>;
+  return <RepresentationProvider dataPointCount={maxMessages}>{children}</RepresentationProvider>;
 }
 
 function ThemeProviderWithSettings({ children }: { children: React.ReactNode }) {
@@ -50,7 +50,7 @@ function ThemeProviderWithSettings({ children }: { children: React.ReactNode }) 
 export const AppProviders = composeProviders(
   TransportProvider,
   ThemeProviderWithSettings,
-  MQTTProviderWithSettings,
+  RepresentationProviderWithSettings,
   ConnectionProvider,
   SubscriptionProvider,
   BrockerMonitorProvider,

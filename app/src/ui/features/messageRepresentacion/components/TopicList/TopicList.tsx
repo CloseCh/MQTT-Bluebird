@@ -1,7 +1,7 @@
 import React from 'react';
 import TopicListItem from './TopicListItem/TopicListItem';
 import List from '@mui/material/List';
-import { useMQTTContext } from '../../hooks/useMQTTContext';
+import { useMQTTContext } from '../../context/RepresentationProvider';
 
 import type { Topic, TopicList } from '../../types/mqtt.types';
 import { useSubscriptionContext } from '@/features/messageSubscription/index';

@@ -1,6 +1,6 @@
 import { type ReactElement } from 'react';
 
-import { HistoryTable, TopicTable, LastTable, useMQTTContext } from '@/features/messageRepresentacion';
+import { HistoryTable, TopicTable, LastTable, useMQTTContext, type TableType } from '@/features/messageRepresentacion';
 import { useSubscriptionContext } from '@/features/messageSubscription';
 import { useNavigationStore, OVERLAY_IDS } from '@/features/navigation';
 import { filterBySubscriptions } from '@/shared/service/topicFilter';
@@ -8,12 +8,10 @@ import { SubscriptionSidebar } from './components/SubscriptionSidebar/Subscripti
 import { PublishSidebar } from './components/PublishSidebar/PublishSidebar';
 
 export function useMainPage() {
-
-  const { topicList, getSelectedTopic, getMessageSelected } = useMQTTContext();
+  const { topicList, getSelectedTopic, getMessageSelected, tableType } = useMQTTContext();
   const { getSelectedSubscriptions } = useSubscriptionContext();
   
   const openedSidebar = useNavigationStore(s => s.openedSidebar);
-  const tableConfig = useNavigationStore(s => s.tableConfig);
 
   const selectedTopic = getSelectedTopic();
   const selectedSubscription = getSelectedSubscriptions();
@@ -23,33 +21,36 @@ export function useMainPage() {
   const messageSelected = getMessageSelected();
 
   const sideBarOpened: ReactElement = sidebarToShow({openedSidebar});
-  // const tableOpened: ReactElement = tableToShow({ showTable, tableConfig });
+  const tableOpened: ReactElement = tableToShow({ showTable, tableType });
 
   return {
     sideBarOpened,
     selectedTopic,
     messageSelected,
     showTable,
-    // tableOpened,
+    tableOpened,
   };
 }
 
-// interface TableToShowProps {
-//   showTable: boolean;
-//   tableConfig: string;
-// }
+interface TableToShowProps {
+  showTable: boolean;
+  tableType: TableType;
+}
 
-// function tableToShow({ showTable, tableConfig }: TableToShowProps) {
+function tableToShow({ showTable, tableType }: TableToShowProps) {
+  if (!showTable) {
+    return <></>;
+  }
+  if (tableType === 'history') {
+    return <HistoryTable />
+  } else if (tableType === 'topic') {
+    return <TopicTable />;
+  } else if (tableType === 'last') {
+    return <LastTable />
+  }
 
-//   if (showTable && tableConfig === OVERLAY_IDS.TABLE_HISTORY) {
-//     return <HistoryTable />
-//   } else if (tableConfig === OVERLAY_IDS.TABLE_TOPIC) {
-//     return <TopicTable />;
-//   } else if (tableConfig === OVERLAY_IDS.TABLE_LAST) {
-//     return <LastTable />
-//   }
-//   return <></>;
-// }
+  return <></>;
+}
 
 interface SidebarToShowProps {
   openedSidebar: string;

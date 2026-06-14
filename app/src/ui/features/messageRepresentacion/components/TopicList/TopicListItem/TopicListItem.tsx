@@ -2,7 +2,7 @@ import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 
 import type { Topic } from '../../../types/mqtt.types';
-import { useMQTTContext } from '../../../hooks/useMQTTContext';
+import { useMQTTContext } from '../../../context/RepresentationProvider';
 
 interface MQTTListItemProps {
   topic: Topic;
