@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type {
   ConnectionFormValues,
@@ -8,7 +8,13 @@ import type {
 import { useConnectionContext } from '@/features/brockerConnection/context/ConnectionProvider';
 import { DEFAULT_PORTS } from '@/features/brockerConnection/constants/connection.constants';
 import { useNavigate } from 'react-router';
-import { buildEndpoint, validateHost, validatePort } from '../../utils/utils';
+import {
+  buildEndpoint,
+  loadStoredConnection,
+  saveStoredConnection,
+  validateHost,
+  validatePort,
+} from '../../utils/utils';
 
 export function useConnectionForm() {
   const navigate = useNavigate();
@@ -20,15 +26,25 @@ export function useConnectionForm() {
   const protocol: MqttProtocol = typeof window.electron === 'undefined' ? 'ws' : 'mqtt';
   const port = DEFAULT_PORTS[protocol];
 
+  // Última conexión usada (sin contraseña), recuperada de localStorage.
+  const stored = useMemo(() => loadStoredConnection(), []);
+
   const form = useForm<ConnectionFormValues>({
     defaultValues: {
-      protocol,
-      host: 'localhost',
-      port,
-      username: '',
+      protocol: stored.protocol ?? protocol,
+      host: stored.host ?? 'localhost',
+      port: stored.port ?? port,
+      path: stored.path ?? '',
+      username: stored.username ?? '',
       password: '',
     },
   });
+
+  // Persiste los valores (menos la contraseña) en cada cambio del formulario.
+  useEffect(() => {
+    const subscription = form.watch((values) => saveStoredConnection(values));
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   const isConnecting = status === 'connecting';
 
