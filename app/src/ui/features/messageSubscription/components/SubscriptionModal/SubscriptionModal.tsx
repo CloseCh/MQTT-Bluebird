@@ -30,7 +30,7 @@ const style = {
 };
 
 
-export default function SubscriptionModal({ open, onClose }: SubscriptionModalProp) {
+export function SubscriptionModal({ open, onClose }: SubscriptionModalProp) {
   const {
     control,
     handleSubmit,
