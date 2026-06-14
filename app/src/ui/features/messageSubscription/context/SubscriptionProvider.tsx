@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, type ReactNode } from 'react';
-import { useSubscriptionService } from './useSubscriptionService';
+import { useSubscriptionService } from '../hooks/useSubscriptionService';
 import type { SubscriptionContextValue } from '../types/subscription.types';
 
 const subscriptionContext = createContext<SubscriptionContextValue | null>(null);
@@ -22,7 +22,7 @@ export function SubscriptionProvider({ children }: SubscriptionProviderProp) {
 export function useSubscriptionContext(): SubscriptionContextValue {
   const ctx = useContext(subscriptionContext);
   if (!ctx) {
-    throw new Error('useMQTTContext debe usarse dentro de <subscriptionProvider>');
+    throw new Error('useSubscriptionContext debe usarse dentro de <SubscriptionProvider>');
   }
   return ctx;
 }

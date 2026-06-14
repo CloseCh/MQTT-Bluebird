@@ -1,6 +1,6 @@
 import List from '@mui/material/List';
 import type { SubscriptionList } from '../../types/subscription.types';
-import { useSubscriptionContext } from '../../hooks/useSubscriptionContext';
+import { useSubscriptionContext } from '../../context/SubscriptionProvider';
 import { SubscriptionListItem } from './SubscriptionListItem/SubscriptionListItem';
 
 export function SubscriptionList() {

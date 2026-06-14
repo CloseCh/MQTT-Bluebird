@@ -1,73 +1,64 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useReducer, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useTransportContext } from '@/transport';
-import type { SubscriptionContextValue, SubscriptionList } from '../types/subscription.types';
-import { useConnectionContext } from '@/features/brockerConnection';
+import type { SubscriptionContextValue } from '../types/subscription.types';
+import {
+  subscriptionReducer
+} from '../reducers/subscription.reducer';
+import { initialSubscriptionList } from '../constants/suscription.constants';
+import { getNotSubscribed, getSelectedTopics } from '../utils/subscription.util';
 
 export function useSubscriptionService(): SubscriptionContextValue {
   const transport = useTransportContext();
-  const { isConnected } = useConnectionContext();
-  const [subscriptionList, setSubscriptionList] = useState<SubscriptionList>({['#']:true});
+  const [subscriptionList, dispatch] = useReducer(
+    subscriptionReducer,
+    initialSubscriptionList,
+  );
+
+  // ref para leer el estado más reciente dentro de callbacks async
+  // sin recrearlos en cada cambio de la lista
+  const listRef = useRef(subscriptionList);
+  useEffect(() => { listRef.current = subscriptionList; }, [subscriptionList]);
 
   const subscribe = useCallback(async (topics: string[]) => {
+    const notSubscribed = getNotSubscribed(listRef.current, topics);
+    if (notSubscribed.length === 0) return;
     try {
-      const notSubscribed = topics.filter(
-        (key) => !subscriptionList[key]
-      );
-
-      if (notSubscribed.length === 0) return;
-
       await transport.mqttSubscribe(notSubscribed);
-
-      setSubscriptionList((prev) => {
-        const newSubscriptionList = {...prev};
-        notSubscribed.forEach(key => {
-          newSubscriptionList[key] = true;
-        });
-        return newSubscriptionList;
-      });
+      dispatch({ type: 'subscribed', topics: notSubscribed });
     } catch (err) {
       console.error('Error al suscribirse:', err);
     }
-  }, [transport, subscriptionList]);
+  }, [transport]);
 
   const unsubscribe = useCallback(async (topic: string) => {
     try {
       await transport.mqttUnsubscribe([topic]);
-
-      setSubscriptionList(prev => {
-        const newSubscriptionList = {...prev};
-        delete newSubscriptionList[topic];
-        return newSubscriptionList;
-      });
+      dispatch({ type: 'unsubscribed', topic });
     } catch (err) {
       console.error('Error al desuscribirse:', err);
     }
   }, [transport]);
 
-  function updateSubscriptionState (topic: string) {
-    setSubscriptionList(prev => ({
-      ...prev,
-      [topic]: !prev[topic]
-    }));
-  };
+  const updateSubscriptionState = useCallback((topic: string) => {
+    dispatch({ type: 'toggled', topic });
+  }, []);
 
-  useEffect(() => {
-    if (!isConnected) return;
-  }, [isConnected]);
+  useEffect(
+    () => transport.onBrokerDisconnected(() => dispatch({ type: 'reset' })),
+    [transport],
+  );
 
-  useEffect(() => {
-    const unsub = transport.onBrokerDisconnected(() => {
-      setSubscriptionList({});
-    });
-    return unsub;
-  }, [transport]);
+  const selectedSubscriptions = useMemo(
+    () => getSelectedTopics(subscriptionList),
+    [subscriptionList],
+  );
 
   return {
     subscriptionList,
     updateSubscriptionState,
     subscribe,
     unsubscribe,
-    getSelectedSubscriptions: () => Object.keys(subscriptionList).filter(key => subscriptionList[key])
+    getSelectedSubscriptions: () => selectedSubscriptions,
   };
 }
 

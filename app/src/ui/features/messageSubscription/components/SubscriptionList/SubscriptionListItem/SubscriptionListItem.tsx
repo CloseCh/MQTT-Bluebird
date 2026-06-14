@@ -1,5 +1,5 @@
 import { Checkbox, IconButton, ListItem, ListItemText } from '@mui/material';
-import { useSubscriptionContext } from '../../../hooks/useSubscriptionContext';
+import { useSubscriptionContext } from '../../../context/SubscriptionProvider';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 

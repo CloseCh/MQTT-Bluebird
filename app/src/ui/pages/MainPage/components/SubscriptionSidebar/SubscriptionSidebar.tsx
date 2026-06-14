@@ -1,22 +1,41 @@
-import { SubscriptionList } from '@/features/messageSubscription';
+import { SubscriptionButton, SubscriptionList } from '@/features/messageSubscription';
 import { TableSelectionSelector } from '@/features/messageRepresentacion';
 import { SideBar } from '@/features/navigation';
-import { Box, Divider, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 
 export function SubscriptionSidebar() {
   return (
     <SideBar>
-      <Stack sx={{ height: '100%', width: '100%' }}>
-        <Box sx={{ height: '100%', width: '100%', overflow: 'auto' }}>
-          <Stack>
-            <TableSelectionSelector styleProp={{ p: '10px 10px 10px 10px' }}/>
-            <Box sx={{ height: '60%', width: '100%', overflow: 'auto' }}>
-              <SubscriptionList />
-            </Box>
-          </Stack>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          minHeight: 0,
+          width: '100%',
+        }}
+      >
+        <Box sx={{ flex: '0 0 auto', minHeight: 0 }}>
+          <TableSelectionSelector styleProp={{ p: '10px 10px 10px 10px' }} />
         </Box>
-        <Divider />
-      </Stack>
+
+        <Box sx={{ flex: '1 1 0', minHeight: 0, overflow: 'auto' }}>
+          <SubscriptionList />
+        </Box>
+
+        <Box
+          sx={{
+            flex: '0 0 auto',
+            minHeight: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <SubscriptionButton />
+        </Box>
+      </Box>
     </SideBar>
   );
 }
