@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useRepresentationContext } from '../../context/RepresentationProvider';
+import { useSubscriptionContext } from '@/features/messageSubscription';
+import { filterBySubscriptions } from '@/shared/service/topicFilter';
 import DecoderService from '../../service/DecorderService';
 import { nowMs, tsToMs } from '../../utils/date.util';
 import type { GridColDef, GridRowClassNameParams } from '@mui/x-data-grid';
@@ -13,7 +15,9 @@ export function useTopicTable() {
     setSelectedTopic,
     setMessageSelected
   } = useRepresentationContext();
+  const { getSelectedSubscriptions } = useSubscriptionContext();
   const selectedTopic = getSelectedTopic();
+  const selectedSubscriptions = getSelectedSubscriptions();
 
   const columns: GridColDef<MQTTMessage>[] = useMemo(() => [
     { field: 'timeStamp', headerName: 'TimeStamp', width: 125 },
@@ -30,12 +34,12 @@ export function useTopicTable() {
   ], [getTypedMessageList]);
 
   const rows = useMemo(() =>
-    topicList.flatMap((topic) => {
+    filterBySubscriptions(topicList, selectedSubscriptions).flatMap((topic) => {
       const { messageList } = getTypedMessageList(topic);
       const last = messageList[0];
       return last ? [{ id: topic, ...last }] : [];
     }),
-    [topicList, getTypedMessageList]
+    [topicList, selectedSubscriptions, getTypedMessageList]
   );
 
   const handleClick = useCallback((message: MQTTMessage) => {

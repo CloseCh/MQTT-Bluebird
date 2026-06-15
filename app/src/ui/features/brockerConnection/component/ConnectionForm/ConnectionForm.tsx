@@ -8,11 +8,17 @@ import {
   TextField,
 } from '@mui/material';
 import { useConnectionForm } from './useConnectionForm';
+import { ConnectionTabs } from '../ConnectionTabs/ConnectionTabs';
 import { PROTOCOLS } from '../../constants/connection.constants';
 
 export function ConnectionForm() {
   const {
     form,
+    connections,
+    activeId,
+    selectConnection,
+    addConnection,
+    removeConnection,
     status,
     isConnecting,
     errorMessage,
@@ -26,8 +32,24 @@ export function ConnectionForm() {
   return (
     <Stack spacing={2}>
 
+      <ConnectionTabs
+        connections={connections}
+        activeId={activeId}
+        onSelect={selectConnection}
+        onAdd={addConnection}
+        onRemove={removeConnection}
+      />
+
       <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)} noValidate>
         <Stack spacing={2}>
+
+          {/* Nombre del perfil (opcional; si está vacío, el tab muestra host:port) */}
+          <TextField
+            label='Nombre'
+            fullWidth
+            placeholder={`${form.watch('host')}:${form.watch('port')}`}
+            {...form.register('label')}
+          />
 
           {/* Protocol + Host */}
           <Stack direction='row' spacing={1}>

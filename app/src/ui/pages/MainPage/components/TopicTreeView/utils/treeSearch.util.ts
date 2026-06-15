@@ -41,6 +41,11 @@ function matchSegments(
   return false;
 }
 
+/** ¿El topic concreto encaja en el patrón de suscripción (con + y #)? */
+export function topicMatchesSubscription(topic: string, subscription: string): boolean {
+  return matchSegments(topic.split("/"), subscription.split("/"));
+}
+
 export function getAllMatchingSubscriptions(root: TreeRoot, topic: string): string[] {
   const segments = topic.split("/");
 

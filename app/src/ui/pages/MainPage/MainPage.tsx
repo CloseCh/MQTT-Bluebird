@@ -10,8 +10,7 @@ export function MainPage() {
   const {
     sideBarOpened,
     tableOpened,
-    messageSelected,
-    showTable
+    messageSelected
   } = useMainPage();
 
   return (
@@ -26,12 +25,8 @@ export function MainPage() {
             pr: '10px', pl: '10px', pt: '10px',
             width: '100%'
           }}>
-            {showTable ? 
-              <>
-                <TableHeader styleProp={{pb: '10px'}}/>
-                {tableOpened}
-              </>
-              : <></>}
+            <TableHeader styleProp={{pb: '10px'}}/>
+            {tableOpened}
           </Box>
         </Stack>
       </Stack>

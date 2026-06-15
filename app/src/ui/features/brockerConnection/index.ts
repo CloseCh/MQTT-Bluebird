@@ -1,4 +1,5 @@
 export { ConnectionForm } from './component/ConnectionForm/ConnectionForm';
+export { ConnectionTabs } from './component/ConnectionTabs/ConnectionTabs';
 export { EndpointField } from './component/EndpointField/EndpointField';
 export { StatusButton } from './component/StatusButton/StatusButton';
 export { ConnectionStatus } from './component/ConnectionStatus/ConnectionStatus';

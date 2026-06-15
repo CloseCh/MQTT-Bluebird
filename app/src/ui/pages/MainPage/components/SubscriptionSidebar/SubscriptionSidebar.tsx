@@ -1,8 +1,8 @@
 import { SubscriptionButton } from '@/features/messageSubscription';
 import { TableSelectionSelector } from '@/features/messageRepresentacion';
-import { SideBar } from '@/features/navigation';
 import { Box } from '@mui/material';
 import TopicTreeView from '../TopicTreeView/TopicTreeView';
+import { SideBar } from '@/shared/components/SideBar/SideBar';
 
 export function SubscriptionSidebar() {
   return (
@@ -32,6 +32,7 @@ export function SubscriptionSidebar() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            p: '10px 10px 10px 10px'
           }}
         >
           <SubscriptionButton />

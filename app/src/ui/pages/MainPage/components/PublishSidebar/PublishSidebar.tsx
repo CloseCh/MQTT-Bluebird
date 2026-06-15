@@ -1,5 +1,5 @@
 import { PublishForm } from '@/features/messagePublish';
-import { SideBar } from '@/features/navigation';
+import { SideBar } from '@/shared/components/SideBar/SideBar';
 import { Box, Stack } from '@mui/material';
 
 export function PublishSidebar() {

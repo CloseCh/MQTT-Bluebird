@@ -10,7 +10,8 @@ export function useLastTable() {
     topicList,
     getTypedMessageList,
     setSelectedTopic,
-    setMessageSelected
+    setMessageSelected,
+    isTopicChecked
   } = useRepresentationContext();
 
   const columns: GridColDef<MQTTMessage>[] = useMemo(() => [
@@ -29,12 +30,13 @@ export function useLastTable() {
 
   const rows = useMemo(() =>
     topicList
+      .filter(isTopicChecked)
       .flatMap((topic) => {
         const { messageList } = getTypedMessageList(topic);
         return messageList.map((msg, i) => ({ id: `${topic}-${msg.timeStamp}-${i}`, ...msg }));
       })
       .sort((a, b) => tsToMs(b.timeStamp) - tsToMs(a.timeStamp)),
-    [topicList, getTypedMessageList]
+    [topicList, getTypedMessageList, isTopicChecked]
   );
 
   const handleClick = useCallback((message: MQTTMessage) => {
