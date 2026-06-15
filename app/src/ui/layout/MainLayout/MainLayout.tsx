@@ -4,10 +4,10 @@ import {
   Stack
 } from '@mui/material';
 
-import { NavBar } from '@/features/navigation/index';
+import { NavBar } from './components/NavBar/NavBar';
 import { useConnectionContext } from '@/features/brockerConnection/';
 import { useEffect } from 'react';
-import Header from '@/components/Header/Header';
+import Header from '@/shared/components/Header/Header';
 
 export default function MainLayout() {
   const { isConnected } = useConnectionContext();

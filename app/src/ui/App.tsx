@@ -15,7 +15,7 @@ import { SettingsPage } from '@pages/SettingsPage';
 import { LoginPage } from '@pages/LoginPage';
 import { BrokerMonitorPage } from '@pages/BrokerMonitorPage';
 
-import { AppProviders } from '@/components/AppProviders/AppProviders';
+import { AppProviders } from '@/shared/components/AppProviders/AppProviders';
 
 export default function App() {
   return (

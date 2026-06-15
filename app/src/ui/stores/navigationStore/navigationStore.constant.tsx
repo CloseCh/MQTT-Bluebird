@@ -1,4 +1,4 @@
-import type { NavItemConfig } from '@/features/navigation';
+import type { NavItemConfig } from '@/layout/MainLayout/types/navigation.types';
 import { Send, Mail, Hub, Settings } from '@mui/icons-material';
 
 export const DRAWER_WIDTH = 60;

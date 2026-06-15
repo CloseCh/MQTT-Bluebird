@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="900" viewBox="0 0 1180 900" font-family="'Segoe UI',Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#5b6b7a"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#1f6feb"/>
+    </marker>
+    <style>
+      .title{font-size:26px;font-weight:700;fill:#0d2235}
+      .sub{font-size:14px;fill:#5b6b7a}
+      .layer{font-size:13px;font-weight:700;letter-spacing:1px;fill:#7a8a99}
+      .box{rx:8;stroke-width:1.5}
+      .bt{font-size:14px;font-weight:600;fill:#0d2235}
+      .bd{font-size:11px;fill:#54657a}
+      .elabel{font-size:11px;fill:#1f6feb;font-weight:600}
+      .elabel2{font-size:11px;fill:#5b6b7a}
+    </style>
+  </defs>
+
+  <rect width="1180" height="900" fill="#f7f9fb"/>
+  <text x="40" y="48" class="title">MQTT Bluebird — Global Architecture</text>
+  <text x="40" y="72" class="sub">Cross-platform MQTT desktop/web client · Electron + React + TypeScript · single transport-abstracted UI runs in two hosts</text>
+
+  <!-- ================= UI LAYER ================= -->
+  <rect x="40" y="100" width="1100" height="318" rx="12" fill="#eef4fb" stroke="#cdddef"/>
+  <text x="60" y="124" class="layer">RENDERER · REACT UI  (app/src/ui)</text>
+
+  <!-- Providers / shell -->
+  <rect x="60" y="140" width="240" height="70" class="box" fill="#ffffff" stroke="#cdddef"/>
+  <text x="72" y="164" class="bt">App Shell &amp; Providers</text>
+  <text x="72" y="183" class="bd">App.tsx · AppProviders · composeProviders</text>
+  <text x="72" y="199" class="bd">Header · MainLayout / LoginLayout · ROUTES</text>
+
+  <!-- stores -->
+  <rect x="312" y="140" width="200" height="70" class="box" fill="#ffffff" stroke="#cdddef"/>
+  <text x="324" y="164" class="bt">Global Stores (zustand)</text>
+  <text x="324" y="183" class="bd">settingsStore</text>
+  <text x="324" y="199" class="bd">navigationStore</text>
+
+  <!-- pages -->
+  <rect x="524" y="140" width="290" height="70" class="box" fill="#ffffff" stroke="#cdddef"/>
+  <text x="536" y="164" class="bt">Pages &amp; Routing (react-router)</text>
+  <text x="536" y="183" class="bd">MainPage · BrokerMonitorPage</text>
+  <text x="536" y="199" class="bd">SettingsPage · LoginPage</text>
+
+  <!-- design system -->
+  <rect x="826" y="140" width="288" height="70" class="box" fill="#ffffff" stroke="#cdddef"/>
+  <text x="838" y="164" class="bt">Design System</text>
+  <text x="838" y="183" class="bd">MUI · @mui/x-data-grid · x-tree-view</text>
+  <text x="838" y="199" class="bd">emotion · recharts charts</text>
+
+  <!-- Feature modules -->
+  <text x="60" y="240" class="layer">FEATURE MODULES  (app/src/ui/features) — context + service hook + reducer per feature</text>
+
+  <rect x="60" y="252" width="205" height="150" class="box" fill="#ffffff" stroke="#bcd3ea"/>
+  <text x="72" y="274" class="bt">brockerConnection</text>
+  <text x="72" y="293" class="bd">ConnectionForm</text>
+  <text x="72" y="309" class="bd">ConnectionProvider</text>
+  <text x="72" y="325" class="bd">useConnectionService</text>
+  <text x="72" y="341" class="bd">ConnectionStatus / StatusButton</text>
+  <text x="72" y="361" class="bd">EndpointField · PROTOCOLS</text>
+  <text x="72" y="381" class="bd">DEFAULT_PORTS · STATUS_*</text>
+
+  <rect x="277" y="252" width="205" height="150" class="box" fill="#ffffff" stroke="#bcd3ea"/>
+  <text x="289" y="274" class="bt">messageSubscription</text>
+  <text x="289" y="293" class="bd">SubscriptionProvider</text>
+  <text x="289" y="309" class="bd">useSubscriptionService</text>
+  <text x="289" y="325" class="bd">subscriptionReducer</text>
+  <text x="289" y="341" class="bd">findCoveringSubscriptions</text>
+  <text x="289" y="361" class="bd">DuplicateSubscriptionModal</text>
+  <text x="289" y="381" class="bd">Topic Tree (buildTree/match)</text>
+
+  <rect x="494" y="252" width="205" height="150" class="box" fill="#ffffff" stroke="#bcd3ea"/>
+  <text x="506" y="274" class="bt">messageRepresentacion</text>
+  <text x="506" y="293" class="bd">RepresentationProvider</text>
+  <text x="506" y="309" class="bd">useRepresentationService</text>
+  <text x="506" y="325" class="bd">messagesReducer</text>
+  <text x="506" y="341" class="bd">DecoderService</text>
+  <text x="506" y="361" class="bd">History / Last / Topic tables</text>
+  <text x="506" y="381" class="bd">NUM_FORMATS · TEXT_FORMATS</text>
+
+  <rect x="711" y="252" width="195" height="150" class="box" fill="#ffffff" stroke="#bcd3ea"/>
+  <text x="723" y="274" class="bt">messagePublish</text>
+  <text x="723" y="293" class="bd">PublishForm</text>
+  <text x="723" y="309" class="bd">usePublishFormStore</text>
+  <text x="723" y="325" class="bd">PublishConfig / Values</text>
+  <text x="723" y="341" class="bd">Multi-format encoding</text>
+  <text x="723" y="361" class="bd">(ASCII/Hex/JSON/Numeric)</text>
+
+  <rect x="918" y="252" width="196" height="150" class="box" fill="#ffffff" stroke="#bcd3ea"/>
+  <text x="930" y="274" class="bt">brockerMonitor</text>
+  <text x="930" y="293" class="bd">BrockerMonitorProvider</text>
+  <text x="930" y="309" class="bd">StatCardGroup · LoadChart</text>
+  <text x="930" y="325" class="bd">ClientsPanel</text>
+  <text x="930" y="341" class="bd">$SYS topic stats</text>
+  <text x="930" y="361" class="bd">navigation (NavBar/Sidebar)</text>
+
+  <!-- ================= TRANSPORT ABSTRACTION ================= -->
+  <rect x="40" y="446" width="1100" height="118" rx="12" fill="#fff6e9" stroke="#f0d9b0"/>
+  <text x="60" y="470" class="layer" fill="#b5852a">TRANSPORT ABSTRACTION LAYER  (app/src/ui/transport)  —  the architectural pivot</text>
+
+  <rect x="60" y="482" width="300" height="64" class="box" fill="#ffffff" stroke="#e6c886"/>
+  <text x="72" y="506" class="bt">createTransport()</text>
+  <text x="72" y="525" class="bd">window.electron present?  → IPC transport</text>
+  <text x="72" y="541" class="bd">else → direct MQTT transport · MQTTTransport iface</text>
+
+  <rect x="430" y="482" width="320" height="64" class="box" fill="#ffffff" stroke="#e6c886"/>
+  <text x="442" y="506" class="bt">ElectronIPCTransport</text>
+  <text x="442" y="525" class="bd">desktop path — forwards publish/subscribe</text>
+  <text x="442" y="541" class="bd">over IPC to the Electron main process</text>
+
+  <rect x="780" y="482" width="334" height="64" class="box" fill="#ffffff" stroke="#e6c886"/>
+  <text x="792" y="506" class="bt">MQTTDirectTransport</text>
+  <text x="792" y="525" class="bd">web path — connects renderer straight to</text>
+  <text x="792" y="541" class="bd">the broker via MQTT-over-WebSocket</text>
+
+  <!-- ================= TWO HOSTS ================= -->
+  <!-- Electron main -->
+  <rect x="40" y="592" width="540" height="210" rx="12" fill="#eaf6ee" stroke="#c2e3cd"/>
+  <text x="60" y="616" class="layer" fill="#2f8a55">ELECTRON MAIN PROCESS  (app/src/electron)  — desktop host</text>
+
+  <rect x="60" y="632" width="240" height="80" class="box" fill="#ffffff" stroke="#c2e3cd"/>
+  <text x="72" y="656" class="bt">main.ts + preload</text>
+  <text x="72" y="675" class="bd">ipcMainHandleWithReturn</text>
+  <text x="72" y="691" class="bd">preload bridges window.electron</text>
+  <text x="72" y="705" class="bd">EventPayloadMapping contract</text>
+
+  <rect x="312" y="632" width="248" height="80" class="box" fill="#ffffff" stroke="#c2e3cd"/>
+  <text x="324" y="656" class="bt">services/mqtt</text>
+  <text x="324" y="675" class="bd">mqttConnection · connectClient</text>
+  <text x="324" y="691" class="bd">mqttPublisher · publishMessage</text>
+  <text x="324" y="705" class="bd">mqttSubscriptor · setupClientListeners</text>
+
+  <rect x="60" y="724" width="500" height="60" class="box" fill="#ffffff" stroke="#c2e3cd"/>
+  <text x="72" y="748" class="bt">window/mainWindow · util · pathResolver</text>
+  <text x="72" y="767" class="bd">BrowserWindow + CSP · loads built renderer · electron-vite / electron-builder packaging</text>
+
+  <!-- Web container -->
+  <rect x="600" y="592" width="280" height="210" rx="12" fill="#eaf6ee" stroke="#c2e3cd"/>
+  <text x="620" y="616" class="layer" fill="#2f8a55">WEB CONTAINER  (docker / testInfra)</text>
+  <rect x="620" y="632" width="240" height="70" class="box" fill="#ffffff" stroke="#c2e3cd"/>
+  <text x="632" y="656" class="bt">mqtt-bluebird web service</text>
+  <text x="632" y="675" class="bd">same renderer bundle served</text>
+  <text x="632" y="691" class="bd">in browser (no main process)</text>
+  <rect x="620" y="712" width="240" height="72" class="box" fill="#ffffff" stroke="#c2e3cd"/>
+  <text x="632" y="736" class="bt">Mosquitto broker service</text>
+  <text x="632" y="755" class="bd">compose.yaml test infra</text>
+  <text x="632" y="771" class="bd">WebSocket listener enabled</text>
+
+  <!-- Broker -->
+  <rect x="900" y="592" width="240" height="210" rx="12" fill="#f3eefb" stroke="#dcccef"/>
+  <text x="920" y="616" class="layer" fill="#7a4fb0">MQTT BROKER</text>
+  <rect x="920" y="640" width="200" height="144" class="box" fill="#ffffff" stroke="#dcccef"/>
+  <text x="932" y="666" class="bt">Broker</text>
+  <text x="932" y="686" class="bd">publish / subscribe</text>
+  <text x="932" y="704" class="bd">retained &amp; QoS msgs</text>
+  <text x="932" y="722" class="bd">$SYS metrics topics</text>
+  <text x="932" y="744" class="bd">DEFAULT_QOS constant</text>
+  <text x="932" y="766" class="bd">TCP or WebSocket</text>
+
+  <!-- ============ CONNECTORS ============ -->
+  <!-- features -> transport -->
+  <line x1="590" y1="402" x2="590" y2="446" stroke="#1f6feb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="600" y="430" class="elabel">UI calls transport.publish() / subscribe()</text>
+
+  <!-- createTransport -> IPC -->
+  <line x1="360" y1="514" x2="430" y2="514" stroke="#5b6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- createTransport -> Direct (curved) -->
+  <path d="M360,520 C390,560 740,560 779,520" fill="none" stroke="#5b6b7a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- IPC transport -> electron main -->
+  <line x1="500" y1="546" x2="300" y2="632" stroke="#2f8a55" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="300" y="600" class="elabel2">IPC channels</text>
+
+  <!-- electron services -> broker -->
+  <path d="M560,672 C840,672 980,672 980,640" fill="none" stroke="#7a4fb0" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="690" y="666" class="elabel2">mqtt client (TCP)</text>
+
+  <!-- direct transport -> web/broker -->
+  <line x1="947" y1="546" x2="800" y2="592" stroke="#2f8a55" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="860" y1="748" x2="920" y2="730" stroke="#7a4fb0" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="812" y="578" class="elabel2">WebSocket</text>
+
+  <!-- broker -> back (subscribe push) annotation -->
+  <text x="40" y="844" class="sub">Inbound flow (subscribe): broker → (main process listeners → IPC) or (direct WS) → transport → RepresentationProvider/messagesReducer → DecoderService → tables &amp; charts.</text>
+  <text x="40" y="866" class="sub">Outbound flow (publish): PublishForm encodes payload (ASCII/Hex/JSON/Numeric) → transport.publish() → main process publishMessage or direct client → broker.</text>
+  <text x="40" y="888" class="sub">Generated from the graphify knowledge graph (536 nodes · 902 edges · 33 communities). Raw graph: graphify-out/graph.svg</text>
+</svg>
