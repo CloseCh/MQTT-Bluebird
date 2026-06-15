@@ -5,16 +5,19 @@ import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import { useCallback, useMemo } from 'react';
 import type { TopicNode } from './types/tree.type';
-import { buildTree } from './utils/treeInstanciation.util';
+import { buildTree, orderByLabel } from './utils/treeInstanciation.util';
+
+// Ordena alfabéticamente (numérico: topic/1, topic/2, topic/10).
 
 function renderTopicNode(
   node: TopicNode,
   idPath: string,
   onSelectTopic: (topic: string) => void
 ) {
-  const children = node.children ? [...node.children.values()] : [];
+  const children = (node.children ? [...node.children.values()] : []).sort(orderByLabel);
   const isLeaf = children.length === 0;
   const label = isLeaf ? node.fullPath ?? node.label : node.label;
+  const hasOwnData = !isLeaf && node.fullPath != null;
 
   return (
     <TreeItem
@@ -23,6 +26,18 @@ function renderTopicNode(
       label={label}
       onClick={isLeaf && node.fullPath ? () => onSelectTopic(node.fullPath!) : undefined}
     >
+      {hasOwnData && (
+        <TreeItem
+          key={`${idPath}::self`}
+          itemId={`${idPath}::self`}
+          label={
+            <Box component='span' sx={{ color: 'warning.main', fontWeight: 700 }}>
+              {`● ${node.label} (este topic)`}
+            </Box>
+          }
+          onClick={() => onSelectTopic(node.fullPath!)}
+        />
+      )}
       {children.map((child) =>
         renderTopicNode(child, `${idPath}/${child.label}`, onSelectTopic)
       )}
@@ -49,11 +64,13 @@ export default function TopicTreeView() {
   return (
     <Box sx={{ minHeight: 352, minWidth: 250 }}>
       <SimpleTreeView>
-        {[...tree.children.values()].map((subscriptionNode) => {
+        {[...tree.children.values()]
+          .sort((a, b) => a.suscription.localeCompare(b.suscription, undefined, { numeric: true }))
+          .map((subscriptionNode) => {
           const subscriptionId = `subscription::${subscriptionNode.suscription}`;
-          const topics = subscriptionNode.children
+          const topics = (subscriptionNode.children
             ? [...subscriptionNode.children.values()]
-            : [];
+            : []).sort(orderByLabel);
 
           return (
             <TreeItem

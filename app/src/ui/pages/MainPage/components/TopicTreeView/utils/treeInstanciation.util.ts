@@ -36,15 +36,17 @@ export function insertTopic(root: TreeRoot, subscription: string, topic: string)
   let current = subscriptionNode.children!;
 
   segments.forEach((segment, index) => {
-    if (!current.has(segment)) {
-      const isLast = index === segments.length - 1;
-      const fullPath = segments.slice(0, index + 1).join("/");
+    const isLast = index === segments.length - 1;
+    const fullPath = segments.slice(0, index + 1).join("/");
 
+    if (!current.has(segment)) {
       current.set(segment, {
         label: segment,
         fullPath: isLast ? fullPath : undefined,
         children: new Map(),
       });
+    } else if (isLast) {
+      current.get(segment)!.fullPath = fullPath;
     }
 
     current = current.get(segment)!.children!;
@@ -73,3 +75,6 @@ export function buildTree(
 
   return root;
 }
+
+export const orderByLabel = (a: TopicNode, b: TopicNode) =>
+  a.label.localeCompare(b.label, undefined, { numeric: true });
