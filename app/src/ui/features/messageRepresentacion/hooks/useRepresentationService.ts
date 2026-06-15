@@ -24,6 +24,9 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
   const [messageSelected, setMessageSelected] = useState<MQTTMessage | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<Topic>('');
   const [tableType, setTableType] = useState<TableType>('history');
+  // Topics destildados en el LastTree. Un topic está marcado salvo que esté aquí,
+  // de modo que los topics nuevos aparecen marcados por defecto.
+  const [deselectedTopics, setDeselectedTopics] = useState<Set<Topic>>(new Set());
 
   const onMessage = useCallback((message: MQTTMessage) => {
     dispatch({ type: 'messageReceived', message, cap: dataPointCount });
@@ -36,9 +39,24 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
       dispatch({ type: 'cleared' });
       setMessageSelected(null);
       setSelectedTopic('');
+      setDeselectedTopics(new Set());
     }),
     [transport],
   );
+
+  const isTopicChecked = useCallback(
+    (topic: Topic) => !deselectedTopics.has(topic),
+    [deselectedTopics],
+  );
+
+  const toggleTopicChecked = useCallback((topic: Topic) => {
+    setDeselectedTopics((prev) => {
+      const next = new Set(prev);
+      if (next.has(topic)) next.delete(topic);
+      else next.add(topic);
+      return next;
+    });
+  }, []);
 
   const setMessageFormat = useCallback((topic: Topic, format: MessageFormatEnum) => {
     dispatch({ type: 'formatChanged', topic, format });
@@ -64,6 +82,8 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
     getMessageFormat: (topic) => messageListByTopic[topic]?.format ?? EMPTY_MESSAGE.format,
     getMessageSelected: () => messageSelected,
     setMessageSelected,
+    isTopicChecked,
+    toggleTopicChecked,
     tableType,
     setTableType,
   };

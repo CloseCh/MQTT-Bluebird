@@ -10,6 +10,10 @@ export interface MQTTContextValue {
   getMessageFormat: (topic: Topic) => MessageFormatEnum;
   getMessageSelected: () => MQTTMessage | null;
   setMessageSelected: (message: MQTTMessage | null) => void;
+  /** ¿El topic está marcado (checkbox) en el LastTree? Marcado por defecto. */
+  isTopicChecked: (topic: Topic) => boolean;
+  /** Alterna el check de un topic concreto del LastTree. */
+  toggleTopicChecked: (topic: Topic) => void;
   tableType: TableType;
   setTableType: (type: TableType) => void;
 }

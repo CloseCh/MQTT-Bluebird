@@ -3,56 +3,22 @@ import { useRepresentationContext } from '@/features/messageRepresentacion';
 import { useSubscriptionContext, SubscriptionModal } from '@/features/messageSubscription';
 
 import Box from '@mui/material/Box';
-import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import { TreeItem } from '@mui/x-tree-view/TreeItem';
 
-import type { ContextMenuState, TopicNode } from './types/tree.type';
+import type { ContextMenuState } from './types/tree.type';
 
-import { buildTree, orderByLabel } from './utils/treeInstanciation.util';
+import { buildTree } from './utils/treeInstanciation.util';
 import { topicMatchesSubscription } from './utils/treeSearch.util';
 
 import DeleteSuscriptionDialog from './component/DeleteSuscriptionDialog/DeleteSuscriptionDialog';
 import LeftClickMenu from './component/LeftClickMenu/LeftClickMenu';
-
-function renderTopicNode(
-  node: TopicNode,
-  idPath: string,
-  onSelectTopic: (topic: string) => void
-) {
-  const children = (node.children ? [...node.children.values()] : []).sort(orderByLabel);
-  const isLeaf = children.length === 0;
-  const label = isLeaf ? node.fullPath ?? node.label : node.label;
-  const hasOwnData = !isLeaf && node.fullPath != null;
-
-  return (
-    <TreeItem
-      key={idPath}
-      itemId={idPath}
-      label={label}
-      onClick={isLeaf && node.fullPath ? () => onSelectTopic(node.fullPath!) : undefined}
-    >
-      {hasOwnData && (
-        <TreeItem
-          key={`${idPath}::self`}
-          itemId={`${idPath}::self`}
-          label={
-            <Box component='span' sx={{ color: 'warning.main', fontWeight: 700 }}>
-              {`● ${node.label} (este topic)`}
-            </Box>
-          }
-          onClick={() => onSelectTopic(node.fullPath!)}
-        />
-      )}
-      {children.map((child) =>
-        renderTopicNode(child, `${idPath}/${child.label}`, onSelectTopic)
-      )}
-    </TreeItem>
-  );
-}
+import HistoryTree from './component/HistoryTree/HistoryTree';
+import TopicTree from './component/TopicTree/TopicTree';
+import LastTree from './component/LastTree/LastTree';
 
 export default function TopicTreeView() {
-  const { subscriptionList, unsubscribe } = useSubscriptionContext();
-  const { topicList, setSelectedTopic, removeTopics } = useRepresentationContext();
+  const { subscriptionList, unsubscribe, updateSubscriptionState } = useSubscriptionContext();
+  const { topicList, tableType, setSelectedTopic, removeTopics, isTopicChecked, toggleTopicChecked } =
+    useRepresentationContext();
 
   const [menu, setMenu] = useState<ContextMenuState | null>(null);
   // Topic de la suscripción que se está editando (null = modal cerrado).
@@ -110,40 +76,33 @@ export default function TopicTreeView() {
 
   return (
     <Box sx={{ minHeight: 352, minWidth: 250 }}>
-      <SimpleTreeView>
-        {[...tree.children.values()]
-          .sort((a, b) => a.suscription.localeCompare(b.suscription, undefined, { numeric: true }))
-          .map((subscriptionNode) => {
-          const subscriptionId = `subscription::${subscriptionNode.suscription}`;
-          const topics = (subscriptionNode.children
-            ? [...subscriptionNode.children.values()]
-            : []).sort(orderByLabel);
+      {tableType === 'topic' ? (
+        <TopicTree
+          tree={tree}
+          onSubscriptionContextMenu={handleContextMenu}
+          isChecked={(sub) => subscriptionList[sub]?.selected ?? false}
+          onToggle={updateSubscriptionState}
+        />
+      ) : tableType === 'last' ? (
+        <LastTree
+          tree={tree}
+          onSelectTopic={handleSelectTopic}
+          onSubscriptionContextMenu={handleContextMenu}
+          isTopicChecked={isTopicChecked}
+          onToggleTopic={toggleTopicChecked}
+        />
+      ) : (
+        <HistoryTree
+          tree={tree}
+          onSelectTopic={handleSelectTopic}
+          onSubscriptionContextMenu={handleContextMenu}
+        />
+      )}
 
-          return (
-            <TreeItem
-              key={subscriptionId}
-              itemId={subscriptionId}
-              label={
-                <Box
-                  sx={{ width: '100%' }}
-                  onContextMenu={(e) => handleContextMenu(e, subscriptionNode.suscription)}
-                >
-                  {subscriptionNode.suscription}
-                </Box>
-              }
-            >
-              {topics.map((topic) =>
-                renderTopicNode(topic, `${subscriptionId}/${topic.label}`, handleSelectTopic)
-              )}
-            </TreeItem>
-          );
-        })}
-      </SimpleTreeView>
-
-      <LeftClickMenu 
-        menu={menu} 
-        closeMenu={closeMenu} 
-        handleEdit={handleEdit} 
+      <LeftClickMenu
+        menu={menu}
+        closeMenu={closeMenu}
+        handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
 
@@ -152,10 +111,10 @@ export default function TopicTreeView() {
         onClose={() => setEditTopic(null)}
         subscription={editingSubscription}
       />
-      
-      <DeleteSuscriptionDialog 
-        deleteTopic={deleteTopic} 
-        confirmDelete={confirmDelete} 
+
+      <DeleteSuscriptionDialog
+        deleteTopic={deleteTopic}
+        confirmDelete={confirmDelete}
         setDeleteTopic={setDeleteTopic}
       />
     </Box>
