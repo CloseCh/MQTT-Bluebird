@@ -11,6 +11,7 @@ export interface MessagesState {
 export type MessagesAction =
   | { type: 'messageReceived'; message: MQTTMessage; cap: number }
   | { type: 'formatChanged'; topic: Topic; format: MessageFormatEnum }
+  | { type: 'removeTopics'; topics: Topic[] }
   | { type: 'cleared' };
 
 export const initialMessagesState: MessagesState = {
@@ -49,6 +50,16 @@ export function messagesReducer(state: MessagesState, action: MessagesAction): M
           ...state.messageListByTopic,
           [action.topic]: { ...current, format: action.format },
         },
+      };
+    }
+    case 'removeTopics': {
+      const remove = new Set(action.topics);
+      if (remove.size === 0) return state;
+      const messageListByTopic = { ...state.messageListByTopic };
+      remove.forEach((topic) => delete messageListByTopic[topic]);
+      return {
+        topicList: state.topicList.filter((topic) => !remove.has(topic)),
+        messageListByTopic,
       };
     }
     case 'cleared':

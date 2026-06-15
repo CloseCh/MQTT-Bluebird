@@ -2,6 +2,7 @@ export type TableType = 'history' | 'topic' | 'last';
 
 export interface MQTTContextValue {
   topicList: TopicList;
+  removeTopics: (topics: Topic[]) => void;
   getSelectedTopic: () => Topic;
   setSelectedTopic: (topic: Topic) => void;
   getTypedMessageList: (topic: Topic) => MQTTMessageList;

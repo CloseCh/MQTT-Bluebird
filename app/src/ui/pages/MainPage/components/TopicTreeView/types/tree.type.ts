@@ -12,3 +12,7 @@ export interface TopicNode {
   fullPath?: string;
   children?: Map<string, TopicNode>;
 };
+
+
+
+export type ContextMenuState = { mouseX: number; mouseY: number; topic: string };

@@ -44,8 +44,19 @@ function useRepresentationService(dataPointCount: number): MQTTContextValue {
     dispatch({ type: 'formatChanged', topic, format });
   }, []);
 
+  const removeTopics = useCallback((topics: Topic[]) => {
+    if (topics.length === 0) return;
+    dispatch({ type: 'removeTopics', topics });
+    // Si el topic seleccionado fue eliminado, limpiamos la selección.
+    if (topics.includes(selectedTopic)) {
+      setSelectedTopic('');
+      setMessageSelected(null);
+    }
+  }, [selectedTopic]);
+
   return {
     topicList,
+    removeTopics,
     getSelectedTopic: () => selectedTopic,
     setSelectedTopic,
     getTypedMessageList: (topic) => messageListByTopic[topic] ?? EMPTY_MESSAGE,

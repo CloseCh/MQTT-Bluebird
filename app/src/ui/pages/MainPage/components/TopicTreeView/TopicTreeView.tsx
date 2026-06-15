@@ -1,13 +1,18 @@
+import { useCallback, useMemo, useState } from 'react';
 import { useRepresentationContext } from '@/features/messageRepresentacion';
-import { useSubscriptionContext } from '@/features/messageSubscription';
+import { useSubscriptionContext, SubscriptionModal } from '@/features/messageSubscription';
+
 import Box from '@mui/material/Box';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import { useCallback, useMemo } from 'react';
-import type { TopicNode } from './types/tree.type';
-import { buildTree, orderByLabel } from './utils/treeInstanciation.util';
 
-// Ordena alfabéticamente (numérico: topic/1, topic/2, topic/10).
+import type { ContextMenuState, TopicNode } from './types/tree.type';
+
+import { buildTree, orderByLabel } from './utils/treeInstanciation.util';
+import { topicMatchesSubscription } from './utils/treeSearch.util';
+
+import DeleteSuscriptionDialog from './component/DeleteSuscriptionDialog/DeleteSuscriptionDialog';
+import LeftClickMenu from './component/LeftClickMenu/LeftClickMenu';
 
 function renderTopicNode(
   node: TopicNode,
@@ -46,8 +51,14 @@ function renderTopicNode(
 }
 
 export default function TopicTreeView() {
-  const { subscriptionList } = useSubscriptionContext();
-  const { topicList, setSelectedTopic } = useRepresentationContext();
+  const { subscriptionList, unsubscribe } = useSubscriptionContext();
+  const { topicList, setSelectedTopic, removeTopics } = useRepresentationContext();
+
+  const [menu, setMenu] = useState<ContextMenuState | null>(null);
+  // Topic de la suscripción que se está editando (null = modal cerrado).
+  const [editTopic, setEditTopic] = useState<string | null>(null);
+  // Topic pendiente de confirmar su eliminación (null = diálogo cerrado).
+  const [deleteTopic, setDeleteTopic] = useState<string | null>(null);
 
   const tree = useMemo(
     () => buildTree(subscriptionList, topicList),
@@ -60,6 +71,42 @@ export default function TopicTreeView() {
     },
     [setSelectedTopic]
   );
+
+  const handleContextMenu = useCallback((e: React.MouseEvent, topic: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setMenu({ mouseX: e.clientX, mouseY: e.clientY, topic });
+  }, []);
+
+  const closeMenu = useCallback(() => setMenu(null), []);
+
+  const handleEdit = useCallback(() => {
+    if (menu) setEditTopic(menu.topic);
+    closeMenu();
+  }, [menu, closeMenu]);
+
+  const handleDelete = useCallback(() => {
+    if (menu) setDeleteTopic(menu.topic);
+    closeMenu();
+  }, [menu, closeMenu]);
+
+  const confirmDelete = useCallback(() => {
+    if (deleteTopic) {
+      void unsubscribe(deleteTopic);
+      // Elimina los datos de los topics que cubría esta suscripción y que ya
+      // no quedan cubiertos por ninguna otra suscripción activa.
+      const remainingSubs = Object.keys(subscriptionList).filter((s) => s !== deleteTopic);
+      const orphanTopics = topicList.filter(
+        (topic) =>
+          topicMatchesSubscription(topic, deleteTopic) &&
+          !remainingSubs.some((sub) => topicMatchesSubscription(topic, sub)),
+      );
+      removeTopics(orphanTopics);
+    }
+    setDeleteTopic(null);
+  }, [deleteTopic, unsubscribe, subscriptionList, topicList, removeTopics]);
+
+  const editingSubscription = editTopic ? subscriptionList[editTopic] : undefined;
 
   return (
     <Box sx={{ minHeight: 352, minWidth: 250 }}>
@@ -76,7 +123,14 @@ export default function TopicTreeView() {
             <TreeItem
               key={subscriptionId}
               itemId={subscriptionId}
-              label={subscriptionNode.suscription}
+              label={
+                <Box
+                  sx={{ width: '100%' }}
+                  onContextMenu={(e) => handleContextMenu(e, subscriptionNode.suscription)}
+                >
+                  {subscriptionNode.suscription}
+                </Box>
+              }
             >
               {topics.map((topic) =>
                 renderTopicNode(topic, `${subscriptionId}/${topic.label}`, handleSelectTopic)
@@ -85,6 +139,25 @@ export default function TopicTreeView() {
           );
         })}
       </SimpleTreeView>
+
+      <LeftClickMenu 
+        menu={menu} 
+        closeMenu={closeMenu} 
+        handleEdit={handleEdit} 
+        handleDelete={handleDelete}
+      />
+
+      <SubscriptionModal
+        open={editingSubscription !== undefined}
+        onClose={() => setEditTopic(null)}
+        subscription={editingSubscription}
+      />
+      
+      <DeleteSuscriptionDialog 
+        deleteTopic={deleteTopic} 
+        confirmDelete={confirmDelete} 
+        setDeleteTopic={setDeleteTopic}
+      />
     </Box>
   );
 }
