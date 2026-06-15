@@ -32,6 +32,7 @@ export function SubscriptionSidebar() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            p: '10px 10px 10px 10px'
           }}
         >
           <SubscriptionButton />

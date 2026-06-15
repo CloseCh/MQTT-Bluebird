@@ -1,5 +1,5 @@
 import mqtt, { type MqttClient } from 'mqtt';
-import { resetSubscriptions } from './mqttSubscriptor';
+import { notifyBrokerDisconnected, resetSubscriptions } from './mqttSubscriptor';
 
 let client: MqttClient | null = null;
 
@@ -31,6 +31,7 @@ export function connectClient({endpoint, username, password}: MqttConnectionOpti
 
   client.on('close', () => {
     console.warn('Conexión MQTT cerrada');
+    notifyBrokerDisconnected();
     destroyClient();
   });
 
@@ -40,9 +41,10 @@ export function connectClient({endpoint, username, password}: MqttConnectionOpti
 }
 
 export function destroyClient(): void {
-  if (client) {
-    client.end(true);
-    client = null;
-  }
+  // Anulamos la referencia antes de cerrar para evitar recursión:
+  // client.end() dispara 'close', cuyo handler vuelve a llamar a destroyClient.
+  const current = client;
+  client = null;
+  if (current) current.end(true);
   resetSubscriptions();
 }

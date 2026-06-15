@@ -102,3 +102,10 @@ export function setupClientListeners(mainWindow: BrowserWindow): void {
 export function resetSubscriptions(): void {
   activeSubscriptions = defaultSubscriptions();
 }
+
+/** Notifica al renderer que el broker se ha desconectado (manual o caída). */
+export function notifyBrokerDisconnected(): void {
+  if (activeWebContents && !activeWebContents.isDestroyed()) {
+    ipcWebContentsSend('mqtt:brokerDisconnected', activeWebContents, undefined);
+  }
+}

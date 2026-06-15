@@ -10,12 +10,14 @@ import { useEffect } from 'react';
 import Header from '@/shared/components/Header/Header';
 
 export default function MainLayout() {
-  const { isConnected } = useConnectionContext();
+  const { status } = useConnectionContext();
   const navigate = useNavigate();
 
+  // En caída inesperada ('error') nos quedamos para mostrar el estado en rojo;
+  // solo redirigimos al login en una desconexión limpia.
   useEffect(() => {
-    if (!isConnected) void navigate('/login');
-  }, [isConnected, navigate]);
+    if (status === 'disconnected') void navigate('/login');
+  }, [status, navigate]);
   
   return (
     <Stack sx={{ height: '100%', overflow: 'hidden' }}>

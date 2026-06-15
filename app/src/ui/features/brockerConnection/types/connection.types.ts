@@ -1,5 +1,7 @@
 export interface ConnectionContextValue {
   isConnected: boolean;
+  /** Estado de la conexión: 'error' indica caída inesperada del broker. */
+  status: ConnectionStatus;
   connectedEndpoint: string | null;
   handleConnection: (endpoint: string, username?: string, password?: string) => Promise<boolean>;
   handleDisconnection: () => Promise<void>;
