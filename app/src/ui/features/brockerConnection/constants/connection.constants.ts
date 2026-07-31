@@ -2,9 +2,9 @@ import type { ConnectionStatus, MqttProtocol } from '../types/connection.types';
 
 export const PROTOCOLS: { value: MqttProtocol; label: string }[] = [
   { value: 'mqtt', label: 'mqtt://' },
-  { value: 'mqtts', label: 'mqtts://' },
+  //{ value: 'mqtts', label: 'mqtts://' },
   { value: 'ws', label: 'ws://' },
-  { value: 'wss', label: 'wss://' },
+  //{ value: 'wss', label: 'wss://' },
 ];
 
 export const DEFAULT_PORTS: Record<MqttProtocol, string> = {

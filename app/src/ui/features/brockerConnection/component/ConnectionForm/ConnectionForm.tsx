@@ -56,7 +56,7 @@ export function ConnectionForm() {
             <TextField
               select
               label='Protocolo'
-              sx={{ minWidth: 110 }}
+              sx={{ minWidth: 130 }}
               value={form.watch('protocol')}
               onChange={handleProtocolChange}
             >
