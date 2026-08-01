@@ -1,16 +1,19 @@
 import { Outlet } from 'react-router';
 
-import { Box, Paper, Stack, Typography } from '@mui/material';
-import { LIVE_ACCENT } from '@/theme';
+import { 
+  Box, 
+  Paper, 
+  Stack, 
+  Typography
+} from '@mui/material';
 
 export default function LoginLayout() {
   return (
-    <Stack direction='row' sx={{ height: '100vh', width: '100vw' }}>
+    <Stack direction='row' sx={{ height: '100%', width: '100%' }}>
 
-      {/* Mitad izquierda: panel de marca */}
       <Box
         sx={{
-          flex: '1 1 50%',
+          width: '40%',
           display: { xs: 'none', md: 'flex' },
           flexDirection: 'column',
           alignItems: 'center',
@@ -21,46 +24,33 @@ export default function LoginLayout() {
           color: 'common.white',
         }}
       >
-        <Box
-          sx={{
-            width: 14,
-            height: 14,
-            borderRadius: '50%',
-            bgcolor: LIVE_ACCENT,
-            boxShadow: `0 0 12px ${LIVE_ACCENT}`,
-          }}
-        />
         <Typography variant='h4' fontWeight={700}>
           MQTT Bluebird
         </Typography>
         <Typography variant='body2' sx={{ opacity: 0.8 }}>
-          Cliente de comunicación MQTT
+          Aplicación de mensajería MQTT
         </Typography>
       </Box>
 
-      {/* Mitad derecha: conexión — siempre ocupa la misma mitad de la pantalla */}
       <Box
         sx={{
-          flex: '1 1 50%',
-          display: 'flex',
+          flex: '1 1 30%',
           alignItems: 'center',
           justifyContent: 'center',
-          p: 4,
           overflowY: 'auto',
         }}
       >
         <Paper
           elevation={3}
           sx={{
-            width: '80%',
-            maxWidth: 560,
+            width: '100%',
+            height: '100%',
             p: 4,
           }}
         >
           <Outlet />
         </Paper>
       </Box>
-
     </Stack>
   );
 }

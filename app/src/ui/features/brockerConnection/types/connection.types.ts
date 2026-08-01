@@ -9,7 +9,7 @@ export interface ConnectionContextValue {
 
 type MQTT = 'mqtt' | 'mqtts';
 
-type WEBSOCKETS = | 'ws' | 'wss';
+type WEBSOCKETS = 'ws' | 'wss';
 
 export type MqttProtocol =  MQTT | WEBSOCKETS;
 
